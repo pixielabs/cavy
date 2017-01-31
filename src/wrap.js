@@ -20,7 +20,7 @@ import React, { createClass } from 'react';
 //     // ...
 //     render() {
 //       const wrappedButton = wrap(Button);
-//       
+//
 //       // ...
 //     }
 //   }
