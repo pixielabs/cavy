@@ -1,6 +1,8 @@
-This documentation is still in progress.
+**This documentation is still in progress.**
 
 # Cavy
+
+[![npm version](https://badge.fury.io/js/cavy.svg)](https://badge.fury.io/js/cavy)
 
 An integration test framework for React Native, by
 [Pixie Labs](http://pixielabs.io).
