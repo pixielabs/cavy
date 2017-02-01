@@ -31,6 +31,12 @@ export default function wrap(statelessComponent) {
     reactClass[key] = statelessComponent[key];
   });
 
+  if (statelessComponent.defaultProps) {
+    reactClass.getDefaultProps = function() {
+      return statelessComponent.defaultProps;
+    }
+  }
+
   reactClass.displayName = statelessComponent.name || statelessComponent.displayName;
   reactClass.render = function() {
     return statelessComponent(this.props, this.context);
