@@ -1,6 +1,3 @@
-**This documentation is still in progress.**
-
-
 # Cavy
 
 [![npm version](https://badge.fury.io/js/cavy.svg)](https://badge.fury.io/js/cavy)
@@ -33,6 +30,16 @@ of testing approaches available:
 
 Cavy fits in between shallow-render testing and testing within your native
 environment.
+
+### Cavy's components
+
+Cavy provides 3 tools to let you run integration tests:
+
+1. A store of 'test hooks'; key-value pairs between a string identifier and a 
+   component somewhere in your app component tree.
+2. A set of helper functions to write spec files.
+3. A `<Tester>` component you wrap around your entire app to make the test hook
+   store available, and autorun your test cases on boot.
 
 ## Installation
 
@@ -88,7 +95,7 @@ export default TestableScene;
 ### Write your test cases
 
 Using your component identifiers, write your spec functions. We suggest saving
-these in a spec folder such as `./specs/AppSpec`.
+these in a spec folder, naming them something like `./specs/AppSpec.js`.
 
 ```javascript
 export default function(spec) {
@@ -104,11 +111,12 @@ export default function(spec) {
 
 ### Set up your test wrapper
 
-Import `Tester`, `TestHookStore` and your specs in `index.ios.js` and/or
-`index.android.js`, and instantiate a new `TestHookStore`.
+Import `Tester`, `TestHookStore` and your specs in your top-level JS file
+(typically this is your `index.{ios,android}.js` files), and instantiate a new
+`TestHookStore`.
 
-Wrap your app in a Tester component, passing in the `testHookStore` and an array
-containing your spec functions.
+Wrap your app in a Tester component, passing in the `TestHookStore` and an array
+containing your imported spec functions.
 
 ```javascript
 import React, { Component } from 'react';
