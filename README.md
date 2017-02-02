@@ -1,11 +1,38 @@
 **This documentation is still in progress.**
 
+
 # Cavy
 
 [![npm version](https://badge.fury.io/js/cavy.svg)](https://badge.fury.io/js/cavy)
 
-An integration test framework for React Native, by
+![Cavy logo](https://cloud.githubusercontent.com/assets/126989/22546798/6cf18938-e936-11e6-933f-da756b9ee7b8.png)
+
+**Cavy** is a cross-platform integration test framework for React Native, by
 [Pixie Labs](http://pixielabs.io).
+
+## How does it work?
+
+Cavy (ab)uses React `ref` generating functions to give you the ability to refer
+to, and simulate actions upon, deeply nested components within your
+application. Unlike a tool like [enzyme](https://github.com/airbnb/enzyme)
+which uses a simulated renderer, Cavy runs within your live application as it
+is running on a host device (e.g. your Android or iOS simulator).
+
+This allows you to do far more accurate integration testing than if you run
+your React app within a simulated rendering environment.
+
+### Where does it fit in?
+
+We built Cavy because, at the time of writing, React Native had only a handful
+of testing approaches available:
+
+1. Unit testing components ([Jest](https://github.com/facebook/jest)).
+2. Shallow-render testing components ([enzyme](https://github.com/airbnb/enzyme)).
+3. Testing within your native environment, using native JS hooks ([Appium](http://appium.io/)).
+4. Testing completely within your native environment ([XCTest](https://developer.apple.com/reference/xctest)).
+
+Cavy fits in between shallow-render testing and testing within your native
+environment.
 
 ## Installation
 
@@ -21,7 +48,8 @@ or `npm`:
 
 ### Hook up components for testing
 
-Add 'hooks' to any components you want to test by adding a `ref` and using the `generateTestHook` function.
+Add 'hooks' to any components you want to test by adding a `ref` and using the
+`generateTestHook` function.
 
 `generateTestHook` takes a string as its first argument - this is the identifier
 to be used in tests. It takes an optional second argument in case you want to
