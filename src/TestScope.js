@@ -75,15 +75,15 @@ export default class TestScope {
   // f     - Callback function containing your tests cases defined with `it`.
   //
   // Example
-  //  
+  //
   //   // specs/MyFeatureSpec.js
   //   export default function(spec) {
   //     spec.describe('My Scene', function() {
-  //       
+  //
   //       spec.it('Has a component', async function() {
   //         await spec.exists('MyScene.myComponent');
   //       });
-  //  
+  //
   //     });
   //   }
   //
@@ -128,6 +128,22 @@ export default class TestScope {
   async press(identifier) {
     const component = await this.findComponent(identifier);
     component.props.onPress();
+  }
+
+  // Public: Pause the test for a specified length of time, perhaps to allow
+  // time for a request response to be received.
+  //
+  // time - Integer length of time to pause for (in milliseconds).
+  //
+  // Returns a promise, use await when calling this function.
+  async pause(time) {
+    let promise = new Promise((resolve, reject) => {
+      setTimeout(function() {
+        resolve();
+      }, time);
+    });
+
+    return promise;
   }
 
   // Public: Check a component exists.
