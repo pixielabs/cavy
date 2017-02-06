@@ -82,6 +82,10 @@ Import `Tester`, `TestHookStore` and your specs in `index.ios.js` and/or
 Wrap your app in a Tester component, passing in the `testHookStore` and an array
 containing your spec functions.
 
+You may optionally pass in a value for `waitTime`, being an integer representing
+the time in milliseconds that your tests should wait to find specified 'hooked'
+components. By default, `waitTime` is set to two seconds.
+
 ```javascript
 import React, { Component } from 'react';
 import { AppRegistry } from 'react-native';
@@ -94,7 +98,7 @@ const testHookStore = new TestHookStore();
 export default class AppWrapper extends Component {
   render() {
     return (
-      <Tester specs={[AppSpec]} store={testHookStore}>
+      <Tester specs={[AppSpec]} store={testHookStore} waitTime={4000}>
         <App />
       </Tester>
     );

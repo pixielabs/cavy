@@ -6,10 +6,11 @@ const DEFAULT_WAIT_TIME = 2000;
 // spec files.
 export default class TestScope {
 
-  constructor(component) {
+  constructor(component, waitTime) {
     this.component = component;
     this.testHooks = component.testHookStore;
     this.testCases = [];
+    this.waitTime = waitTime || DEFAULT_WAIT_TIME;
 
     this.run.bind(this);
   }
@@ -32,7 +33,7 @@ export default class TestScope {
   }
 
   // Public: Find a component by its test hook identifier. Waits
-  // `DEFAULT_WAIT_TIME` for the component to appear before abandoning.
+  // this.waitTime for the component to appear before abandoning.
   //
   // Usually, you'll want to use `exists` instead.
   //
@@ -47,7 +48,7 @@ export default class TestScope {
   //
   // Returns a promise; use `await` when calling this function. Resolves the
   // promise if the component is found, rejects the promise after
-  // `DEFAULT_WAIT_TIME` if the component is never found in the test hook
+  // this.waitTime if the component is never found in the test hook
   // store.
   findComponent(identifier) {
     let promise = new Promise((resolve, reject) => {
@@ -58,7 +59,7 @@ export default class TestScope {
           clearInterval(loop);
           return resolve(component);
         } else {
-          if (Date.now() - startTime >= DEFAULT_WAIT_TIME) {
+          if (Date.now() - startTime >= this.waitTime) {
             reject(new Error(`Could not find component with identifier ${identifier}`));
             clearInterval(loop);
           }
