@@ -13,8 +13,11 @@ import {
 // This component wraps your app inside a <View> to facilitate
 // re-rendering with a new key after each test case.
 //
-// store - An instance of TestHookStore.
-// specs - An array of spec functions.
+// store    - An instance of TestHookStore.
+// specs    - An array of spec functions.
+// waitTime - An integer representing the time in milliseconds that the testing
+//            framework should wait for the function findComponent() to return
+//            the 'hooked' component.
 //
 // Example
 //
@@ -56,7 +59,7 @@ export default class Tester extends Component {
   }
 
   async runTests() {
-    scope = new TestScope(this);
+    scope = new TestScope(this, this.props.waitTime);
     for (var i = 0; i < this.props.specs.length; i++) {
       await this.props.specs[i](scope);
     }
@@ -79,9 +82,14 @@ export default class Tester extends Component {
 
 Tester.propTypes = {
   store: PropTypes.instanceOf(TestHookStore),
-  specs: PropTypes.arrayOf(PropTypes.func)
+  specs: PropTypes.arrayOf(PropTypes.func),
+  waitTime: PropTypes.number
 };
 
 Tester.childContextTypes = {
   testHooks: PropTypes.instanceOf(TestHookStore)
+}
+
+Tester.defaultProps = {
+  waitTime: 2000
 }

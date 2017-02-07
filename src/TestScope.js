@@ -1,15 +1,14 @@
-const DEFAULT_WAIT_TIME = 2000;
-
 // Internal: Wrapper around an app being tested, and a bunch of test cases.
 //
 // The TestScope also includes all the functions available when writing your
 // spec files.
 export default class TestScope {
 
-  constructor(component) {
+  constructor(component, waitTime) {
     this.component = component;
     this.testHooks = component.testHookStore;
     this.testCases = [];
+    this.waitTime = waitTime;
 
     this.run.bind(this);
   }
@@ -32,7 +31,7 @@ export default class TestScope {
   }
 
   // Public: Find a component by its test hook identifier. Waits
-  // `DEFAULT_WAIT_TIME` for the component to appear before abandoning.
+  // this.waitTime for the component to appear before abandoning.
   //
   // Usually, you'll want to use `exists` instead.
   //
@@ -47,7 +46,7 @@ export default class TestScope {
   //
   // Returns a promise; use `await` when calling this function. Resolves the
   // promise if the component is found, rejects the promise after
-  // `DEFAULT_WAIT_TIME` if the component is never found in the test hook
+  // this.waitTime if the component is never found in the test hook
   // store.
   findComponent(identifier) {
     let promise = new Promise((resolve, reject) => {
@@ -58,7 +57,7 @@ export default class TestScope {
           clearInterval(loop);
           return resolve(component);
         } else {
-          if (Date.now() - startTime >= DEFAULT_WAIT_TIME) {
+          if (Date.now() - startTime >= this.waitTime) {
             reject(new Error(`Could not find component with identifier ${identifier}`));
             clearInterval(loop);
           }
@@ -75,15 +74,15 @@ export default class TestScope {
   // f     - Callback function containing your tests cases defined with `it`.
   //
   // Example
-  //  
+  //
   //   // specs/MyFeatureSpec.js
   //   export default function(spec) {
   //     spec.describe('My Scene', function() {
-  //       
+  //
   //       spec.it('Has a component', async function() {
   //         await spec.exists('MyScene.myComponent');
   //       });
-  //  
+  //
   //     });
   //   }
   //
@@ -128,6 +127,22 @@ export default class TestScope {
   async press(identifier) {
     const component = await this.findComponent(identifier);
     component.props.onPress();
+  }
+
+  // Public: Pause the test for a specified length of time, perhaps to allow
+  // time for a request response to be received.
+  //
+  // time - Integer length of time to pause for (in milliseconds).
+  //
+  // Returns a promise, use await when calling this function.
+  async pause(time) {
+    let promise = new Promise((resolve, reject) => {
+      setTimeout(function() {
+        resolve();
+      }, time);
+    });
+
+    return promise;
   }
 
   // Public: Check a component exists.
