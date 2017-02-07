@@ -89,3 +89,7 @@ Tester.propTypes = {
 Tester.childContextTypes = {
   testHooks: PropTypes.instanceOf(TestHookStore)
 }
+
+Tester.defaultProps = {
+  waitTime: 2000
+}

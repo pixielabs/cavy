@@ -1,5 +1,3 @@
-const DEFAULT_WAIT_TIME = 2000;
-
 // Internal: Wrapper around an app being tested, and a bunch of test cases.
 //
 // The TestScope also includes all the functions available when writing your
@@ -10,7 +8,7 @@ export default class TestScope {
     this.component = component;
     this.testHooks = component.testHookStore;
     this.testCases = [];
-    this.waitTime = waitTime || DEFAULT_WAIT_TIME;
+    this.waitTime = waitTime;
 
     this.run.bind(this);
   }
