@@ -35,7 +35,7 @@ environment.
 
 Cavy provides 3 tools to let you run integration tests:
 
-1. A store of 'test hooks'; key-value pairs between a string identifier and a 
+1. A store of 'test hooks'; key-value pairs between a string identifier and a
    component somewhere in your app component tree.
 2. A set of helper functions to write spec files.
 3. A `<Tester>` component you wrap around your entire app to make the test hook
@@ -109,6 +109,9 @@ export default function(spec) {
 }
 ```
 
+[See below](#available-spec-helpers) for a list of currently available spec
+helper functions.
+
 ### Set up your test wrapper
 
 Import `Tester`, `TestHookStore` and your specs in your top-level JS file
@@ -153,6 +156,31 @@ Your tests will run automatically when you run your app using either:
 or
 
     $ react-native run-android
+
+## Available spec helpers
+
+`fillIn(identifier, str)` - fills in the identified 'TextInput'-compatible
+component with the provided string (str). Your component must respond to the
+property `onChangeText`.
+
+`press(identifier)` - presses the identified component. Your component must
+respond to the property `onPress`.
+
+`pause(integer)` - pauses the running test for the length of time, specified in
+milliseconds (integer). This is useful if you need to allow time for a response
+to be received before progressing.
+
+`exists(identifier)` - returns `true` if the component can be identified (i.e.
+is currently on screen).
+
+`findComponent(identifier)` - returns the identified component. This function
+should be used if your testable component does not respond to either
+`onChangeText` or `onPress`, for example:
+
+```javascript
+picker = await spec.findComponent('Scene.modalPicker');
+picker.open();
+```
 
 ## Contributing
 
