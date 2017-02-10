@@ -173,6 +173,9 @@ to be received before progressing.
 `exists(identifier)` - returns `true` if the component can be identified (i.e.
 is currently on screen).
 
+`notExists(identifier)` - as above, but checks for the absence of the
+component.
+
 `findComponent(identifier)` - returns the identified component. This function
 should be used if your testable component does not respond to either
 `onChangeText` or `onPress`, for example:

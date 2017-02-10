@@ -156,4 +156,20 @@ export default class TestScope {
     const component = await this.findComponent(identifier);
     return !!component;
   }
+
+  // Public: Check for the absence of a component. Will potentially halt your
+  // test for your maximum wait time.
+  //
+  // identifier - Identifier for the component.
+  async notExists(identifier) {
+    try {
+      await spec.findComponent(identifier);
+    } catch(e) {
+      if (e.message.indexOf('Could not find component') === 0) {
+        return true;
+      }
+      throw e;
+    }
+    throw new Error(`Component with identifier ${identifier} was present`);
+  }
 }
