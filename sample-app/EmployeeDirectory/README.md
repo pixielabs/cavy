@@ -5,4 +5,4 @@ Base code borrowed from [Christophe Coenraets](https://github.com/ccoenraets/emp
 ## How to run
 
 Follow Christophe's installation instructions, using the `app` folder from
-this folder instead of his.
+this folder instead of his. Don't forget to `yarn add cavy` too!
