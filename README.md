@@ -53,7 +53,9 @@ or `npm`:
 
 ## Basic usage
 
-Check out [the sample app](https://github.com/pixielabs/cavy/tree/master/sample-app/EmployeeDirectory) for example usage.
+Check out [the sample app](https://github.com/pixielabs/cavy/tree/master/sample-app/EmployeeDirectory) for example usage. Here it is running:
+
+![Sample app running](https://cloud.githubusercontent.com/assets/126989/22829358/193b5c0a-ef9a-11e6-994e-d4df852a6181.gif)
 
 ### Hook up components for testing
 
