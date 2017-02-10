@@ -53,6 +53,8 @@ or `npm`:
 
 ## Basic usage
 
+Check out [the sample app](https://github.com/pixielabs/cavy/tree/master/sample-app/EmployeeDirectory) for example usage.
+
 ### Hook up components for testing
 
 Add 'hooks' to any components you want to test by adding a `ref` and using the
