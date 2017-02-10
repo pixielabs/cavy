@@ -11,7 +11,7 @@ class EmployeeListItem extends Component {
 
   render() {
     return (
-      <TouchableHighlight ref={this.props.generateTestHook(`EmployeeListItem.${this.props.data.firstName} ${this.props.data.lastName}`)} onPress={this.showDetails.bind(this)} underlayColor={'#EEEEEE'}>
+      <TouchableHighlight ref={this.props.generateTestHook(`EmployeeListItem.${this.props.data.firstName}${this.props.data.lastName}`)} onPress={this.showDetails.bind(this)} underlayColor={'#EEEEEE'}>
         <View style={styles.container}>
           <Image source={{uri: this.props.data.picture}} style={styles.picture} />
           <View>

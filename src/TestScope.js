@@ -2,6 +2,14 @@
 //
 // The TestScope also includes all the functions available when writing your
 // spec files.
+
+class ComponentNotFoundError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'ComponentNotFoundError';
+  }
+};
+
 export default class TestScope {
 
   constructor(component, waitTime) {
@@ -58,7 +66,7 @@ export default class TestScope {
           return resolve(component);
         } else {
           if (Date.now() - startTime >= this.waitTime) {
-            reject(new Error(`Could not find component with identifier ${identifier}`));
+            reject(new ComponentNotFoundError(`Could not find component with identifier ${identifier}`));
             clearInterval(loop);
           }
         }
@@ -163,9 +171,9 @@ export default class TestScope {
   // identifier - Identifier for the component.
   async notExists(identifier) {
     try {
-      await spec.findComponent(identifier);
+      await this.findComponent(identifier);
     } catch(e) {
-      if (e.message.indexOf('Could not find component') === 0) {
+      if (e.name == 'ComponentNotFoundError') {
         return true;
       }
       throw e;
