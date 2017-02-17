@@ -1,6 +1,8 @@
-import React, { Component, Children, PropTypes } from 'react'
-import TestHookStore from './TestHookStore'
-import TestScope from './TestScope'
+import React, { Component, Children, PropTypes } from 'react';
+import { AsyncStorage } from 'react-native';
+
+import TestHookStore from './TestHookStore';
+import TestScope from './TestScope';
 
 import {
   View
@@ -13,11 +15,13 @@ import {
 // This component wraps your app inside a <View> to facilitate
 // re-rendering with a new key after each test case.
 //
-// store    - An instance of TestHookStore.
-// specs    - An array of spec functions.
-// waitTime - An integer representing the time in milliseconds that the testing
-//            framework should wait for the function findComponent() to return
-//            the 'hooked' component.
+// store             - An instance of TestHookStore.
+// specs             - An array of spec functions.
+// waitTime          - An integer representing the time in milliseconds that
+//                     the testing framework should wait for the function
+//                     findComponent() to return the 'hooked' component.
+// clearAsyncStorage - A boolean to determine whether to clear AsyncStorage
+//                     between each test. Defaults to `false`.
 //
 // Example
 //
@@ -70,6 +74,10 @@ export default class Tester extends Component {
     this.setState({key: Math.random()});
   }
 
+  clearAsync() {
+    if (this.props.clearAsyncStorage) { AsyncStorage.clear(); }
+  }
+
   render() {
     return (
       <View key={this.state.key} style={{flex: 1}}>
@@ -83,7 +91,8 @@ export default class Tester extends Component {
 Tester.propTypes = {
   store: PropTypes.instanceOf(TestHookStore),
   specs: PropTypes.arrayOf(PropTypes.func),
-  waitTime: PropTypes.number
+  waitTime: PropTypes.number,
+  clearAsync: PropTypes.bool
 };
 
 Tester.childContextTypes = {
@@ -91,5 +100,6 @@ Tester.childContextTypes = {
 }
 
 Tester.defaultProps = {
-  waitTime: 2000
+  waitTime: 2000,
+  clearAsyncStorage: false
 }
