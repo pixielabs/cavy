@@ -92,7 +92,7 @@ Tester.propTypes = {
   store: PropTypes.instanceOf(TestHookStore),
   specs: PropTypes.arrayOf(PropTypes.func),
   waitTime: PropTypes.number,
-  clearAsync: PropTypes.bool
+  clearAsyncStorage: PropTypes.bool
 };
 
 Tester.childContextTypes = {
