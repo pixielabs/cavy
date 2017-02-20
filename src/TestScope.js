@@ -34,6 +34,7 @@ export default class TestScope {
       } catch (e) {
         console.warn(`${description}  ❎\n   ${e.message}`);
       }
+      await this.component.clearAsync();
       this.component.reRender();
     }
   }

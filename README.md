@@ -125,9 +125,15 @@ Import `Tester`, `TestHookStore` and your specs in your top-level JS file
 Wrap your app in a Tester component, passing in the `TestHookStore` and an array
 containing your imported spec functions.
 
-You may optionally pass in a value for `waitTime`, being an integer representing
-the time in milliseconds that your tests should wait to find specified 'hooked'
-components. By default, `waitTime` is set to two seconds.
+Optional props:
+
+`waitTime`          - Integer, the time in milliseconds that your tests should
+                      wait to find specified 'hooked' components.
+                      Set to `2000` (2 seconds) by default.
+
+`clearAsyncStorage` - Boolean, set this to `true` to clear AsyncStorage between
+                      each test e.g. to remove a logged in user.
+                      Set to `false` by default.
 
 ```javascript
 import React, { Component } from 'react';
