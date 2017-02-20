@@ -74,8 +74,8 @@ export default class Tester extends Component {
     this.setState({key: Math.random()});
   }
 
-  clearAsync() {
-    if (this.props.clearAsyncStorage) { AsyncStorage.clear(); }
+  async clearAsync() {
+    if (this.props.clearAsyncStorage) { await AsyncStorage.clear(); }
   }
 
   render() {
