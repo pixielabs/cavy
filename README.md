@@ -80,14 +80,16 @@ class Scene extends Component {
   render() {
     const WrappedComponent = wrap(FuncComponent);
     return (
-      <TextInput
-        ref={this.props.generateTestHook('Scene.TextInput')}
-        onChangeText={...}
-      />
-      <WrappedComponent
-        ref={this.props.generateTestHook('Scene.Component')}
-        onPress={...}
-      />
+      <view>
+        <TextInput
+          ref={this.props.generateTestHook('Scene.TextInput')}
+          onChangeText={...}
+        />
+        <WrappedComponent
+          ref={this.props.generateTestHook('Scene.Component')}
+          onPress={...}
+        />
+      </view>      
     );
   }
 }
