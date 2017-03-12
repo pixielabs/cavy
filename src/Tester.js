@@ -47,7 +47,7 @@ export default class Tester extends Component {
   getChildContext() {
     return {
       testHooks: this.testHookStore
-    }
+    };
   }
 
   constructor(props, context) {
@@ -63,7 +63,7 @@ export default class Tester extends Component {
   }
 
   async runTests() {
-    scope = new TestScope(this, this.props.waitTime);
+    scope = new TestScope(this, this.props.waitTime, this.props.reporting);
     for (var i = 0; i < this.props.specs.length; i++) {
       await this.props.specs[i](scope);
     }
