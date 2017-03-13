@@ -80,7 +80,7 @@ class Scene extends Component {
   render() {
     const WrappedComponent = wrap(FuncComponent);
     return (
-      <view>
+      <View>
         <TextInput
           ref={this.props.generateTestHook('Scene.TextInput')}
           onChangeText={...}
@@ -89,7 +89,7 @@ class Scene extends Component {
           ref={this.props.generateTestHook('Scene.Component')}
           onPress={...}
         />
-      </view>      
+      </View>      
     );
   }
 }
