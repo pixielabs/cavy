@@ -1,3 +1,7 @@
+# 0.3.1
+
+- Tweak to the test failure message.
+
 # 0.3.0
 
 - Added the ability to automatically clear the app's entire AsyncStorage
