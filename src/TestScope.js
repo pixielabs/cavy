@@ -32,7 +32,7 @@ export default class TestScope {
         await f.call(this);
         console.log(`${description}  ✅`);
       } catch (e) {
-        console.warn(`${description}  ❎\n   ${e.message}`);
+        console.warn(`${description}  ❌\n   ${e.message}`);
       }
       await this.component.clearAsync();
       this.component.reRender();
