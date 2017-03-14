@@ -141,8 +141,8 @@ export default class TestScope {
   //
   _handleNotify(testReport) {
     if (this.notifier) {
-      console.log('handle notify');
       postTestResults(testReport, this.notifier);
+      this._handleConsoleLog('Report sent to notification server.');
     }
   }
 
