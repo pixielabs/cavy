@@ -20,6 +20,13 @@ import {
 // waitTime          - An integer representing the time in milliseconds that
 //                     the testing framework should wait for the function
 //                     findComponent() to return the 'hooked' component.
+// testStartDelay    - Optional pause before test execution begins (ms)
+// consoleLog        - Optional/tristate: determine level of console feedback
+//                         false: no console.log statements
+//                         true: some console.log statements
+//                         'verbose': detailed console.log statements  
+// reporter          - Optional select reporter formatting for test report output
+// notifier          - Optional pass notifier parameters to call webhook on test completion
 // clearAsyncStorage - A boolean to determine whether to clear AsyncStorage
 //                     between each test. Defaults to `false`.
 //
@@ -42,6 +49,7 @@ import {
 //       );
 //     }
 //   }
+
 export default class Tester extends Component {
 
   getChildContext() {
