@@ -3,16 +3,16 @@ import {Navigator, Text, TouchableOpacity, Image, StyleSheet} from 'react-native
 import EmployeeList from './EmployeeList';
 import EmployeeDetails from './EmployeeDetails';
 
-import { hook } from 'cavy';
+import {testHook} from './helpers/cavy.js';
 
-class EmployeeDirectoryApp extends Component {
+class _EmployeeDirectoryApp extends Component {
 
   renderScene(route, navigator) {
     switch (route.name) {
       case 'employee-list':
-        return <EmployeeList navigator={navigator} />
+        return <EmployeeList navigator={navigator} />;
       case 'details':
-        return <EmployeeDetails navigator={navigator} data={route.data} />
+        return <EmployeeDetails navigator={navigator} data={route.data} />;
     }
   }
 
@@ -30,7 +30,7 @@ class EmployeeDirectoryApp extends Component {
                 } else {
                   return (
                     <TouchableOpacity onPress={() => navigator.pop()}>
-                      <Image source={require('./assets/back.png')} style={styles.backButton} />
+                      <Text>Back</Text>
                     </TouchableOpacity>
                   );
                 }
@@ -46,11 +46,11 @@ class EmployeeDirectoryApp extends Component {
           />
         }
       />
-    )
+    );
   }
 }
 
-const TestableApp = hook(EmployeeDirectoryApp);
+const TestableApp = testHook(_EmployeeDirectoryApp);
 export default TestableApp;
 
 const styles = StyleSheet.create({
