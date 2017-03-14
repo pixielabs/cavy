@@ -11,28 +11,29 @@ const SEARCH2 = 'Amy';
 
 export const verifyAndSearch = (spec) => {
   spec.suite('Verify Anup and search Amy', () => {
+    itAction.clearTextInput(spec);
     itAction.presenceEmployeeListItem(spec, TEST_EMPLOYEE);
-    itAction.inputSearchBarTextInput(spec, SEARCH2);
-    itAction.notPresenceEmployeeListItem(spec, TEST_EMPLOYEE);
-    itAction.presenceEmployeeListItem(spec, TEST_EMPLOYEE2);
+    itAction.inputSearchBarTextInput(spec, SEARCH2, TEST_EMPLOYEE2);
+    itAction.inputSearchBarClearText(spec);
   });
 };
 
 export const verifyActionBarEmail = (spec) => {
   spec.suite('Search Amy and verify contact button exists', () => {
-    itAction.presenceActionBarEmailButton(spec, SEARCH2);
+    itAction.presenceActionBarEmailButton(spec);
   });
 };
 
 export const secretPresence = (spec) => {
   spec.suite('Use secret component to continue testing past OS alert', () => {
-    itAction.secretPresenceActionBar(spec);
+    itAction.secretShowDetails(spec);
   });
 };
 
-export const criticalTests = (spec) => {
-  spec.suite('Run critical integration tests.', () => {
-    itAction.presenceActionBarEmailButton(spec, SEARCH);
-    itAction.secretPresenceActionBar(spec);
+export const runFailures = (spec) => {
+  spec.suite('Run a few failing tests', () => {
+    itAction.failure(spec);
+    itAction.pause(spec, 1000);
+    itAction.failure(spec);
   });
 };

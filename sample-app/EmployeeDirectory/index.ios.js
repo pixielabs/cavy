@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {AppRegistry} from 'react-native';
 
 import { Tester, TestHookStore } from 'cavy';
@@ -13,7 +13,7 @@ if (GLOBAL.TEST_ENABLED) {
   var TestSuites = require('./specs/itSuites.js');
   // var TestSuitesArray = [TestSuites.verifyAndSearch, TestSuites.verifyActionBarEmail, TestSuites.secretPresence, TestSuites.criticalTests];
   // , 
-  var TestSuitesArray = [TestSuites.verifyActionBarEmail];
+  var TestSuitesArray = [TestSuites.verifyAndSearch, TestSuites.verifyActionBarEmail, TestSuites.secretPresence, TestSuites.runFailures];
  
   var testApiParams = {
     url: 'http://localhost:3003/jenkins',
@@ -22,7 +22,7 @@ if (GLOBAL.TEST_ENABLED) {
   };
 }
 
-class AppWrapper extends Component {
+class AppWrapper extends PureComponent {
   render() {
     if (GLOBAL.TEST_ENABLED) {
       return (
@@ -31,9 +31,10 @@ class AppWrapper extends Component {
           store={testHookStore} 
           waitTime={1000}
           testStartDelay={1000}
-          consoleLog={true}
+          consoleLog='verbose' //{false}, {true}, 'verbose'
           reporter='ChromiumJSONTestReporting'
           notifier={testApiParams}
+          reRender={true}
         >
         <EmployeeDirectoryApp />
       </Tester>

@@ -1,11 +1,12 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {Navigator, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import EmployeeList from './EmployeeList';
 import EmployeeDetails from './EmployeeDetails';
 
+import GLOBAL from './helpers/globals.js';
 import {testHook} from './helpers/cavy.js';
 
-class _EmployeeDirectoryApp extends Component {
+class _EmployeeDirectoryApp extends PureComponent {
 
   renderScene(route, navigator) {
     switch (route.name) {
@@ -29,8 +30,11 @@ class _EmployeeDirectoryApp extends Component {
                   return null;
                 } else {
                   return (
-                    <TouchableOpacity onPress={() => navigator.pop()}>
-                      <Text>Back</Text>
+                    <TouchableOpacity
+                      ref={GLOBAL.TEST_ENABLED ? this.props.generateTestHook('NavBar.LeftButton') : 'LeftButton'}
+                      onPress={() => navigator.pop()}
+                      >
+                      <Image source={require('./assets/back.png')} style={styles.backButton} />
                     </TouchableOpacity>
                   );
                 }

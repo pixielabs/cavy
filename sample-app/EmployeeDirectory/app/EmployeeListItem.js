@@ -4,9 +4,10 @@ import { View, Text, Image, TouchableHighlight, StyleSheet } from 'react-native'
 import GLOBAL from './helpers/globals.js';
 import {testWrapHook} from './helpers/cavy.js';
 
-const _EmployeeListItem = ({generateTestHook, data, onShowDetails}) => (
+const _EmployeeListItem = ({generateTestHook, data, onShowDetails, directReports=false}) => (
     <TouchableHighlight 
-    ref={GLOBAL.TEST_ENABLED ? generateTestHook(`EmployeeListItem.${data.firstName}${data.lastName}`): null} 
+    ref={GLOBAL.TEST_ENABLED ? directReports ? null : generateTestHook(`EmployeeListItem.${data.firstName}${data.lastName}`): null}
+    key={data.id}
     onPress={() => {onShowDetails(data);}} 
     underlayColor={'#EEEEEE'}
     >

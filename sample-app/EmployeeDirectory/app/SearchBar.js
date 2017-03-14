@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 
 import GLOBAL from './helpers/globals.js';
 import { testHook } from './helpers/cavy.js';
-import { SecretPresenceAction } from '../specs/itTestComponents.js';
 
-class SearchBar extends Component {
+class SearchBar extends PureComponent {
   constructor() {
     super();
     this.state = {
@@ -32,7 +31,6 @@ class SearchBar extends Component {
           onChangeText={(value) => this._onChangeText(value)}
           value={this.state.value}
         />
-        {GLOBAL.TEST_ENABLED ? <SecretPresenceAction onSecretSearch={() => this._secretSearch} generateTestHook={this.props.generateTestHook} /> : null}
       </View>
     );
   }

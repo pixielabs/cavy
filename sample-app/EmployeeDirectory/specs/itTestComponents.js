@@ -18,7 +18,7 @@ const TestHookStyles = StyleSheet.create({
 
 const TestHook = ({refName, onPressIn}) => (
     <TouchableOpacity style={TestHookStyles.invisibleContainer}
-      ref={refName} onPress={() => {onPressIn(); console.log('root shit');}}>
+      ref={refName} onPress={() => onPressIn()}>
       <View />
     </TouchableOpacity>
 );
@@ -28,18 +28,29 @@ TestHook.propTypes = {
   refName: React.PropTypes.any.isRequired
 };
 
+const alertBypassData = {
+  email: "james@fakemail.com",
+  firstName: "James",
+  id: 5,
+  lastName: "Kennedy",
+  managerName: "Caroline Kingsley",
+  mobilePhone: "617-987-6543",
+  phone: "617-123-4567",
+  picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/james_kennedy.jpg",
+  title: "Account Executive"
+};
 
-const _SecretPresenceAction = ({onSecretSearch, generateTestHook}) => (
+const _SecretShowDetails = ({onSecretShowDetails, generateTestHook}) => (
   <TestHook
-    onPressIn={() => onSecreatSearch}
-    refName={generateTestHook('secretPresenceAction')}
+    onPressIn={() => onSecretShowDetails(alertBypassData)}
+    refName={generateTestHook('SecretShowDetails')}
   />
 );
 
-_SecretPresenceAction.PropTypes = {
-  dispatch: React.PropTypes.func.isRequired,
+_SecretShowDetails.PropTypes = {
+  onSecretShowDetails: React.PropTypes.func.isRequired,
   generateTestHook: React.PropTypes.func.isRequired,
 };
 
-export const SecretPresenceAction = testWrapHook(_SecretPresenceAction);
+export const SecretShowDetails = testWrapHook(_SecretShowDetails);
 

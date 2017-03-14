@@ -3,11 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "server": "node specs/server/app.js"
   },
   "dependencies": {
-    "cavy": "git://github.com/TGPSKI/cavy.git#23cd4eeebe72994b5e42232c662a73504355ac10",
+    "cavy": "git://github.com/TGPSKI/cavy.git#b51020a267761a8c71782c815f18beb6d1982a3f",
     "react": "~15.4.0",
     "react-native": "0.41.2"
   },
@@ -15,6 +14,9 @@
     "babel-jest": "18.0.0",
     "babel-preset-react-native": "1.9.1",
     "jest": "18.1.0",
+    "jsonfile": "^2.4.0",
+    "node-api-server": "^2.2.6",
+    "node-fetch": "^1.6.3",
     "react-test-renderer": "~15.4.0"
   },
   "jest": {
