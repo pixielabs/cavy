@@ -112,8 +112,8 @@ export default class TestScope {
       this._handleNotify(this.reporter.generateReport());
     }
 
-    this._handleConsoleLog('Cavy tests finished at' + finish);
     this._handleConsoleLog(this.testSuites);
+    this._handleConsoleLog('Cavy tests finished at ' + finish);
   }
 
   // Internal: Handle reporting to console based on consoleLog prop
