@@ -1,4 +1,4 @@
-const {keys, values, has} = require('lodash');
+const {has} = require('lodash');
 
 // Chromium JSON Test Reporter
 // https://www.chromium.org/developers/the-json-test-results-format
@@ -26,20 +26,21 @@ class ChromiumJSONTestReporting {
 
   _generateTestStatistics() {
     var numFailuresByType = {};
-    let suiteKeys = keys(this.reportJSON.suites);
-    for (testSuiteIdx in suiteKeys) {
+    let suiteKeys = Object.keys(this.reportJSON.suites);
+    
+    for (let testSuiteIdx in suiteKeys) {
       let testSuite = this.reportJSON.suites[suiteKeys[testSuiteIdx]];
-      let caseKeys = keys(testSuite);
-      for (testCaseIdx in caseKeys) {
+      let caseKeys = Object.keys(testSuite);
+      for (let testCaseIdx in caseKeys) {
         let testCase = testSuite[caseKeys[testCaseIdx]];
         if (has(testCase, 'error')) {
           if (has(numFailuresByType, testCase.error)) {
             numFailuresByType[testCase.error] += 1;
-          };
+          }
           numFailuresByType[testCase.error] = 1;
         }
       }
-    };
+    }
     return numFailuresByType;
   }
 
