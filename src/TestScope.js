@@ -1,6 +1,6 @@
 import {postTestResults} from './reporting/api';
 import Reporters from './reporting/reporters';
-import {has, keys, omit} from 'lodash';
+import {has, omit} from 'lodash';
 
 // Internal: Wrapper around an app being tested, and a bunch of test cases.
 //
@@ -45,7 +45,7 @@ export default class TestScope {
       this.pause(this.testStartDelay);
     }
 
-    let suiteKeys = keys(this.testSuites);
+    let suiteKeys = Object.keys(this.testSuites);
     for (let testSuiteIdx in suiteKeys) {
       let testSuite = this.testSuites[suiteKeys[testSuiteIdx]];
       let suiteStats = {};
@@ -53,7 +53,7 @@ export default class TestScope {
       suiteStats.start = new Date();
       this._handleConsoleLog(suiteKeys[testSuiteIdx] + ' suite started at ' + suiteStats.start);
 
-      let caseKeys = keys(testSuite);
+      let caseKeys = Object.keys(testSuite);
       for (let testCaseIdx in caseKeys) {
         let testCase = testSuite[caseKeys[testCaseIdx]];
         let caseStats = {};
