@@ -71,7 +71,7 @@ export default class Tester extends Component {
   }
 
   async runTests() {
-    scope = new TestScope(this, this.props.waitTime, this.props.testStartDelay, this.props.consoleLog, this.props.reporter, this.props.notifier);
+    let scope = new TestScope(this, this.props.waitTime, this.props.testStartDelay, this.props.consoleLog, this.props.reporter, this.props.notifier);
     for (var i = 0; i < this.props.specs.length; i++) {
       await this.props.specs[i](scope);
     }
@@ -106,14 +106,19 @@ Tester.propTypes = {
   store: PropTypes.instanceOf(TestHookStore),
   specs: PropTypes.arrayOf(PropTypes.func),
   waitTime: PropTypes.number,
-  clearAsyncStorage: PropTypes.bool
+  clearAsyncStorage: PropTypes.bool,
+  testStartDelay: PropTypes.number,
+  consoleLog: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  reporter: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  notifier: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  children: PropTypes.any
 };
 
 Tester.childContextTypes = {
   testHooks: PropTypes.instanceOf(TestHookStore)
-}
+};
 
 Tester.defaultProps = {
   waitTime: 2000,
   clearAsyncStorage: false
-}
+};
