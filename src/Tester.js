@@ -109,7 +109,7 @@ Tester.propTypes = {
   clearAsyncStorage: PropTypes.bool,
   testStartDelay: PropTypes.number,
   consoleLog: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  reporter: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  reporter: PropTypes.string,
   notifier: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   children: PropTypes.any
 };
