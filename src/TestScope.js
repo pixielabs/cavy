@@ -16,7 +16,7 @@ class ComponentNotFoundError extends Error {
 
 export default class TestScope {
 
-  constructor(component, waitTime, testStartDelay=false, consoleLog=false, reporter=false, notifier=false) {
+  constructor(component, waitTime, testStartDelay=false, consoleLog=false, reporter=false, notifier=false, reRender=true) {
     this.component = component;
     this.testHooks = component.testHookStore;
     this.waitTime = waitTime;
@@ -26,6 +26,7 @@ export default class TestScope {
       this.reporter = new Reporters[reporter]();
     } else { this.reporter = false; }
     this.notifier = notifier;
+    this.reRender = reRender;
     this.testSuites = {};
 
     this.run.bind(this);
@@ -86,7 +87,7 @@ export default class TestScope {
         }
 
         await this.component.clearAsync();
-        this.component.reRender();
+        this.reRender ? this.component.reRender() : null; 
 
         caseStats.duration = (caseStats.finish - caseStats.start)/1000;
 

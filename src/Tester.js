@@ -27,6 +27,7 @@ import {
 //                         'verbose': detailed console.log statements  
 // reporter          - Optional select reporter formatting for test report output
 // notifier          - Optional pass notifier parameters to call webhook on test completion
+// reRender          - Optional re-render component after test spec completion
 // clearAsyncStorage - A boolean to determine whether to clear AsyncStorage
 //                     between each test. Defaults to `false`.
 //
@@ -71,7 +72,7 @@ export default class Tester extends Component {
   }
 
   async runTests() {
-    let scope = new TestScope(this, this.props.waitTime, this.props.testStartDelay, this.props.consoleLog, this.props.reporter, this.props.notifier);
+    let scope = new TestScope(this, this.props.waitTime, this.props.testStartDelay, this.props.consoleLog, this.props.reporter, this.props.notifier, this.props.reRender);
     for (var i = 0; i < this.props.specs.length; i++) {
       await this.props.specs[i](scope);
     }
@@ -111,6 +112,7 @@ Tester.propTypes = {
   consoleLog: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   reporter: PropTypes.string,
   notifier: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  reRender: PropTypes.bool,
   children: PropTypes.any
 };
 
