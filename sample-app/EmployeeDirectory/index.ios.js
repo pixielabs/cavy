@@ -11,8 +11,6 @@ if (GLOBAL.TEST_ENABLED) {
   var testHookStore = new TestHookStore();
 
   var TestSuites = require('./specs/itSuites.js');
-  // var TestSuitesArray = [TestSuites.verifyAndSearch, TestSuites.verifyActionBarEmail, TestSuites.secretPresence, TestSuites.criticalTests];
-  // , 
   var TestSuitesArray = [TestSuites.verifyAndSearch, TestSuites.verifyActionBarEmail, TestSuites.secretPresence, TestSuites.runFailures];
  
   var testApiParams = {
