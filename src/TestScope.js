@@ -1,5 +1,4 @@
 import {postTestResults} from './reporting/api';
-import {getFormattedDate} from './reporting/reporterUtils';
 import Reporters from './reporting/reporters';
 import {has, keys, omit} from 'lodash';
 
@@ -25,7 +24,7 @@ export default class TestScope {
     this.consoleLog = consoleLog;
     if (reporter) {
       this.reporter = new Reporters[reporter]();
-    } else { this.reporter = false; };
+    } else { this.reporter = false; }
     this.notifier = notifier;
     this.testSuites = {};
 
@@ -39,7 +38,7 @@ export default class TestScope {
   async run() {
 
     let start = new Date();
-    if (this.reporter) {this.reporter.testStart = start;};
+    if (this.reporter) {this.reporter.testStart = start;}
     this._handleConsoleLog('Cavy tests started at' + start);
 
     if (this.testStartDelay) {
@@ -47,7 +46,7 @@ export default class TestScope {
     }
 
     let suiteKeys = keys(this.testSuites);
-    for (testSuiteIdx in suiteKeys) {
+    for (let testSuiteIdx in suiteKeys) {
       let testSuite = this.testSuites[suiteKeys[testSuiteIdx]];
       let suiteStats = {};
 
@@ -55,7 +54,7 @@ export default class TestScope {
       this._handleConsoleLog(suiteKeys[testSuiteIdx] + ' suite started at ' + suiteStats.start);
 
       let caseKeys = keys(testSuite);
-      for (testCaseIdx in caseKeys) {
+      for (let testCaseIdx in caseKeys) {
         let testCase = testSuite[caseKeys[testCaseIdx]];
         let caseStats = {};
         let caseResult = {};
@@ -110,7 +109,7 @@ export default class TestScope {
       this.reporter.testFinish = finish;
       this.reporter.addTestResults(this.testSuites);
       this._handleNotify(this.reporter.generateReport());
-    };
+    }
 
     this._handleConsoleLog('Cavy tests finished at' + finish);
     this._handleConsoleLog(this.testSuites);
@@ -131,8 +130,8 @@ export default class TestScope {
         this.consoleLog === 'verbose' ? warn ? console.warn(log) : console.log(log) : null;
       } else  {
         warn ? console.warn(log) : console.log(log);
-      };
-    };
+      }
+    }
   }
 
   // Internal: Handle notifying webhook on test completion
@@ -143,7 +142,7 @@ export default class TestScope {
     if (this.notifier) {
       console.log('handle notify');
       postTestResults(testReport, this.notifier);
-    };
+    }
   }
 
   // Public: Find a component by its test hook identifier. Waits
@@ -228,7 +227,6 @@ export default class TestScope {
   //
   // See example above.
   it(expected, f) {
-    const description = `${this.describeLabel}: ${expected}`;
     this.testSuites[this.activeSuiteKey][this.describeLabel] = {expected, f};
   }
 
