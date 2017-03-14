@@ -32,15 +32,15 @@ class ActionBar extends Component {
     return (
       <View style={styles.container}>
         <TouchableOpacity ref={GLOBAL.TEST_ENABLED ? this.props.generateTestHook('ActionBar.EmailButton') : 'EmailButton'} onPress={this.sendMail.bind(this)} style={styles.action}>
-          {/* Missing <Image source={require('./assets/email.png')} style={styles.icon} /> */}
+          <Image source={require('./assets/email.png')} style={styles.icon} />
           <Text style={styles.actionText}>email</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={this.callNumber.bind(this)} style={styles.action}>
-          {/* <Image source={require('./assets/call.png')} style={styles.icon} /> */}
+          <Image source={require('./assets/call.png')} style={styles.icon} />
           <Text style={styles.actionText}>call</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={this.sendMessage.bind(this)} style={styles.action}>
-          {/* <Image source={require('./assets/sms.png')} style={styles.icon} /> */}
+          <Image source={require('./assets/sms.png')} style={styles.icon} />
           <Text style={styles.actionText}>message</Text>
         </TouchableOpacity>
       </View>

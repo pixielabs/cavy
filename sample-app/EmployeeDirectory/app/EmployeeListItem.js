@@ -7,11 +7,11 @@ import {testWrapHook} from './helpers/cavy.js';
 const _EmployeeListItem = ({generateTestHook, data, onShowDetails}) => (
     <TouchableHighlight 
     ref={GLOBAL.TEST_ENABLED ? generateTestHook(`EmployeeListItem.${data.firstName}${data.lastName}`): null} 
-    onPress={(data) => onShowDetails(data)} 
+    onPress={() => {onShowDetails(data);}} 
     underlayColor={'#EEEEEE'}
     >
     <View style={styles.container}>
-      {/* <Image source={{uri: data.picture}} style={styles.picture} />  */}
+      <Image source={{uri: data.picture}} style={styles.picture} />
       <View>
         <Text>{data.firstName} {data.lastName}</Text>
         <Text style={styles.title}>{data.title}</Text>

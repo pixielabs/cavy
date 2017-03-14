@@ -9,10 +9,11 @@
 export function presenceActionBarEmailButton(spec) {
   spec.describe('Employee list item exists', function() {
     spec.it('PASS', async function() {
+      await spec.exists('SearchBar.TextInput');
+      await spec.fillIn('SearchBar.TextInput', 'Amy');     
       await spec.pause(1000);
       await spec.exists('EmployeeListItem.AmyTaylor');
       await spec.press('EmployeeListItem.AmyTaylor');
-      await spec.pause(1000);
       await spec.exists('ActionBar.EmailButton');
       await spec.fillIn('SearchBar.TextInput', '');
     });

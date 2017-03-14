@@ -30,12 +30,12 @@ class _EmployeeList extends Component {
   }
 
   _onShowDetails(data) {
-    this.navigator.push({name: 'details', data: data});
+    this.props.navigator.push({name: 'details', data: data});
   }
 
   render() {
     const {navigator, generateTestHook} = this.props;
-    
+
     return (
       <ListView style={styles.container}
         dataSource={this.state.dataSource}
