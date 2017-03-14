@@ -106,14 +106,14 @@ export default class TestScope {
 
     let finish = new Date();
 
+    this._handleConsoleLog(this.testSuites);
+    this._handleConsoleLog('Cavy tests finished at ' + finish);
+
     if (this.reporter) {
       this.reporter.testFinish = finish;
       this.reporter.addTestResults(this.testSuites);
       this._handleNotify(this.reporter.generateReport());
     }
-
-    this._handleConsoleLog(this.testSuites);
-    this._handleConsoleLog('Cavy tests finished at ' + finish);
   }
 
   // Internal: Handle reporting to console based on consoleLog prop
