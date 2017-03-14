@@ -40,7 +40,7 @@ export default class TestScope {
 
     let start = new Date();
     if (this.reporter) {this.reporter.testStart = start;}
-    this._handleConsoleLog('Cavy tests started at' + start);
+    this._handleConsoleLog('Cavy tests started at ' + start);
 
     if (this.testStartDelay) {
       this.pause(this.testStartDelay);
