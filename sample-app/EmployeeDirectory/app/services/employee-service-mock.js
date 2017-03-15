@@ -7,7 +7,7 @@ let employees = [
     phone: "617-123-4567",
     mobilePhone: "617-987-6543",
     email: "amy@fakemail.com",
-    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/amy_taylor.jpg"
+    picture: "https://s3.eu-west-2.amazonaws.com/cavy-sample-app/people/amy_taylor.jpg"
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ let employees = [
     phone: "617-123-4567",
     mobilePhone: "617-987-6543",
     email: "anup@fakemail.com",
-    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/anup_gupta.jpg"
+    picture: "https://s3.eu-west-2.amazonaws.com/cavy-sample-app/people/anup_gupta.jpg"
   },
   {
     id: 3,
@@ -31,7 +31,7 @@ let employees = [
     phone: "617-123-4567",
     mobilePhone: "617-987-6543",
     email: "michael@fakemail.com",
-    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/michael_jones.jpg"
+    picture: "https://s3.eu-west-2.amazonaws.com/cavy-sample-app/people/michael_jones.jpg"
   },
   {
     id: 4,
@@ -43,7 +43,7 @@ let employees = [
     phone: "617-123-4567",
     mobilePhone: "617-987-6543",
     email: "caroline@fakemail.com",
-    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/caroline_kingsley.jpg"
+    picture: "https://s3.eu-west-2.amazonaws.com/cavy-sample-app/people/caroline_kingsley.jpg"
   },
   {
     id: 5,
@@ -55,7 +55,7 @@ let employees = [
     phone: "617-123-4567",
     mobilePhone: "617-987-6543",
     email: "james@fakemail.com",
-    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/james_kennedy.jpg"
+    picture: "https://s3.eu-west-2.amazonaws.com/cavy-sample-app/people/james_kennedy.jpg"
   },
   {
     id: 6,
@@ -67,7 +67,7 @@ let employees = [
     phone: "617-123-4567",
     mobilePhone: "617-987-6543",
     email: "jen@fakemail.com",
-    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/jennifer_wu.jpg"
+    picture: "https://s3.eu-west-2.amazonaws.com/cavy-sample-app/people/jennifer_wu.jpg"
   },
   {
     id: 7,
@@ -79,7 +79,7 @@ let employees = [
     phone: "617-123-4567",
     mobilePhone: "617-987-6543",
     email: "jonathan@fakemail.com",
-    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/jonathan_bradley.jpg"
+    picture: "https://s3.eu-west-2.amazonaws.com/cavy-sample-app/people/jonathan_bradley.jpg"
   },
   {
     id: 8,
@@ -91,7 +91,7 @@ let employees = [
     phone: "617-123-4567",
     mobilePhone: "617-987-6543",
     email: "kenneth@fakemail.com",
-    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/kenneth_sato.jpg"
+    picture: "https://s3.eu-west-2.amazonaws.com/cavy-sample-app/people/kenneth_sato.jpg"
   },
   {
     id: 9,
@@ -103,7 +103,7 @@ let employees = [
     phone: "617-123-4567",
     mobilePhone: "617-987-6543",
     email: "lisa@fakemail.com",
-    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/lisa_parker.jpg"
+    picture: "https://s3.eu-west-2.amazonaws.com/cavy-sample-app/people/lisa_parker.jpg"
   },
   {
     id: 10,
@@ -115,7 +115,7 @@ let employees = [
     phone: "617-123-4567",
     mobilePhone: "617-987-6543",
     email: "brad@fakemail.com",
-    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/brad_moretti.jpg"
+    picture: "https://s3.eu-west-2.amazonaws.com/cavy-sample-app/people/brad_moretti.jpg"
   },
   {
     id: 11,
@@ -127,7 +127,7 @@ let employees = [
     phone: "617-123-4567",
     mobilePhone: "617-987-6543",
     email: "michelle@fakemail.com",
-    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/michelle_lambert.jpg"
+    picture: "https://s3.eu-west-2.amazonaws.com/cavy-sample-app/people/michelle_lambert.jpg"
   },
   {
     id: 12,
@@ -139,7 +139,7 @@ let employees = [
     phone: "617-123-4567",
     mobilePhone: "617-987-6543",
     email: "miriam@fakemail.com",
-    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/miriam_aupont.jpg"
+    picture: "https://s3.eu-west-2.amazonaws.com/cavy-sample-app/people/miriam_aupont.jpg"
   },
   {
     id: 13,
@@ -151,7 +151,7 @@ let employees = [
     phone: "617-123-4567",
     mobilePhone: "617-987-6543",
     email: "olivia@fakemail.com",
-    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/olivia_green.jpg"
+    picture: "https://s3.eu-west-2.amazonaws.com/cavy-sample-app/people/olivia_green.jpg"
   },
   {
     id: 14,
@@ -163,7 +163,7 @@ let employees = [
     phone: "617-123-4567",
     mobilePhone: "617-987-6543",
     email: "robert@fakemail.com",
-    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/robert_sullivan.jpg"
+    picture: "https://s3.eu-west-2.amazonaws.com/cavy-sample-app/people/robert_sullivan.jpg"
   },
   {
     id: 15,
@@ -175,7 +175,7 @@ let employees = [
     phone: "617-123-4567",
     mobilePhone: "617-987-6543",
     email: "tammy@fakemail.com",
-    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/tammy_robinson.jpg"
+    picture: "https://s3.eu-west-2.amazonaws.com/cavy-sample-app/people/tammy_robinson.jpg"
   },
   {
     id: 16,
@@ -187,7 +187,7 @@ let employees = [
     phone: "617-123-4567",
     mobilePhone: "617-987-6543",
     email: "victor@fakemail.com",
-    picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/victor_ochoa.jpg"
+    picture: "https://s3.eu-west-2.amazonaws.com/cavy-sample-app/people/victor_ochoa.jpg"
   }
 ];
 
