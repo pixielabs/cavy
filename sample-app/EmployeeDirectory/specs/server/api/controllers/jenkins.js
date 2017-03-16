@@ -1,5 +1,7 @@
 var fetch = require('node-fetch');
 var jsonfile = require('jsonfile');
+var mkdirp = require('mkdirp');
+var path = require('path');
 
 var results = {};
 var outputFileName = '';
@@ -17,18 +19,23 @@ const webhookConfig = outputFileName => {
 
 function getFormattedDate() {
   // Minor mods from: http://stackoverflow.com/a/32062237
+
   var date = new Date();
+
   var month = date.getMonth() + 1;
   var day = date.getDate();
   var hour = date.getHours();
   var min = date.getMinutes();
   var sec = date.getSeconds();
+
   month = (month < 10 ? '0' : '') + month;
   day = (day < 10 ? '0' : '') + day;
   hour = (hour < 10 ? '0' : '') + hour;
   min = (min < 10 ? '0' : '') + min;
   sec = (sec < 10 ? '0' : '') + sec;
+
   var str = date.getFullYear() + '-' + month + '-' + day + '_' + hour + '_' + min + '_' + sec;
+
   return str;
 }
 
@@ -47,12 +54,18 @@ function postTestCompleteWebhook(params) {
     });
 }
 
-function writeReport(reportJSON, outputFilePath, webhookCallback=false, jsonFileOptions={spaces: 2}) {
+function writeReport(reportJSON, outputFilePath, webhookCallback = false, jsonFileOptions = { spaces: 2 }) {
+  mkdirp(path.dirname(outputFilePath), err => {
+    if (err) {
+      return console.log('Error creating path ' + path.dirname(outputFilePath) + '. Reason: ' + err);
+    }
+  });
   jsonfile.writeFile(outputFilePath, reportJSON, jsonFileOptions, err => {
     if (err) {
       return console.log('Error writing test results to file: ' + err);
     } else {
       console.log('Test results written to ' + outputFilePath);
+
       if (webhookCallback) {
         webhookCallback(outputFilePath);
       }
