@@ -6,7 +6,7 @@
     "server": "node specs/server/app.js"
   },
   "dependencies": {
-    "cavy": "git://github.com/TGPSKI/cavy.git#117e1a597b36da5420d6f13d188f57729fd8848a",
+    "cavy": "git://github.com/TGPSKI/cavy.git#5d03508c00ea1861e58e3a256d3030285580cec2",
     "mkdirp": "^0.5.1",
     "path": "^0.12.7",
     "react": "~15.4.0",
