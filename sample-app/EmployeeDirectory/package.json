@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "cavy": "git://github.com/TGPSKI/cavy.git#117e1a597b36da5420d6f13d188f57729fd8848a",
+    "mkdirp": "^0.5.1",
     "react": "~15.4.0",
     "react-native": "0.41.2"
   },
