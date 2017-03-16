@@ -36,7 +36,7 @@ const alertBypassData = {
   managerName: "Caroline Kingsley",
   mobilePhone: "617-987-6543",
   phone: "617-123-4567",
-  picture: "https://s3-us-west-1.amazonaws.com/sfdc-demo/people/james_kennedy.jpg",
+  picture: "https://s3.eu-west-2.amazonaws.com/cavy-sample-app/people/james_kennedy.jpg",
   title: "Account Executive"
 };
 
