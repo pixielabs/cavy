@@ -86,9 +86,6 @@ export default class TestScope {
           };
         }
 
-        await this.component.clearAsync();
-        this.reRender ? this.component.reRender() : null; 
-
         caseStats.duration = (caseStats.finish - caseStats.start)/1000;
 
         let noF = omit(testCase, 'f');
@@ -99,6 +96,9 @@ export default class TestScope {
 
       suiteStats.stop = new Date();
       suiteStats.duration = (suiteStats.stop - suiteStats.start)/1000;
+
+      await this.component.clearAsync();
+      this.reRender ? this.component.reRender() : null;
 
       this._handleConsoleLog('Suite stopped at ' + suiteStats.stop);
       this._handleConsoleLog({suiteStats}, true);
