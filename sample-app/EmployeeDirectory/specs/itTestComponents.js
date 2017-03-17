@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {
   TouchableOpacity,
   StyleSheet,
@@ -24,8 +24,8 @@ const TestHook = ({refName, onPressIn}) => (
 );
 
 TestHook.propTypes = {
-  onPressIn: React.PropTypes.func.isRequired,
-  refName: React.PropTypes.any.isRequired
+  onPressIn: PropTypes.func.isRequired,
+  refName: PropTypes.any.isRequired
 };
 
 const alertBypassData = {
@@ -48,9 +48,22 @@ const _SecretShowDetails = ({onSecretShowDetails, generateTestHook}) => (
 );
 
 _SecretShowDetails.PropTypes = {
-  onSecretShowDetails: React.PropTypes.func.isRequired,
-  generateTestHook: React.PropTypes.func.isRequired,
+  onSecretShowDetails: PropTypes.func.isRequired,
+  generateTestHook: PropTypes.func.isRequired,
 };
 
 export const SecretShowDetails = testWrapHook(_SecretShowDetails);
 
+const _SecretSearch = ({onSecretSearch, generateTestHook}) => (
+  <TestHook
+    onPressIn={() => onSecretSearch()}
+    refName={generateTestHook('SecretSearch')}
+  />
+);
+
+_SecretSearch.PropTypes = {
+  onSecretSearch: PropTypes.func.isRequired,
+  generateTestHook: PropTypes.func.isRequired,
+};
+
+export const SecretSearch = testWrapHook(_SecretSearch);
