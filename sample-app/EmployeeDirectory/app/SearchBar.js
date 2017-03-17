@@ -18,8 +18,9 @@ class SearchBar extends PureComponent {
     this.props.onChange(value);
   }
 
-  _secretSearch() {
+  _onSecretSearch() {
     this.setState({value: 'foobar SECRET SEARCH'});
+    this.props.onChange('foobar SECRET SEARCH');
   }
 
   render() {
@@ -32,7 +33,7 @@ class SearchBar extends PureComponent {
           onChangeText={(value) => this._onChangeText(value)}
           value={this.state.value}
         />
-        {GLOBAL.TEST_ENABLED ? <SecretSearch onSecretShowDetails={() => this._onSecretSearch()} generateTestHook={this.props.generateTestHook} /> : null}
+        {GLOBAL.TEST_ENABLED ? <SecretSearch onSecretSearch={() => this._onSecretSearch()} generateTestHook={this.props.generateTestHook} /> : null}
       </View>
     );
   }
