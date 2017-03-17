@@ -9,9 +9,10 @@ import GLOBAL from './app/helpers/globals.js';
 
 if (GLOBAL.TEST_ENABLED) {
   var testHookStore = new TestHookStore();
+  console.ignoredYellowBox = ['A component for'];
 
   var TestSuites = require('./specs/itSuites.js');
-  var TestSuitesArray = [TestSuites.verifyAndSearch, TestSuites.verifyActionBarEmail, TestSuites.secretPresence, TestSuites.runFailures];
+  var testSuitesArray = [TestSuites.verifyAndSearch, TestSuites.verifyActionBarEmail, TestSuites.secretPresence, TestSuites.runFailures];
  
   var testApiParams = {
     url: 'http://localhost:3003/jenkins',
@@ -25,11 +26,11 @@ class AppWrapper extends PureComponent {
     if (GLOBAL.TEST_ENABLED) {
       return (
         <Tester 
-          specs={TestSuitesArray} 
+          specs={testSuitesArray} 
           store={testHookStore} 
           waitTime={1000}
           testStartDelay={1000}
-          consoleLog='verbose' //{false}, {true}, 'verbose'
+          consoleLog='verbose' // {false}, {true}, 'verbose'
           reporter='ChromiumJSONTestReporting'
           notifier={testApiParams}
           reRender={true}
