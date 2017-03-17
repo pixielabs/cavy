@@ -3,13 +3,14 @@ import { View, TextInput, StyleSheet } from 'react-native';
 
 import GLOBAL from './helpers/globals.js';
 import { testHook } from './helpers/cavy.js';
+import { SecretSearch } from '../specs/itTestComponents.js';
 
 class SearchBar extends PureComponent {
   constructor() {
     super();
     this.state = {
       value: ''
-    }
+    };
   }
 
   _onChangeText(value) {
@@ -31,6 +32,7 @@ class SearchBar extends PureComponent {
           onChangeText={(value) => this._onChangeText(value)}
           value={this.state.value}
         />
+        {GLOBAL.TEST_ENABLED ? <SecretSearch onSecretShowDetails={() => this._onSecretSearch()} generateTestHook={this.props.generateTestHook} /> : null}
       </View>
     );
   }
