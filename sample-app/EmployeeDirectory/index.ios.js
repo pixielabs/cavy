@@ -8,11 +8,16 @@ import EmployeeDirectoryApp from './app/EmployeeDirectoryApp';
 import GLOBAL from './app/helpers/globals.js';
 
 if (GLOBAL.TEST_ENABLED) {
+  // if (GLOBAL.API_URL !== 'stage') {console.error('You are running tests on prod!')} else {...
+
   var testHookStore = new TestHookStore();
   console.ignoredYellowBox = ['A component for'];
 
   var TestSuites = require('./specs/itSuites.js');
-  var testSuitesArray = [TestSuites.verifyAndSearch, TestSuites.verifyActionBarEmail, TestSuites.secretPresence, TestSuites.runFailures];
+
+  //// Test Suites ////
+  // var testSuitesArray = [TestSuites.verifyAndSearch, TestSuites.verifyActionBarEmail, TestSuites.secretPresence, TestSuites.runFailures];
+  var testSuitesArray = [TestSuites.secretSearch];
  
   var testApiParams = {
     url: 'http://localhost:3003/jenkins',
