@@ -16,8 +16,7 @@ if (GLOBAL.TEST_ENABLED) {
   var TestSuites = require('./specs/itSuites.js');
 
   //// Test Suites ////
-  // var testSuitesArray = [TestSuites.verifyAndSearch, TestSuites.verifyActionBarEmail, TestSuites.secretPresence, TestSuites.runFailures];
-  var testSuitesArray = [TestSuites.secretSearch];
+  var testSuitesArray = [TestSuites.secretSearch, TestSuites.verifyAndSearch, TestSuites.verifyActionBarEmail, TestSuites.secretPresence, TestSuites.runFailures];
  
   var testApiParams = {
     url: 'http://localhost:3003/jenkins',
