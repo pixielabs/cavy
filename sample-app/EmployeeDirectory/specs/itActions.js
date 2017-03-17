@@ -61,6 +61,15 @@ export function secretShowDetails(spec) {
   });
 }
 
+export function secretSearch(spec) {
+  spec.describe('Use secret component to enter string in search bar', function() {
+    spec.it('PASS', async function() {
+      await spec.exists('SecretSearch');
+      await spec.press('SecretSearch');
+    });
+  });
+}
+
 export function presenceEmployeeListItem(spec, name) {
   spec.describe('Employee list item exists', function() {
     spec.it('PASS', async function() {
