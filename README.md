@@ -197,6 +197,31 @@ picker = await spec.findComponent('Scene.modalPicker');
 picker.open();
 ```
 
+## FAQs
+
+#### How does Cavy compare to Appium? What is the benefit?
+
+Cavy is a comparable tool to Appium. The key difference is that Appium uses
+native hooks to access components (accessibility IDs), wheras Cavy uses React
+Native refs. This means that Cavy sits directly within your React Native
+environment (working identically with both Android and iOS builds), making it
+easy to integrate into your application very quickly, without much
+overhead.
+
+#### What does this allow me to do that Jest does not?
+
+Jest is a useful tool for unit testing individual React Native components,
+whereas Cavy is an integration testing tool allowing you to run end-to-end user
+interface tests.
+
+#### How about supporting stateless components?
+
+We'd love for Cavy to be better compatible with stateless functional components
+and would be more than happy to see its reliance on refs replaced with something
+better suited to the task...
+What that looks like specifically, we're not 100% sure yet. We're very happy to
+discuss possible alternatives!
+
 ## Contributing
 
 - Check out the latest master to make sure the feature hasn't been implemented
