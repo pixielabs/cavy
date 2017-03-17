@@ -7,7 +7,6 @@ env:
 extends:
 - eslint:recommended
 - plugin:react/recommended
-- plugin:ava/recommended
 - plugin:flowtype/recommended
 parser: babel-eslint
 parserOptions:
@@ -19,7 +18,6 @@ parserOptions:
 plugins:
 - react
 - react-native
-- ava
 - babel
 - flowtype
 rules:
