@@ -66,6 +66,7 @@ export function secretSearch(spec) {
     spec.it('PASS', async function() {
       await spec.exists('SecretSearch');
       await spec.press('SecretSearch');
+      await spec.pause(2000);
     });
   });
 }
