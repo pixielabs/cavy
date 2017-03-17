@@ -98,7 +98,10 @@ export default class TestScope {
       suiteStats.duration = (suiteStats.stop - suiteStats.start)/1000;
 
       await this.component.clearAsync();
-      this.reRender ? this.component.reRender() : null;
+
+      if (this.reRender) {
+        this.component.reRender();
+      }
 
       this._handleConsoleLog('Suite stopped at ' + suiteStats.stop);
       this._handleConsoleLog({suiteStats}, true);
@@ -106,8 +109,8 @@ export default class TestScope {
 
     let finish = new Date();
 
-    this._handleConsoleLog(this.testSuites);
     this._handleConsoleLog('Cavy tests finished at ' + finish);
+    this._handleConsoleLog(this.testSuites);
 
     if (this.reporter) {
       this.reporter.testFinish = finish;
@@ -128,9 +131,26 @@ export default class TestScope {
   _handleConsoleLog(log, verbose=false, warn=false) {
     if (this.consoleLog) {
       if (verbose) {
-        this.consoleLog === 'verbose' ? warn ? console.warn(log) : console.log(log) : null;
+        switch (this.consoleLog) {
+        case 'verbose':
+          if (warn) {
+            console.warn(log);
+          } else {
+            console.log(log);
+          }
+          break;
+        default:
+          break;
+        }
       } else  {
-        warn ? console.warn(log) : console.log(log);
+        switch (warn) {
+        case true:
+          console.warn(log);
+          break;
+        case false:
+          console.log(log);
+          break;
+        }
       }
     }
   }
