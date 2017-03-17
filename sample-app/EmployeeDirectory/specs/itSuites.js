@@ -30,6 +30,12 @@ export const secretPresence = (spec) => {
   });
 };
 
+export const secretSearch = (spec) => {
+  spec.suite('Use secret component to enter text into search box', () => {
+    itAction.secretSearch(spec);
+  });
+};
+
 export const runFailures = (spec) => {
   spec.suite('Run a few failing tests', () => {
     itAction.failure(spec);
