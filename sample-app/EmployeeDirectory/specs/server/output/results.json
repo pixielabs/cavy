@@ -1,0 +1,87 @@
+{
+  "tests": {
+    "suites": {
+      "Use secret component to enter text into search box": {
+        "Use secret component to enter string in search bar": {
+          "expected": "PASS",
+          "start": "2017-03-18T00:00:15.896Z",
+          "finish": "2017-03-18T00:00:18.246Z",
+          "duration": 2.35,
+          "actual": "PASS"
+        }
+      },
+      "Verify Anup and search Amy": {
+        "Clear searchbar text input": {
+          "expected": "PASS",
+          "start": "2017-03-18T00:00:18.283Z",
+          "finish": "2017-03-18T00:00:18.523Z",
+          "duration": 0.24,
+          "actual": "PASS"
+        },
+        "Employee list item exists": {
+          "expected": "PASS",
+          "start": "2017-03-18T00:00:18.525Z",
+          "finish": "2017-03-18T00:00:18.649Z",
+          "duration": 0.124,
+          "actual": "PASS"
+        },
+        "Listing the employees": {
+          "expected": "PASS",
+          "start": "2017-03-18T00:00:18.651Z",
+          "finish": "2017-03-18T00:00:19.604Z",
+          "duration": 0.953,
+          "actual": "PASS"
+        },
+        "Clear search bar": {
+          "expected": "PASS",
+          "start": "2017-03-18T00:00:19.605Z",
+          "finish": "2017-03-18T00:00:20.414Z",
+          "duration": 0.809,
+          "actual": "PASS"
+        }
+      },
+      "Search Amy and verify contact button exists": {
+        "Employee list item exists": {
+          "expected": "PASS",
+          "start": "2017-03-18T00:00:20.460Z",
+          "finish": "2017-03-18T00:00:22.417Z",
+          "duration": 1.957,
+          "actual": "PASS"
+        }
+      },
+      "Use secret component to continue testing past OS alert": {
+        "Use secret component to continue testing past OS alert": {
+          "expected": "PASS",
+          "start": "2017-03-18T00:00:22.446Z",
+          "finish": "2017-03-18T00:00:23.411Z",
+          "duration": 0.965,
+          "actual": "PASS"
+        }
+      },
+      "Run a few failing tests": {
+        "Clear searchbar text input": {
+          "expected": "FAIL",
+          "start": "2017-03-18T00:00:23.432Z",
+          "finish": "2017-03-18T00:00:24.484Z",
+          "duration": 1.052,
+          "actual": "FAIL",
+          "error": "Could not find component with identifier FooBar.Baz"
+        },
+        "pause test execution": {
+          "expected": "PASS",
+          "start": "2017-03-18T00:00:24.487Z",
+          "finish": "2017-03-18T00:00:25.496Z",
+          "duration": 1.009,
+          "actual": "PASS"
+        }
+      }
+    }
+  },
+  "interrupted": false,
+  "path_delimiter": "/",
+  "version": 3,
+  "seconds_since_epoch": "2017-03-18T00:00:25.523Z",
+  "num_failures_by_type": {
+    "Could not find component with identifier FooBar.Baz": 1
+  }
+}
