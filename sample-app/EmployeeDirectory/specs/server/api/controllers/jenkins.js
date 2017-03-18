@@ -1,10 +1,8 @@
 var fetch = require('node-fetch');
+var fs = require('fs');
 var jsonfile = require('jsonfile');
 var mkdirp = require('mkdirp');
 var path = require('path');
-
-var results = {};
-var outputFileName = '';
 
 function handleFailure(failure) {
   console.log(failure);
@@ -54,13 +52,56 @@ function postTestCompleteWebhook(params) {
     });
 }
 
-function writeReport(reportJSON, outputFilePath, webhookCallback = false, jsonFileOptions = { spaces: 2 }) {
-  mkdirp(path.dirname(outputFilePath), err => {
+function testCaseToXML(suiteName, testName, testCase) {
+  var passed = (testCase.expected == testCase.actual);
+  var xml = '    <testcase classname="' + suiteName + '" name="' + testName + '"';
+
+  if (passed) {
+    xml += '/>\n';
+  } else {
+    xml += '>\n      <failure message="Expected ' + testCase.expected +
+      ' but got ' + testCase.actual + '">' + testCase.error + '</failure>\n';
+    xml += '    </testcase>\n';
+  }
+
+  return xml;
+}
+
+function testSuiteToXML(suiteName, suite) {
+  var numTests = Object.keys(suite).length;
+  var xml = '  <testsuite tests="' + numTests.toString() + '">\n';
+  for (var testName in suite) {
+    xml += testCaseToXML(suiteName, testName, suite[testName]);
+  }
+  xml += '  </testsuite>\n';
+  return xml;
+}
+
+function jsonToXUnit(results) {
+  var xml = '<?xml version="1.0" encoding="UTF-8"?>\n<testsuites>\n';
+
+  for (var suiteName in results.tests.suites) {
+    xml += testSuiteToXML(suiteName, results.tests.suites[suiteName]);
+  }
+
+  xml += '</testsuites>\n';
+  return xml;
+}
+
+// type='xml' => junit report format for use with jenkins
+// type='json' => chromium json report format
+
+function writeReport(report, outputDir, type='xml', webhookCallback=false, jsonFileOptions={spaces: 2}) {
+  mkdirp(outputDir, err => {
     if (err) {
-      return console.log('Error creating path ' + path.dirname(outputFilePath) + '. Reason: ' + err);
+      return console.log('Error creating path ' + outputDir + '. Reason: ' + err);
     }
   });
-  jsonfile.writeFile(outputFilePath, reportJSON, jsonFileOptions, err => {
+
+  var filename = 'results.' + type;
+  var outputFilePath = path.join(outputDir, filename);
+
+  var err_handler = (err => {
     if (err) {
       return console.log('Error writing test results to file: ' + err);
     } else {
@@ -71,15 +112,32 @@ function writeReport(reportJSON, outputFilePath, webhookCallback = false, jsonFi
       }
     }
   });
+
+  if (type == 'json') {
+    jsonfile.writeFile(outputFilePath, report, jsonFileOptions, err_handler);
+  } else {
+    fs.writeFile(outputFilePath, report, err_handler);
+  }
 }
+
+const reporter = 'json';
+// reporter='xml' => junit report format for use with jenkins
+// reporter='json' => chromium json report format
 
 module.exports = {
   index: (req, res) => {
-    results = {};
-    outputFileName = 'testResults_' + getFormattedDate() + '.json';
-    results = Object.assign({}, req.body.testResult);
+    var results = Object.assign({}, req.body.testResult);
     console.log(results);
-    writeReport(results, './specs/server/output/' + outputFileName);
+    var outputDir = './specs/server/output/';
+    switch (reporter) {
+    case 'xml':
+      var xunit = jsonToXUnit(results);
+      writeReport(xunit, outputDir, 'xml');
+      break;
+    case 'json':
+      writeReport(results, outputDir, 'json');
+      break;
+    }
     return res.send('Results recorded.');
   },
   webhook: (req, res) => {
