@@ -3,7 +3,8 @@ import {Navigator, Text, TouchableOpacity, Image, StyleSheet} from 'react-native
 import EmployeeList from './EmployeeList';
 import EmployeeDetails from './EmployeeDetails';
 
-import { hook } from 'cavy';
+import {testHook} from './helpers/cavy.js';
+import GLOBAL from './helpers/globals.js';
 
 class EmployeeDirectoryApp extends Component {
 
@@ -29,7 +30,9 @@ class EmployeeDirectoryApp extends Component {
                   return null;
                 } else {
                   return (
-                    <TouchableOpacity onPress={() => navigator.pop()}>
+                    <TouchableOpacity 
+                      ref={GLOBAL.TEST_ENABLED ? this.props.generateTestHook('NavBar.LeftButton') : 'LeftButton'}
+                      onPress={() => navigator.pop()}>
                       <Image source={require('./assets/back.png')} style={styles.backButton} />
                     </TouchableOpacity>
                   );
@@ -50,7 +53,7 @@ class EmployeeDirectoryApp extends Component {
   }
 }
 
-const TestableApp = hook(EmployeeDirectoryApp);
+const TestableApp = testHook(EmployeeDirectoryApp);
 export default TestableApp;
 
 const styles = StyleSheet.create({

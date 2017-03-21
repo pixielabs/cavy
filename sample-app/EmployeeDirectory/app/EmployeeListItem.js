@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableHighlight, StyleSheet } from 'react-native';
 
-import { hook } from 'cavy';
+import {testHook} from './helpers/cavy.js';
+import GLOBAL from './helpers/globals.js';
 
 class EmployeeListItem extends Component {
 
@@ -10,12 +11,14 @@ class EmployeeListItem extends Component {
   }
 
   render() {
+    const { generateTestHook, data } = this.props;
+
     return (
-      <TouchableHighlight ref={this.props.generateTestHook(`EmployeeListItem.${this.props.data.firstName}${this.props.data.lastName}`)} onPress={this.showDetails.bind(this)} underlayColor={'#EEEEEE'}>
+      <TouchableHighlight ref={GLOBAL.TEST_ENABLED ? generateTestHook(`EmployeeListItem.${data.firstName}${data.lastName}`): (`${data.firstName}${data.lastName}`)} onPress={this.showDetails.bind(this)} underlayColor={'#EEEEEE'}>
         <View style={styles.container}>
-          <Image source={{uri: this.props.data.picture}} style={styles.picture} />
+          <Image source={{uri: data.picture}} style={styles.picture} />
           <View>
-            <Text>{this.props.data.firstName} {this.props.data.lastName}</Text>
+            <Text>{data.firstName} {data.lastName}</Text>
             <Text style={styles.title}>{this.props.data.title}</Text>
           </View>
         </View>
@@ -24,7 +27,7 @@ class EmployeeListItem extends Component {
   }
 }
 
-export default hook(EmployeeListItem);
+export default testHook(EmployeeListItem);
 
 const styles = StyleSheet.create({
   container: {

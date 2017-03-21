@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 
-import { hook } from 'cavy';
+import { testHook } from './helpers/cavy.js';
+import GLOBAL from './helpers/globals.js';
 
 class SearchBar extends Component {
   constructor() {
@@ -20,7 +21,7 @@ class SearchBar extends Component {
     return (
       <View style={styles.container}>
         <TextInput
-          ref={this.props.generateTestHook('SearchBar.TextInput')}
+          ref={GLOBAL.TEST_ENABLED ? this.props.generateTestHook('SearchBar.TextInput') : 'TextInput'}
           style={styles.input}
           placeholder="Search"
           onChangeText={(value) => this._onChangeText(value)}
@@ -31,7 +32,7 @@ class SearchBar extends Component {
   }
 }
 
-export default hook(SearchBar);
+export default testHook(SearchBar);
 
 const styles = StyleSheet.create({
   container: {
