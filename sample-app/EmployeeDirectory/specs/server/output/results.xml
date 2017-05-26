@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite tests="1">
+    <testcase classname="Use secret component to enter text into search box" name="Use secret component to enter string in search bar"/>
+  </testsuite>
+  <testsuite tests="4">
+    <testcase classname="Verify Anup and search Amy" name="Clear searchbar text input"/>
+    <testcase classname="Verify Anup and search Amy" name="Employee list item exists"/>
+    <testcase classname="Verify Anup and search Amy" name="Listing the employees"/>
+    <testcase classname="Verify Anup and search Amy" name="Clear search bar"/>
+  </testsuite>
+  <testsuite tests="1">
+    <testcase classname="Search Amy and verify contact button exists" name="Employee list item exists"/>
+  </testsuite>
+  <testsuite tests="1">
+    <testcase classname="Use secret component to continue testing past OS alert" name="Use secret component to continue testing past OS alert"/>
+  </testsuite>
+  <testsuite tests="2">
+    <testcase classname="Run a few failing tests" name="Clear searchbar text input"/>
+    <testcase classname="Run a few failing tests" name="pause test execution"/>
+  </testsuite>
+</testsuites>

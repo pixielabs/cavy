@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {View, Text, Image, StyleSheet, TouchableOpacity, Linking} from 'react-native';
 
-import { hook } from 'cavy';
+import {testHook} from './helpers/cavy.js';
+import GLOBAL from './helpers/globals.js';
 
-class ActionBar extends Component {
+class ActionBar extends PureComponent {
 
   callNumber() {
     this.openURL('tel:' + this.props.mobilePhone);
@@ -30,7 +31,7 @@ class ActionBar extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity ref={this.props.generateTestHook('ActionBar.EmailButton')} onPress={this.sendMail.bind(this)} style={styles.action}>
+        <TouchableOpacity ref={GLOBAL.TEST_ENABLED ? this.props.generateTestHook('ActionBar.EmailButton') : 'EmailButton'} onPress={() => this.sendMail} style={styles.action}>
           <Image source={require('./assets/email.png')} style={styles.icon} />
           <Text style={styles.actionText}>email</Text>
         </TouchableOpacity>
@@ -47,7 +48,7 @@ class ActionBar extends Component {
   }
 }
 
-export default hook(ActionBar);
+export default testHook(ActionBar);
 
 const styles = StyleSheet.create({
   container: {

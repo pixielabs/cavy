@@ -1,14 +1,16 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 
-import { hook } from 'cavy';
+import GLOBAL from './helpers/globals.js';
+import { testHook } from './helpers/cavy.js';
+import { SecretSearch } from '../specs/itTestComponents.js';
 
-class SearchBar extends Component {
+class SearchBar extends PureComponent {
   constructor() {
     super();
     this.state = {
       value: ''
-    }
+    };
   }
 
   _onChangeText(value) {
@@ -16,22 +18,28 @@ class SearchBar extends Component {
     this.props.onChange(value);
   }
 
+  _onSecretSearch() {
+    this.setState({value: 'foobar SECRET SEARCH'});
+    this.props.onChange('foobar SECRET SEARCH');
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <TextInput
-          ref={this.props.generateTestHook('SearchBar.TextInput')}
+          ref={GLOBAL.TEST_ENABLED ? this.props.generateTestHook('SearchBar.TextInput') : 'textinput'}
           style={styles.input}
           placeholder="Search"
           onChangeText={(value) => this._onChangeText(value)}
           value={this.state.value}
         />
+        {GLOBAL.TEST_ENABLED ? <SecretSearch onSecretSearch={() => this._onSecretSearch()} generateTestHook={this.props.generateTestHook} /> : null}
       </View>
-    )
+    );
   }
 }
 
-export default hook(SearchBar);
+export default testHook(SearchBar);
 
 const styles = StyleSheet.create({
   container: {

@@ -20,6 +20,14 @@ import {
 // waitTime          - An integer representing the time in milliseconds that
 //                     the testing framework should wait for the function
 //                     findComponent() to return the 'hooked' component.
+// testStartDelay    - Optional pause before test execution begins (ms)
+// consoleLog        - Optional/tristate: determine level of console feedback
+//                         false: no console.log statements
+//                         true: some console.log statements
+//                         'verbose': detailed console.log statements  
+// reporter          - Optional select reporter formatting for test report output
+// notifier          - Optional pass notifier parameters to call webhook on test completion
+// reRender          - Optional re-render component after test spec completion
 // clearAsyncStorage - A boolean to determine whether to clear AsyncStorage
 //                     between each test. Defaults to `false`.
 //
@@ -42,12 +50,13 @@ import {
 //       );
 //     }
 //   }
+
 export default class Tester extends Component {
 
   getChildContext() {
     return {
       testHooks: this.testHookStore
-    }
+    };
   }
 
   constructor(props, context) {
@@ -63,7 +72,7 @@ export default class Tester extends Component {
   }
 
   async runTests() {
-    scope = new TestScope(this, this.props.waitTime);
+    let scope = new TestScope(this, this.props.waitTime, this.props.testStartDelay, this.props.consoleLog, this.props.reporter, this.props.notifier, this.props.reRender);
     for (var i = 0; i < this.props.specs.length; i++) {
       await this.props.specs[i](scope);
     }
@@ -98,14 +107,20 @@ Tester.propTypes = {
   store: PropTypes.instanceOf(TestHookStore),
   specs: PropTypes.arrayOf(PropTypes.func),
   waitTime: PropTypes.number,
-  clearAsyncStorage: PropTypes.bool
+  clearAsyncStorage: PropTypes.bool,
+  testStartDelay: PropTypes.number,
+  consoleLog: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  reporter: PropTypes.string,
+  notifier: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
+  reRender: PropTypes.bool,
+  children: PropTypes.any
 };
 
 Tester.childContextTypes = {
   testHooks: PropTypes.instanceOf(TestHookStore)
-}
+};
 
 Tester.defaultProps = {
   waitTime: 2000,
   clearAsyncStorage: false
-}
+};

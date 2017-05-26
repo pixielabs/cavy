@@ -1,0 +1,78 @@
+{
+  "tests": {
+    "suites": {
+      "Verify Anup and search Amy": {
+        "Clear searchbar text input": {
+          "expected": "PASS",
+          "start": "2017-03-14T18:42:11.711Z",
+          "finish": "2017-03-14T18:42:12.023Z",
+          "duration": 0.312,
+          "actual": "PASS"
+        },
+        "Employee list item exists": {
+          "expected": "PASS",
+          "start": "2017-03-14T18:42:12.070Z",
+          "finish": "2017-03-14T18:42:12.205Z",
+          "duration": 0.135,
+          "actual": "PASS"
+        },
+        "Listing the employees": {
+          "expected": "PASS",
+          "start": "2017-03-14T18:42:12.230Z",
+          "finish": "2017-03-14T18:42:13.162Z",
+          "duration": 0.932,
+          "actual": "PASS"
+        },
+        "Clear search bar": {
+          "expected": "PASS",
+          "start": "2017-03-14T18:42:13.178Z",
+          "finish": "2017-03-14T18:42:13.960Z",
+          "duration": 0.782,
+          "actual": "PASS"
+        }
+      },
+      "Search Amy and verify contact button exists": {
+        "Employee list item exists": {
+          "expected": "PASS",
+          "start": "2017-03-14T18:42:13.978Z",
+          "finish": "2017-03-14T18:42:15.924Z",
+          "duration": 1.946,
+          "actual": "PASS"
+        }
+      },
+      "Use secret component to continue testing past OS alert": {
+        "Use secret component to continue testing past OS alert": {
+          "expected": "PASS",
+          "start": "2017-03-14T18:42:15.947Z",
+          "finish": "2017-03-14T18:42:16.907Z",
+          "duration": 0.96,
+          "actual": "PASS"
+        }
+      },
+      "Run a few failing tests": {
+        "Clear searchbar text input": {
+          "expected": "FAIL",
+          "start": "2017-03-14T18:42:16.933Z",
+          "finish": "2017-03-14T18:42:18.050Z",
+          "duration": 1.117,
+          "actual": "FAIL",
+          "error": "Could not find component with identifier FooBar.Baz"
+        },
+        "pause test execution": {
+          "expected": "PASS",
+          "start": "2017-03-14T18:42:18.088Z",
+          "finish": "2017-03-14T18:42:19.142Z",
+          "duration": 1.054,
+          "actual": "PASS"
+        }
+      }
+    }
+  },
+  "interrupted": false,
+  "path_delimiter": "/",
+  "version": 3,
+  "seconds_since_epoch": "2017-03-14T18:42:19.165Z",
+  "num_failures_by_type": {
+    "Could not find component with identifier FooBar.Baz": 1
+  }
+}

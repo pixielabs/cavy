@@ -38,7 +38,7 @@ export default class EmployeeDetails extends Component {
           <ListView style={styles.list}
                     dataSource={this.state.dataSource}
                     enableEmptySections={true}
-                    renderRow={(data) => <EmployeeListItem navigator={this.props.navigator} data={data} />}
+                    renderRow={(data) => <EmployeeListItem navigator={this.props.navigator} data={data} directReports={true} />}
                     renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
           />;
       } else {

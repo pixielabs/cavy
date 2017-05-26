@@ -1,10 +1,14 @@
-import React, {Component} from 'react';
-import {View, ListView, StyleSheet} from 'react-native';
+import React, {PureComponent, PropTypes} from 'react';
+import {View, ListView, StyleSheet, Alert} from 'react-native';
 import SearchBar from './SearchBar';
 import EmployeeListItem from './EmployeeListItem';
 import * as employeeService from './services/employee-service-mock';
 
-export default class EmployeeList extends Component {
+import GLOBAL from './helpers/globals.js';
+import {testHook} from './helpers/cavy.js';
+import { SecretShowDetails } from '../specs/itTestComponents.js';
+
+class _EmployeeList extends PureComponent {
 
   constructor(props) {
     super(props);
@@ -14,9 +18,12 @@ export default class EmployeeList extends Component {
         dataSource: this.state.dataSource.cloneWithRows(employees)
       });
     });
+
+    this.search = this._search.bind(this);
+    this.onShowDetails = this._onShowDetails.bind(this);
   }
 
-  search(key) {
+  _search(key) {
     employeeService.findByName(key).then(employees => {
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(employees)
@@ -24,18 +31,51 @@ export default class EmployeeList extends Component {
     });
   }
 
+  _onSecretShowDetails(data) {
+    this.props.navigator.push({name: 'details', data: data});
+  }
+
+  _onShowDetails(data) {
+    if (data.firstName === 'James') {
+      Alert.alert(
+        'You can\'t get past this Alert with Cavy!',
+        'You need to use a secret test hook.',
+        [
+          {text: 'Cancel', style: 'cancel'},
+          {text: 'OK', onPress: () => {
+            this.props.navigator.push({name: 'details', data: data});
+          }},
+        ]
+      );
+    } else {
+      this.props.navigator.push({name: 'details', data: data});
+    }
+  }
+
   render() {
+    const {navigator, generateTestHook} = this.props;
+
     return (
-      <ListView style={styles.container}
-                dataSource={this.state.dataSource}
-                enableEmptySections={true}
-                renderRow={(data) => <EmployeeListItem navigator={this.props.navigator} data={data} />}
-                renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
-                renderHeader={() => <SearchBar onChange={this.search.bind(this)} />}
-      />
+      <View>
+        <ListView style={styles.container}
+          dataSource={this.state.dataSource}
+          enableEmptySections={true}
+          renderRow={(data) => <EmployeeListItem navigator={navigator} data={data} onShowDetails={(data) => this.onShowDetails(data)} generateTestHook={generateTestHook} />}
+          renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
+          renderHeader={() => <SearchBar onChange={this.search} />}
+        />
+        {GLOBAL.TEST_ENABLED ? <SecretShowDetails onSecretShowDetails={(data) => this._onSecretShowDetails(data)} generateTestHook={this.props.generateTestHook} /> : null}
+      </View>
     );
   }
 }
+
+_EmployeeList.PropTypes = {
+  navigator: PropTypes.object
+};
+
+const EmployeeList = testHook(_EmployeeList);
+export default EmployeeList;
 
 const styles = StyleSheet.create({
   container: {

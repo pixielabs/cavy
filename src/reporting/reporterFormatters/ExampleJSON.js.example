@@ -1,0 +1,39 @@
+const {keys, values, has} = require('lodash');
+
+// Example JSON Test Reporter
+// 
+// Standard class example for Test Reporting
+
+class ExampleJSONTestReporting {
+  constructor() {
+    this.reportJSON = {};
+    this.reportStatistics = {};
+  }
+
+  set testsStart(formattedTime) {
+    this.testStart = formattedTime;
+  }
+
+  set testsFinish(formattedTime) {
+    this.testFinish = formattedTime;
+  }
+
+  addTestResults(testResults) {
+    this.reportJSON.suites = {};
+    this.reportJSON.suites = testResults;
+  }
+
+  _generateTestStatistics() {
+    // define test statistics reporting functions here
+  }
+
+  generateReport(foo='bar') {
+    return {
+      // formatted test output here
+    };
+  }
+}
+
+module.exports = {
+ ExampleJSONTestReporting: ExampleJSONTestReporting
+};

@@ -1,0 +1,44 @@
+globals:
+  __DEV__: true
+env:
+  browser: true
+  es6: true
+  node: true
+extends:
+- eslint:recommended
+- plugin:react/recommended
+- plugin:flowtype/recommended
+parser: babel-eslint
+parserOptions:
+  ecmaFeatures:
+    jsx: true
+    experimentalObjectRestSpread: true
+  ecmaVersion: 7
+  sourceType: module
+plugins:
+- react
+- react-native
+- babel
+- flowtype
+rules:
+  react-native/no-unused-styles: 2
+  react-native/split-platform-components: 2
+  react-native/no-inline-styles: 0
+  react-native/no-color-literals: 2
+  react/display-name: 1
+  react/prop-types: 2
+  indent:
+  - error
+  - 2
+  linebreak-style:
+  - error
+  - unix
+  semi:
+  - error
+  - always
+  no-console:
+  - 0
+  no-constant-condition:
+  - 0
+  flowtype/space-before-type-colon: 0
+
