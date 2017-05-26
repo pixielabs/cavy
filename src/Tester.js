@@ -16,32 +16,47 @@ import {
 // re-rendering with a new key after each test case.
 //
 // store             - An instance of TestHookStore.
-// specs             - An array of spec functions.
+// suites            - An array of test suites.
 // waitTime          - An integer representing the time in milliseconds that
 //                     the testing framework should wait for the function
 //                     findComponent() to return the 'hooked' component.
 // clearAsyncStorage - A boolean to determine whether to clear AsyncStorage
 //                     between each test. Defaults to `false`.
-//
+// testStartDelay    - Optional pause before test execution begins (ms)
+// consoleLog        - Optional/tristate: determine level of console feedback
+//                         false: no console.log statements
+//                         true: some console.log statements
+//                         'verbose': detailed console.log statements
 // Example
 //
 //   import { Tester, TestHookStore } from 'cavy';
+//   import GLOBAL from './app/helpers/globals.js';
 //
-//   import MyFeatureSpec from './specs/MyFeatureSpec';
-//   import OtherFeatureSpec from './specs/OtherFeatureSpec';
-//
-//   const testHookStore = new TestHookStore();
+//   if (GLOBAL.TEST_ENABLED) {
+//     var testHookStore = new TestHookStore();
+//     var testSuites = require('./specs/itSuites.js');
+//     var testSuitesArray = [TestSuites.myFeatureSpec, TestSuites.myOtherFeatureSpec]  
+//   }
 //
 //   export default class AppWrapper extends React.Component {
 //     // ....
 //     render() {
-//       return (
-//         <Tester specs={[MyFeatureSpec, OtherFeatureSpec]} store={testHookStore}>
-//           <App />
-//         </Tester>
-//       );
+//       if (GLOBAL.TEST_ENABLED) {
+//         return (
+//           <Tester 
+//             suites={testSuitesArray} 
+//             store={testHookStore}
+//             waitTime={2000}
+//             testStartDelay={1000}
+//             consoleLog={true} // {false}, {true}, 'verbose'
+//           >
+//              <App />
+//           </Tester>
+//         );
+//       } else {
+//         return (<App />);
+//       }
 //     }
-//   }
 export default class Tester extends Component {
 
   getChildContext() {
@@ -63,9 +78,18 @@ export default class Tester extends Component {
   }
 
   async runTests() {
-    scope = new TestScope(this, this.props.waitTime);
-    for (var i = 0; i < this.props.specs.length; i++) {
-      await this.props.specs[i](scope);
+    const {suites, waitTime, testStartDelay, consoleLog} = this.props;
+
+    let testOptions = {
+      waitTime: waitTime,
+      testStartDelay: testStartDelay,
+      consoleLog: consoleLog
+    };
+
+    scope = new TestScope(this, testOptions);
+    
+    for (var i = 0; i < suites.length; i++) {
+      await suites[i](scope);
     }
     scope.run();
   }
@@ -91,14 +115,15 @@ export default class Tester extends Component {
       </View>
     );
   }
-
 }
 
 Tester.propTypes = {
   store: PropTypes.instanceOf(TestHookStore),
-  specs: PropTypes.arrayOf(PropTypes.func),
+  suites: PropTypes.arrayOf(PropTypes.func),
   waitTime: PropTypes.number,
-  clearAsyncStorage: PropTypes.bool
+  clearAsyncStorage: PropTypes.bool,
+  testStartDelay: PropTypes.number,
+  consoleLog: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
 };
 
 Tester.childContextTypes = {
@@ -107,5 +132,7 @@ Tester.childContextTypes = {
 
 Tester.defaultProps = {
   waitTime: 2000,
-  clearAsyncStorage: false
+  clearAsyncStorage: false,
+  testStartDelay: false,
+  consoleLog: true
 }
