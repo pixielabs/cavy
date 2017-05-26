@@ -26,6 +26,9 @@ export default class TestScope {
   // after each test case by changing the component key to force React to
   // re-render the entire component tree.
   async run() {
+    const start = new Date();
+    console.log(`Cavy test suite started at ${start}.`);
+
     for (let i = 0; i < this.testCases.length; i++) {
       let {description, f} = this.testCases[i];
       try {
@@ -37,6 +40,10 @@ export default class TestScope {
       await this.component.clearAsync();
       this.component.reRender();
     }
+
+    const stop = new Date();
+    const duration = (stop - start) / 1000;
+    console.log(`Cavy test suite stopped at ${stop}, duration: ${duration} seconds.`);
   }
 
   // Public: Find a component by its test hook identifier. Waits
