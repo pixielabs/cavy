@@ -12,7 +12,7 @@ class ComponentNotFoundError extends Error {
 
 export default class TestScope {
 
-  constructor(component, waitTime, testStartDelay) {
+  constructor(component, waitTime, startDelay) {
     this.component = component;
     this.testHooks = component.testHookStore;
 
@@ -30,7 +30,7 @@ export default class TestScope {
   // re-render the entire component tree.
   async run() {
     if (this.startDelay) {
-      this.pause(this.startDelay)
+      await this.pause(this.startDelay);
     }
 
     for (let i = 0; i < this.testCases.length; i++) {
