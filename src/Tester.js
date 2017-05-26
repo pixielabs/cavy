@@ -20,6 +20,8 @@ import {
 // waitTime          - An integer representing the time in milliseconds that
 //                     the testing framework should wait for the function
 //                     findComponent() to return the 'hooked' component.
+// startDelay        - An integer representing the time in milliseconds before
+//                     before test execution begins.
 // clearAsyncStorage - A boolean to determine whether to clear AsyncStorage
 //                     between each test. Defaults to `false`.
 //
@@ -63,7 +65,7 @@ export default class Tester extends Component {
   }
 
   async runTests() {
-    scope = new TestScope(this, this.props.waitTime);
+    scope = new TestScope(this, this.props.waitTime, this.props.startDelay);
     for (var i = 0; i < this.props.specs.length; i++) {
       await this.props.specs[i](scope);
     }
@@ -75,7 +77,7 @@ export default class Tester extends Component {
   }
 
   async clearAsync() {
-    if (this.props.clearAsyncStorage) { 
+    if (this.props.clearAsyncStorage) {
       try {
         await AsyncStorage.clear();
       } catch(e) {
@@ -98,6 +100,7 @@ Tester.propTypes = {
   store: PropTypes.instanceOf(TestHookStore),
   specs: PropTypes.arrayOf(PropTypes.func),
   waitTime: PropTypes.number,
+  startDelay: PropTypes.number,
   clearAsyncStorage: PropTypes.bool
 };
 
@@ -107,5 +110,6 @@ Tester.childContextTypes = {
 
 Tester.defaultProps = {
   waitTime: 2000,
+  startDelay: 0,
   clearAsyncStorage: false
 }
