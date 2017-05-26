@@ -21,7 +21,7 @@ import {
 //                     the testing framework should wait for the function
 //                     findComponent() to return the 'hooked' component.
 // startDelay        - An integer representing the time in milliseconds before
-//                     before test execution begins.
+//                     test execution begins.
 // clearAsyncStorage - A boolean to determine whether to clear AsyncStorage
 //                     between each test. Defaults to `false`.
 //
