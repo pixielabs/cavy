@@ -1,3 +1,9 @@
+# 0.4.0
+
+- Add optional `startDelay` property to `<Tester>` which delays the test suite
+  from beginning once the component is mounted.
+- Added a start and end console log line.
+
 # 0.3.1
 
 - Tweak to the test failure message.

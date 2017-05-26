@@ -133,6 +133,9 @@ Optional props:
                       wait to find specified 'hooked' components.
                       Set to `2000` (2 seconds) by default.
 
+`startDelay`        - Integer, the time in milliseconds before test execution
+                      begins. Set to `0` by default.
+
 `clearAsyncStorage` - Boolean, set this to `true` to clear AsyncStorage between
                       each test e.g. to remove a logged in user.
                       Set to `false` by default.
