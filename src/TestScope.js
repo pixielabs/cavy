@@ -12,11 +12,14 @@ class ComponentNotFoundError extends Error {
 
 export default class TestScope {
 
-  constructor(component, waitTime) {
+  constructor(component, waitTime, startDelay) {
     this.component = component;
     this.testHooks = component.testHookStore;
+
     this.testCases = [];
+
     this.waitTime = waitTime;
+    this.startDelay = startDelay;
 
     this.run.bind(this);
   }
@@ -26,6 +29,10 @@ export default class TestScope {
   // after each test case by changing the component key to force React to
   // re-render the entire component tree.
   async run() {
+    if (this.startDelay) {
+      await this.pause(this.startDelay);
+    }
+    
     const start = new Date();
     console.log(`Cavy test suite started at ${start}.`);
 
