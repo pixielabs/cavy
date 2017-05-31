@@ -4,6 +4,8 @@
   from beginning once the component is mounted.
 - Added a start and end console log line.
 
+With thanks to [Tyler Pate](https://github.com/TGPSKI) for both of these features!
+
 # 0.3.1
 
 - Tweak to the test failure message.
