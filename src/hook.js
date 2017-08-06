@@ -74,5 +74,10 @@ export default function hook(WrappedComponent) {
     testHooks: PropTypes.instanceOf(TestHookStore)
   }
 
+  // Copying static properties
+  Object.getOwnPropertyNames(WrappedComponent)
+    .filter(prop => typeof WrappedComponent[prop] === "function")
+    .forEach(sProp => (wrapperComponent[sProp] = WrappedComponent[sProp]));
+
   return wrapperComponent;
 }
