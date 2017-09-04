@@ -1,4 +1,5 @@
-import React, { createClass } from 'react';
+import React from 'react';
+import createReactClass from 'create-react-class';
 
 // Public: Wrap a stateless (purely functional) component in a non-stateless
 // component so that a `ref` can be added.
@@ -42,5 +43,5 @@ export default function wrap(statelessComponent) {
     return statelessComponent(this.props, this.context);
   };
 
-  return createClass(reactClass);
+  return createReactClass(reactClass);
 }

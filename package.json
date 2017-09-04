@@ -28,5 +28,9 @@
   "bugs": {
     "url": "https://github.com/pixielabs/cavy/issues"
   },
-  "homepage": "https://github.com/pixielabs/cavy#readme"
+  "homepage": "https://github.com/pixielabs/cavy#readme",
+  "dependencies": {
+    "prop-types": "^15.5.10",
+    "create-react-class": "^15.6.0"
+  }
 }
