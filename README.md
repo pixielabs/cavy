@@ -142,7 +142,6 @@ Optional props:
 
 ```javascript
 import React, { Component } from 'react';
-import { AppRegistry } from 'react-native';
 import { Tester, TestHookStore } from 'cavy';
 import AppSpec from './specs/AppSpec';
 import App from './app';
@@ -158,19 +157,21 @@ export default class AppWrapper extends Component {
     );
   }
 }
-
-AppRegistry.registerComponent('AppWrapper', () => AppWrapper);
 ```
 
 **Congratulations! You are now all set up to start testing your app with Cavy.**
 
-Your tests will run automatically when you run your app using either:
+Your tests will run automatically when you run your app.
 
-    $ react-native run-ios
+#### Apps that use native code
 
-or
+If you're not using [Create React Native App][crna], you'll need to register
+your `AppWrapper` as the main entry point with `AppRegistry` instead of your
+current `App` component:
 
-    $ react-native run-android
+```
+AppRegistry.registerComponent('AppWrapper', () => AppWrapper);
+```
 
 ## Available spec helpers
 
@@ -237,3 +238,5 @@ discuss possible alternatives!
 - Please try not to mess with the package.json, version, or history. If you
   want to have your own version, or is otherwise necessary, that is fine, but
   please isolate to its own commit so we can cherry-pick around it.
+
+[crna]: https://github.com/react-community/create-react-native-app
