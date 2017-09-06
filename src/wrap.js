@@ -1,4 +1,3 @@
-import React from 'react';
 import createReactClass from 'create-react-class';
 
 // Public: Wrap a stateless (purely functional) component in a non-stateless
