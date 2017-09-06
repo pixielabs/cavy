@@ -169,7 +169,7 @@ If you're not using [Create React Native App][crna], you'll need to register
 your `AppWrapper` as the main entry point with `AppRegistry` instead of your
 current `App` component:
 
-```
+```javascript
 AppRegistry.registerComponent('AppWrapper', () => AppWrapper);
 ```
 
