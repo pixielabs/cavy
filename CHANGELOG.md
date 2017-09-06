@@ -1,3 +1,11 @@
+# 0.4.1
+
+- Stop using deprecated `PropTypes` and `createClass`. Thanks
+  [Mohammed Abu-alsaad](https://github.com/mo-solnet)!
+- Fix for when using a wrapped component in a shallow render environment.
+  Thanks [Kye Bracey](https://github.com/Kynosaur)!
+- Updated documentation for Create React Native App / Expo.
+
 # 0.4.0
 
 - Add optional `startDelay` property to `<Tester>` which delays the test suite
