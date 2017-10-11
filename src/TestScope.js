@@ -21,7 +21,14 @@ export default class TestScope {
     this.waitTime = waitTime;
     this.startDelay = startDelay;
 
+    this.beforeAllFn = null;
+    this.afterAllFn = null;
     this.run.bind(this);
+  }
+
+  // taken from underscore.js
+  _isFunction = (obj) => {
+    return !!(obj && obj.constructor && obj.call && obj.apply);
   }
 
   // Internal: Synchronously run each test case one after the other, outputting
@@ -32,10 +39,13 @@ export default class TestScope {
     if (this.startDelay) {
       await this.pause(this.startDelay);
     }
-    
+
     const start = new Date();
     console.log(`Cavy test suite started at ${start}.`);
 
+    if (this.beforeAllFn && this._isFunction(this.beforeAllFn)) {
+      this.beforeAllFn.call(this);
+    }
     for (let i = 0; i < this.testCases.length; i++) {
       let {description, f} = this.testCases[i];
       try {
@@ -46,6 +56,10 @@ export default class TestScope {
       }
       await this.component.clearAsync();
       this.component.reRender();
+    }
+
+    if (this.afterAllFn && this._isFunction(this.afterAllFn)) {
+      this.afterAllFn.call(this);
     }
 
     const stop = new Date();
@@ -125,6 +139,14 @@ export default class TestScope {
   it(label, f) {
     const description = `${this.describeLabel}: ${label}`;
     this.testCases.push({description, f});
+  }
+
+  beforeAll(f) {
+    this.beforeAllFn = f;
+  }
+
+  afterAll(f) {
+    this.afterAllFn = f;
   }
 
   // Public: Fill in a `TextInput`-compatible component with a string value.
