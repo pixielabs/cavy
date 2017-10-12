@@ -16,19 +16,49 @@ export default class TestScope {
     this.component = component;
     this.testHooks = component.testHookStore;
 
-    this.testCases = [];
+    this.testSuites = {};
 
     this.waitTime = waitTime;
     this.startDelay = startDelay;
 
     this.beforeAllFn = null;
     this.afterAllFn = null;
+    this.beforeEachFn = null;
+    this.afterEachFn = null;
+
     this.run.bind(this);
   }
 
   // taken from underscore.js
   _isFunction = (obj) => {
     return !!(obj && obj.constructor && obj.call && obj.apply);
+  };
+
+  _executeTestSuite = async (testSuite) => {
+    if (testSuite.beforeAllFn && this._isFunction(testSuite.beforeAllFn)) {
+      testSuite.beforeAllFn.call(this);
+    }
+    for (let i = 0; i < testSuite.testCases.length; i++) {
+      let { description, f } = testSuite.testCases[i];
+      try {
+        if (testSuite.beforeEachFn && this._isFunction(testSuite.beforeEachFn)) {
+          testSuite.beforeEachFn.call(this);
+        }
+        await f.call(this);
+        if (testSuite.afterEachFn && this._isFunction(testSuite.afterEachFn)) {
+          testSuite.afterEachFn.call(this);
+        }
+        console.log(`${description}  ✅`);
+      } catch (e) {
+        console.warn(`${description}  ❌\n   ${e.message}`);
+      }
+      await this.component.clearAsync();
+      this.component.reRender();
+    }
+
+    if (testSuite.afterAllFn && this._isFunction(testSuite.afterAllFn)) {
+      testSuite.afterAllFn.call(this);
+    }
   }
 
   // Internal: Synchronously run each test case one after the other, outputting
@@ -43,25 +73,11 @@ export default class TestScope {
     const start = new Date();
     console.log(`Cavy test suite started at ${start}.`);
 
-    if (this.beforeAllFn && this._isFunction(this.beforeAllFn)) {
-      this.beforeAllFn.call(this);
-    }
-    for (let i = 0; i < this.testCases.length; i++) {
-      let {description, f} = this.testCases[i];
-      try {
-        await f.call(this);
-        console.log(`${description}  ✅`);
-      } catch (e) {
-        console.warn(`${description}  ❌\n   ${e.message}`);
+    for (var key in this.testSuites) {
+      if (this.testSuites.hasOwnProperty(key)) {
+        await this._executeTestSuite(this.testSuites[key])
       }
-      await this.component.clearAsync();
-      this.component.reRender();
     }
-
-    if (this.afterAllFn && this._isFunction(this.afterAllFn)) {
-      this.afterAllFn.call(this);
-    }
-
     const stop = new Date();
     const duration = (stop - start) / 1000;
     console.log(`Cavy test suite stopped at ${stop}, duration: ${duration} seconds.`);
@@ -126,6 +142,13 @@ export default class TestScope {
   // Returns undefined.
   describe(label, f) {
     this.describeLabel = label;
+    this.testSuites[label] = {
+      testCases: [],
+      beforeAllFn: null,
+      afterAllFn: null,
+      beforeEachFn: null,
+      afterAllFn: null,
+    };
     f.call(this);
   }
 
@@ -138,15 +161,23 @@ export default class TestScope {
   // See example above.
   it(label, f) {
     const description = `${this.describeLabel}: ${label}`;
-    this.testCases.push({description, f});
+    this.testSuites[this.describeLabel].testCases.push({description, f});
   }
 
   beforeAll(f) {
-    this.beforeAllFn = f;
+    this.testSuites[this.describeLabel].beforeAllFn = f;
   }
 
   afterAll(f) {
-    this.afterAllFn = f;
+    this.testSuites[this.describeLabel].afterAllFn = f;
+  }
+
+  beforeEach(f) {
+    this.testSuites[this.describeLabel].beforeEachFn = f;
+  }
+
+  afterEach(f) {
+    this.testSuites[this.describeLabel].afterEachFn = f;
   }
 
   // Public: Fill in a `TextInput`-compatible component with a string value.
