@@ -35,18 +35,26 @@ export default class TestScope {
   };
 
   _executeTestSuite = async (testSuite) => {
-    if (testSuite.beforeAllFn && this._isFunction(testSuite.beforeAllFn)) {
-      testSuite.beforeAllFn.call(this);
+    if (testSuite.beforeAllFunctions && testSuite.beforeAllFunctions.length > 0) {
+      for(let i = 0;i<testSuite.beforeAllFunctions.length;i++) {
+        await testSuite.beforeAllFunctions[i].call(this);
+      }
     }
     for (let i = 0; i < testSuite.testCases.length; i++) {
       let { description, f } = testSuite.testCases[i];
       try {
-        if (testSuite.beforeEachFn && this._isFunction(testSuite.beforeEachFn)) {
-          testSuite.beforeEachFn.call(this);
+        if (testSuite.beforeEachFunctions && testSuite.beforeEachFunctions.length > 0) {
+          for(let i = 0;i<testSuite.beforeEachFunctions.length;i++) {
+            await testSuite.beforeEachFunctions[i].call(this);
+          }
         }
+
         await f.call(this);
-        if (testSuite.afterEachFn && this._isFunction(testSuite.afterEachFn)) {
-          testSuite.afterEachFn.call(this);
+
+        if (testSuite.afterEachFunctions && testSuite.afterEachFunctions.length > 0) {
+          for(let i = 0;i<testSuite.afterEachFunctions.length;i++) {
+            await testSuite.afterEachFunctions[i].call(this);
+          }
         }
         console.log(`${description}  ✅`);
       } catch (e) {
@@ -56,8 +64,10 @@ export default class TestScope {
       this.component.reRender();
     }
 
-    if (testSuite.afterAllFn && this._isFunction(testSuite.afterAllFn)) {
-      testSuite.afterAllFn.call(this);
+    if (testSuite.afterAllFunctions && testSuite.afterAllFunctions.length > 0) {
+      for(let i = 0;i<testSuite.afterAllFunctions.length;i++) {
+        await testSuite.afterAllFunctions[i].call(this);
+      }
     }
   }
 
@@ -142,13 +152,15 @@ export default class TestScope {
   // Returns undefined.
   describe(label, f) {
     this.describeLabel = label;
-    this.testSuites[label] = {
-      testCases: [],
-      beforeAllFn: null,
-      afterAllFn: null,
-      beforeEachFn: null,
-      afterAllFn: null,
-    };
+    if (this.testSuites[label] == null) {
+      this.testSuites[label] = {
+        testCases: [],
+        beforeAllFunctions: [],
+        afterAllFunctions: [],
+        beforeEachFunctions: [],
+        afterAllFunctions: [],
+      };
+    }
     f.call(this);
   }
 
@@ -165,19 +177,19 @@ export default class TestScope {
   }
 
   beforeAll(f) {
-    this.testSuites[this.describeLabel].beforeAllFn = f;
+    this.testSuites[this.describeLabel].beforeAllFunctions.push(f);
   }
 
   afterAll(f) {
-    this.testSuites[this.describeLabel].afterAllFn = f;
+    this.testSuites[this.describeLabel].afterAllFunctions.push(f);
   }
 
   beforeEach(f) {
-    this.testSuites[this.describeLabel].beforeEachFn = f;
+    this.testSuites[this.describeLabel].beforeEachFunctions.push(f);
   }
 
   afterEach(f) {
-    this.testSuites[this.describeLabel].afterEachFn = f;
+    this.testSuites[this.describeLabel].afterEachFunctions.push(f);
   }
 
   // Public: Fill in a `TextInput`-compatible component with a string value.
