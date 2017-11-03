@@ -227,7 +227,7 @@ What that looks like specifically, we're not 100% sure yet. We're very happy to
 discuss possible alternatives!
 
 ## Contributing
-
+Before contributing, please read the [code of conduct](CODE_OF_CONDUCT.md).
 - Check out the latest master to make sure the feature hasn't been implemented
   or the bug hasn't been fixed yet.
 - Check out the issue tracker to make sure someone already hasn't requested it
