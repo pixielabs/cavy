@@ -7,6 +7,20 @@
 **Cavy** is a cross-platform integration test framework for React Native, by
 [Pixie Labs](http://pixielabs.io).
 
+## Table of Contents
+- [How does it work?](#how-does-it-work)
+  - [Where does it fit in?](#where-does-it-fit-in)
+  - [Cavy's Components](#cavys-components)
+- [Installation](#installation)
+- [Basic Usage](#basic-usage)
+  - [Hook up components for testing](#hook-up-components-for-testing)
+  - [Write your test cases](#write-your-test-cases)
+  - [Set up your test wrapper](#set-up-your-test-wrapper)
+  - [Apps That Use Native Code](#apps-that-use-native-code)
+- [Available spec helpers](#available-spec-helpers)
+- [FAQs](#faqs)
+- [Contributing](#contributing)
+
 ## How does it work?
 
 Cavy (ab)uses React `ref` generating functions to give you the ability to refer
@@ -31,7 +45,7 @@ of testing approaches available:
 Cavy fits in between shallow-render testing and testing within your native
 environment.
 
-### Cavy's components
+### Cavy's Components
 
 Cavy provides 3 tools to let you run integration tests:
 
