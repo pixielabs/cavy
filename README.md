@@ -1,6 +1,7 @@
 # Cavy
 
 [![npm version](https://badge.fury.io/js/cavy.svg)](https://badge.fury.io/js/cavy)
+![travis status](https://travis-ci.org/pixielabs/cavy.svg?branch=master)
 
 ![Cavy logo](https://cloud.githubusercontent.com/assets/126989/22546798/6cf18938-e936-11e6-933f-da756b9ee7b8.png)
 
