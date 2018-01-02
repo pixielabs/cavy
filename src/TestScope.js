@@ -30,44 +30,30 @@ export default class TestScope {
   }
 
   // taken from underscore.js
-  _isFunction = (obj) => {
+  static _isFunction = (obj) => {
     return !!(obj && obj.constructor && obj.call && obj.apply);
   };
 
   _executeTestSuite = async (testSuite) => {
-    if (testSuite.beforeAllFunctions && testSuite.beforeAllFunctions.length > 0) {
-      for(let i = 0;i<testSuite.beforeAllFunctions.length;i++) {
-        await testSuite.beforeAllFunctions[i].call(this);
-      }
-    }
     for (let i = 0; i < testSuite.testCases.length; i++) {
       let { description, f } = testSuite.testCases[i];
       try {
-        if (testSuite.beforeEachFunctions && testSuite.beforeEachFunctions.length > 0) {
-          for(let i = 0;i<testSuite.beforeEachFunctions.length;i++) {
-            await testSuite.beforeEachFunctions[i].call(this);
-          }
+        if (this.beforeEachFn && TestScope._isFunction(this.beforeEachFn)) {
+          await this.beforeEachFn.call(this);
         }
 
         await f.call(this);
 
-        if (testSuite.afterEachFunctions && testSuite.afterEachFunctions.length > 0) {
-          for(let i = 0;i<testSuite.afterEachFunctions.length;i++) {
-            await testSuite.afterEachFunctions[i].call(this);
-          }
-        }
         console.log(`${description}  ✅`);
       } catch (e) {
         console.warn(`${description}  ❌\n   ${e.message}`);
+      } finally {
+        if (this.afterEachFn && TestScope._isFunction(this.afterEachFn)) {
+          await this.afterEachFn.call(this);
+        }
       }
       await this.component.clearAsync();
       this.component.reRender();
-    }
-
-    if (testSuite.afterAllFunctions && testSuite.afterAllFunctions.length > 0) {
-      for(let i = 0;i<testSuite.afterAllFunctions.length;i++) {
-        await testSuite.afterAllFunctions[i].call(this);
-      }
     }
   }
 
@@ -83,11 +69,20 @@ export default class TestScope {
     const start = new Date();
     console.log(`Cavy test suite started at ${start}.`);
 
+    if (this.beforeAllFn && TestScope._isFunction(this.beforeAllFn)) {
+      await this.beforeAllFn.call(this);
+    }
+
     for (var key in this.testSuites) {
       if (this.testSuites.hasOwnProperty(key)) {
         await this._executeTestSuite(this.testSuites[key])
       }
     }
+
+    if (this.afterAllFn && TestScope._isFunction(this.afterAllFn)) {
+      await this.afterAllFn.call(this);
+    }
+
     const stop = new Date();
     const duration = (stop - start) / 1000;
     console.log(`Cavy test suite stopped at ${stop}, duration: ${duration} seconds.`);
@@ -155,10 +150,6 @@ export default class TestScope {
     if (this.testSuites[label] == null) {
       this.testSuites[label] = {
         testCases: [],
-        beforeAllFunctions: [],
-        afterAllFunctions: [],
-        beforeEachFunctions: [],
-        afterAllFunctions: [],
       };
     }
     f.call(this);
@@ -177,19 +168,19 @@ export default class TestScope {
   }
 
   beforeAll(f) {
-    this.testSuites[this.describeLabel].beforeAllFunctions.push(f);
+    this.beforeAllFn = f;
   }
 
   afterAll(f) {
-    this.testSuites[this.describeLabel].afterAllFunctions.push(f);
+    this.afterAllFn = f;
   }
 
   beforeEach(f) {
-    this.testSuites[this.describeLabel].beforeEachFunctions.push(f);
+    this.beforeEachFn = f;
   }
 
   afterEach(f) {
-    this.testSuites[this.describeLabel].afterEachFunctions.push(f);
+    this.afterEachFn = f;
   }
 
   // Public: Fill in a `TextInput`-compatible component with a string value.
