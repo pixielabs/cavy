@@ -1,0 +1,41 @@
+version: 2
+jobs:
+  build:
+
+    # Specify the Xcode version to use
+    macos:
+      xcode: "9.0"
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install React Native dependencies
+          command: brew install watchman
+
+      - run:
+          name: Install Node dependencies
+          command: npm i
+
+      - run:
+          name: Link local copy of cavy
+          command: npm link
+
+      - run:
+          name: Install command line interfaces
+          command: npm install -g cavy-cli react-native-cli
+
+      - run:
+          name: Install sample app dependencies
+          command: |
+            mv sample-app ~/
+            cd ~/sample-app/EmployeeDirectory
+            npm i
+            npm link cavy
+            cp rn-cli.config.js.example rn-cli.config.js
+
+      - run:
+          name: Build app and run tests
+          command: |
+            cd ~/sample-app/EmployeeDirectory
+            cavy run-ios
