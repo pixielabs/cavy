@@ -35,11 +35,11 @@ jobs:
 
       - run:
           name: Link local copy of cavy
-          command: npm link
+          command: sudo npm link
 
       - run:
           name: Install command line interfaces
-          command: npm install -g cavy-cli react-native-cli
+          command: sudo npm install -g cavy-cli react-native-cli
 
       - run:
           name: Install sample app dependencies
