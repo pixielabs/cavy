@@ -1,6 +1,62 @@
 version: 2
 jobs:
-  build:
+  android:
+    docker:
+      - image: circleci/android:api-23-node8-alpha
+
+    environment:
+      JVM_OPTS: -Xmx3200m
+
+    steps:
+      - checkout
+
+      # Inspired by
+      # <https://github.com/flyve-mdm/android-mdm-agent/blob/develop/.circleci/config.yml>
+      - run:
+          name: Setup emulator
+          command: sdkmanager "system-images;android-23;google_apis;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-23;google_apis;armeabi-v7a"
+
+      - run:
+          name: Launch emulator
+          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel on
+          background: true
+      - run:
+          name: Wait for emulator to boot
+          command: |
+            # wait for it to have booted
+            circle-android wait-for-boot
+            # unlock the emulator screen
+            sleep 30
+            adb shell input keyevent 82
+
+      - run:
+          name: Install Node dependencies
+          command: npm i
+
+      - run:
+          name: Link local copy of cavy
+          command: npm link
+
+      - run:
+          name: Install command line interfaces
+          command: npm install -g cavy-cli react-native-cli
+
+      - run:
+          name: Install sample app dependencies
+          command: |
+            mv sample-app ~/
+            cd ~/sample-app/EmployeeDirectory
+            npm i
+            npm link cavy
+            cp rn-cli.config.js.example rn-cli.config.js
+
+      - run:
+          name: Build app and run tests
+          command: |
+            cd ~/sample-app/EmployeeDirectory
+            cavy run-android
+
+  ios:
 
     # Specify the Xcode version to use
     macos:
@@ -39,3 +95,10 @@ jobs:
           command: |
             cd ~/sample-app/EmployeeDirectory
             cavy run-ios
+
+workflows:
+  version: 2
+  android-ios:
+    jobs:
+      - android
+      - ios
