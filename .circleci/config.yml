@@ -14,7 +14,10 @@ jobs:
       # <https://github.com/flyve-mdm/android-mdm-agent/blob/develop/.circleci/config.yml>
       - run:
           name: Setup emulator
-          command: sdkmanager "system-images;android-23;google_apis;armeabi-v7a" && echo "no" | avdmanager create avd -n test -k "system-images;android-23;google_apis;armeabi-v7a"
+          command: |
+            sdkmanager "system-images;android-23;google_apis;armeabi-v7a"
+            sdkmanager "build-tools;23.0.1"
+            echo "no" | avdmanager create avd -n test -k "system-images;android-23;google_apis;armeabi-v7a"
 
       - run:
           name: Launch emulator
