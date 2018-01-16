@@ -52,6 +52,9 @@ jobs:
 
       - run:
           name: Build app and run tests
+          environment:
+            # Fix for '$TERM not set' error
+            TERM: dumb
           command: |
             cd ~/sample-app/EmployeeDirectory
             cavy run-android
