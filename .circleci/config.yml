@@ -5,7 +5,9 @@ jobs:
       - image: circleci/android:api-23-node8-alpha
 
     environment:
-      JVM_OPTS: -Xmx3200m
+      # https://circleci.com/docs/1.0/oom/
+      JVM_OPTS: -Xmx2048m
+      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
 
     steps:
       - checkout
