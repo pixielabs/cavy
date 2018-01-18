@@ -1,69 +1,5 @@
 version: 2
 jobs:
-  android:
-    docker:
-      - image: circleci/android:api-23-node8-alpha
-
-    environment:
-      # https://circleci.com/docs/1.0/oom/
-      JVM_OPTS: -Xmx2048m
-      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
-
-    steps:
-      - checkout
-
-      # Inspired by
-      # <https://github.com/flyve-mdm/android-mdm-agent/blob/develop/.circleci/config.yml>
-      - run:
-          name: Setup emulator
-          command: |
-            sdkmanager "system-images;android-23;google_apis;armeabi-v7a"
-            sdkmanager "build-tools;23.0.1"
-            echo "no" | avdmanager create avd -n test -k "system-images;android-23;google_apis;armeabi-v7a"
-
-      - run:
-          name: Launch emulator
-          command: export LD_LIBRARY_PATH=${ANDROID_HOME}/emulator/lib64:${ANDROID_HOME}/emulator/lib64/qt/lib && emulator64-arm -avd test -noaudio -no-boot-anim -no-window -accel on
-          background: true
-      - run:
-          name: Wait for emulator to boot
-          command: |
-            # wait for it to have booted
-            circle-android wait-for-boot
-            # unlock the emulator screen
-            sleep 30
-            adb shell input keyevent 82
-
-      - run:
-          name: Install Node dependencies
-          command: npm i
-
-      - run:
-          name: Link local copy of cavy
-          command: sudo npm link
-
-      - run:
-          name: Install command line interfaces
-          command: sudo npm install -g cavy-cli react-native-cli
-
-      - run:
-          name: Install sample app dependencies
-          command: |
-            mv sample-app ~/
-            cd ~/sample-app/EmployeeDirectory
-            npm i
-            npm link cavy
-            cp rn-cli.config.js.example rn-cli.config.js
-
-      - run:
-          name: Build app and run tests
-          environment:
-            # Fix for '$TERM not set' error
-            TERM: dumb
-          command: |
-            cd ~/sample-app/EmployeeDirectory
-            cavy run-android
-
   ios:
 
     # Specify the Xcode version to use
@@ -106,7 +42,6 @@ jobs:
 
 workflows:
   version: 2
-  android-ios:
+  ios:
     jobs:
-      - android
       - ios
