@@ -10,7 +10,7 @@
 
 This README covers installing and setting up Cavy, writing Cavy tests and FAQs.
 For information on how to use Cavy's **command line interface**, check out
-[cavy-cli][].
+[cavy-cli][cli].
 
 ## Table of Contents
 - [How does it work?](#how-does-it-work)
@@ -41,9 +41,9 @@ your React app within a simulated rendering environment.
 By default, Cavy outputs test results to the console when your app runs.
 However, you can also run Cavy tests directly from the command line using
 Cavy's own command line interface -
-[cavy-cli][]. Details on how you can use
+[cavy-cli][cli]. Details on how you can use
 cavy-cli to fully automate your tests with Continuous Integration can be found
-[in the cavy-cli README][cavy-cli].
+[in the cavy-cli README][cli].
 
 ### Where does it fit in?
 
@@ -170,7 +170,7 @@ Optional props:
                       Set to `false` by default.
 
 `sendReport`        - Boolean, set this to `true` to have Cavy try and 
-                      send a report to [cavy-cli][]. Set to `false` by
+                      send a report to [cavy-cli][cli]. Set to `false` by
                       default.
 
 ```javascript
@@ -273,4 +273,4 @@ Before contributing, please read the [code of conduct](CODE_OF_CONDUCT.md).
   please isolate to its own commit so we can cherry-pick around it.
 
 [crna]: https://github.com/react-community/create-react-native-app
-[cavy-cli]: https://github.com/pixielabs/cavy-cli
+[cli]: https://github.com/pixielabs/cavy-cli
