@@ -9,7 +9,8 @@
 [Pixie Labs](http://pixielabs.io).
 
 This README covers installing and setting up Cavy, writing Cavy tests and FAQs.
-For information on how to use Cavy's **command line interface**, check out [cavy-cli][]
+For information on how to use Cavy's **command line interface**, check out
+[cavy-cli][].
 
 ## Table of Contents
 - [How does it work?](#how-does-it-work)
@@ -272,4 +273,4 @@ Before contributing, please read the [code of conduct](CODE_OF_CONDUCT.md).
   please isolate to its own commit so we can cherry-pick around it.
 
 [crna]: https://github.com/react-community/create-react-native-app
-[cavy-cli] https://github.com/pixielabs/cavy-cli
+[cavy-cli]: https://github.com/pixielabs/cavy-cli
