@@ -37,13 +37,15 @@ is running on a host device (e.g. your Android or iOS simulator).
 This allows you to do far more accurate integration testing than if you run
 your React app within a simulated rendering environment.
 
-### Continuous integration
+### CLI and continuous integration
+
 By default, Cavy outputs test results to the console when your app runs.
 However, you can also run Cavy tests directly from the command line using
-Cavy's own command line interface -
-[cavy-cli][cli]. Details on how you can use
-cavy-cli to fully automate your tests with Continuous Integration can be found
-[in the cavy-cli README][cli].
+Cavy's own command line interface - [cavy-cli][cli]. Just set the `sendReport`
+prop on your `<Tester>` component to `true` (see below).
+
+Further details on how you can use cavy-cli to fully automate your tests with
+continuous integration can be found [in the cavy-cli README][cli].
 
 ### Where does it fit in?
 
