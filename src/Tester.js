@@ -25,6 +25,9 @@ import {
 //                     test execution begins.
 // clearAsyncStorage - A boolean to determine whether to clear AsyncStorage
 //                     between each test. Defaults to `false`.
+// sendReport        - Boolean, set this to `true` to have Cavy try and 
+//                     send a report to cavy-cli. Set to `false` by
+//                     default.
 //
 // Example
 //
@@ -66,7 +69,8 @@ export default class Tester extends Component {
   }
 
   async runTests() {
-    scope = new TestScope(this, this.props.waitTime, this.props.startDelay);
+    const scope = new TestScope(this, this.props.waitTime, this.props.startDelay,
+      this.props.sendReport);
     for (var i = 0; i < this.props.specs.length; i++) {
       await this.props.specs[i](scope);
     }
@@ -102,7 +106,8 @@ Tester.propTypes = {
   specs: PropTypes.arrayOf(PropTypes.func),
   waitTime: PropTypes.number,
   startDelay: PropTypes.number,
-  clearAsyncStorage: PropTypes.bool
+  clearAsyncStorage: PropTypes.bool,
+  sendReport: PropTypes.bool
 };
 
 Tester.childContextTypes = {
@@ -112,5 +117,6 @@ Tester.childContextTypes = {
 Tester.defaultProps = {
   waitTime: 2000,
   startDelay: 0,
-  clearAsyncStorage: false
+  clearAsyncStorage: false,
+  sendReport: false
 }
