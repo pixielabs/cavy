@@ -1,6 +1,6 @@
 {
   "name": "cavy",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "An integration test framework for React Native.",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
     "specs"
   ],
   "peerDependencies": {
-    "react-native": "0.40.x"
+    "react-native": ">= 0.40.0 < 0.53"
   },
   "author": "Pixie Labs",
   "license": "MIT",
