@@ -12,7 +12,7 @@ class ComponentNotFoundError extends Error {
 
 export default class TestScope {
 
-  constructor(component, waitTime, startDelay) {
+  constructor(component, waitTime, startDelay, shouldSendReport) {
     this.component = component;
     this.testHooks = component.testHookStore;
 
@@ -20,6 +20,7 @@ export default class TestScope {
 
     this.waitTime = waitTime;
     this.startDelay = startDelay;
+    this.shouldSendReport = shouldSendReport;
 
     this.run.bind(this);
   }
@@ -73,7 +74,9 @@ export default class TestScope {
       duration: duration
     }
 
-    await this.sendReport(report);
+    if (this.shouldSendReport) {
+      await this.sendReport(report);
+    }
   };
 
   sendReport(report) {
@@ -93,8 +96,11 @@ export default class TestScope {
       .catch((error) => {
         if (error.message.match(/Network request failed/)) {
           console.group(`Cavy test report server is not running at ${url}`);
-          console.log('If you are not using cavy-cli you can ignore this warning.');
           console.log("If you are using cavy-cli, maybe it's not set up correctly or not reachable from this device?");
+          console.groupEnd();
+        } else {
+          console.group('Error sending test results')
+          console.warn(error.message);
           console.groupEnd();
         }
       });

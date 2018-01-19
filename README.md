@@ -9,7 +9,7 @@
 [Pixie Labs](http://pixielabs.io).
 
 This README covers installing and setting up Cavy, writing Cavy tests and FAQs.
-For information on how to use Cavy's **command line interface**, check out [cavy-cli](https://github.com/pixielabs/cavy-cli).
+For information on how to use Cavy's **command line interface**, check out [cavy-cli][]
 
 ## Table of Contents
 - [How does it work?](#how-does-it-work)
@@ -37,7 +37,12 @@ This allows you to do far more accurate integration testing than if you run
 your React app within a simulated rendering environment.
 
 ### Continuous integration
-By default, Cavy outputs test results to the console when your app runs. However, you can also run Cavy tests directly from the command line using Cavy's own command line interface - [cavy-cli](https://github.com/pixielabs/cavy-cli). Details on how you can use cavy-cli to fully automate your tests with Continuous Integration can be found [here](https://github.com/pixielabs/cavy-cli).
+By default, Cavy outputs test results to the console when your app runs.
+However, you can also run Cavy tests directly from the command line using
+Cavy's own command line interface -
+[cavy-cli][]. Details on how you can use
+cavy-cli to fully automate your tests with Continuous Integration can be found
+[in the cavy-cli README][cavy-cli].
 
 ### Where does it fit in?
 
@@ -74,7 +79,8 @@ or `npm`:
 
 ## Basic usage
 
-Check out [the sample app](https://github.com/pixielabs/cavy/tree/master/sample-app/EmployeeDirectory) for example usage. Here it is running:
+Check out [the sample app](https://github.com/pixielabs/cavy/tree/master/sample-app/EmployeeDirectory)
+for example usage. Here it is running:
 
 ![Sample app running](https://cloud.githubusercontent.com/assets/126989/22829358/193b5c0a-ef9a-11e6-994e-d4df852a6181.gif)
 
@@ -83,12 +89,13 @@ Check out [the sample app](https://github.com/pixielabs/cavy/tree/master/sample-
 Add 'hooks' to any components you want to test by adding a `ref` and using the
 `generateTestHook` function.
 
-`generateTestHook` takes a string as its first argument - this is the identifier
-to be used in tests. It takes an optional second argument in case you want to
-set your own `ref` generating function.
+`generateTestHook` takes a string as its first argument - this is the
+identifier to be used in tests. It takes an optional second argument in case
+you want to set your own `ref` generating function.
 
-Stateless functional components cannot be assigned a `ref` since they don't have
-instances. Use the `wrap` function to wrap them inside a non-stateless component.
+Stateless functional components cannot be assigned a `ref` since they don't
+have instances. Use the `wrap` function to wrap them inside a non-stateless
+component.
 
 ```javascript
 import React, { Component } from 'react';
@@ -145,8 +152,8 @@ Import `Tester`, `TestHookStore` and your specs in your top-level JS file
 (typically this is your `index.{ios,android}.js` files), and instantiate a new
 `TestHookStore`.
 
-Wrap your app in a Tester component, passing in the `TestHookStore` and an array
-containing your imported spec functions.
+Wrap your app in a Tester component, passing in the `TestHookStore` and an
+array containing your imported spec functions.
 
 Optional props:
 
@@ -160,6 +167,10 @@ Optional props:
 `clearAsyncStorage` - Boolean, set this to `true` to clear AsyncStorage between
                       each test e.g. to remove a logged in user.
                       Set to `false` by default.
+
+`sendReport`        - Boolean, set this to `true` to have Cavy try and 
+                      send a report to [cavy-cli][]. Set to `false` by
+                      default.
 
 ```javascript
 import React, { Component } from 'react';
@@ -261,3 +272,4 @@ Before contributing, please read the [code of conduct](CODE_OF_CONDUCT.md).
   please isolate to its own commit so we can cherry-pick around it.
 
 [crna]: https://github.com/react-community/create-react-native-app
+[cavy-cli] https://github.com/pixielabs/cavy-cli
