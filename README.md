@@ -171,9 +171,8 @@ Optional props:
                       each test e.g. to remove a logged in user.
                       Set to `false` by default.
 
-`sendReport`        - Boolean, set this to `true` to have Cavy try and 
-                      send a report to [cavy-cli][cli]. Set to `false` by
-                      default.
+`sendReport`        - Boolean, set this to `true` to have Cavy send a report to
+                      [cavy-cli][cli]. Set to `false` by default.
 
 ```javascript
 import React, { Component } from 'react';
