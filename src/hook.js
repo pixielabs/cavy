@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import hoistStatics from 'hoist-non-react-statics';
 
 import TestHookStore from './TestHookStore';
 
@@ -79,5 +80,5 @@ export default function hook(WrappedComponent) {
     testHooks: PropTypes.instanceOf(TestHookStore)
   }
 
-  return wrapperComponent;
+  return hoistStatics(wrapperComponent, WrappedComponent);
 }
