@@ -9,7 +9,10 @@ import { hook } from 'cavy';
 const RootStack = StackNavigator({
   EmployeeList: {
     screen: EmployeeList,
-    navigationOptions: { title: 'Employee List' }
+    navigationOptions: {
+      title: 'Employee List',
+      headerBackTitle: null
+    }
   },
   EmployeeDetails: {
     screen: EmployeeDetails
@@ -20,7 +23,6 @@ const RootStack = StackNavigator({
 
 
 class EmployeeDirectoryApp extends Component {
-
   render() {
     return (
       <RootStack />
@@ -35,12 +37,6 @@ const styles = StyleSheet.create({
   navBar: {
     backgroundColor: '#FAFAFF',
     height: 60,
-  },
-  backButton: {
-    marginTop: 8,
-    marginLeft: 12,
-    height: 24,
-    width: 24
   },
   title: {
     padding: 8,
