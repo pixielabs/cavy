@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FAFAFF',
     paddingBottom: 4,
     borderBottomColor: '#F2F2F7',
     borderBottomWidth: StyleSheet.hairlineWidth

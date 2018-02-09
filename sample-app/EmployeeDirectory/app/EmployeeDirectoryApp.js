@@ -11,11 +11,27 @@ const RootStack = StackNavigator({
     screen: EmployeeList,
     navigationOptions: {
       title: 'Employee List',
-      headerBackTitle: null
+      headerBackTitle: null,
+      headerStyle: {
+        backgroundColor: '#FAFAFF',
+        height: 60,
+      },
+      headerTitleStyle: {
+        padding: 8,
+        fontSize: 18,
+        fontWeight: 'bold'
+      }
     }
   },
   EmployeeDetails: {
-    screen: EmployeeDetails
+    screen: EmployeeDetails,
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: '#FAFAFF',
+        height: 60,
+        borderBottomWidth: 0
+      }
+    }
   }
 }, {
   initialRouteName: 'EmployeeList'
@@ -32,15 +48,3 @@ class EmployeeDirectoryApp extends Component {
 
 const TestableApp = hook(EmployeeDirectoryApp);
 export default TestableApp;
-
-const styles = StyleSheet.create({
-  navBar: {
-    backgroundColor: '#FAFAFF',
-    height: 60,
-  },
-  title: {
-    padding: 8,
-    fontSize: 16,
-    fontWeight: 'bold'
-  }
-});
