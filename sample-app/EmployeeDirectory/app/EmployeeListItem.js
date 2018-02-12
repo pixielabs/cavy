@@ -6,10 +6,10 @@ import { hook } from 'cavy';
 class EmployeeListItem extends Component {
 
   render() {
-    const { navigate } = this.props.navigation;
+    const { state, navigate } = this.props.navigation;
     return (
       <TouchableHighlight
-        ref={this.props.generateTestHook(`EmployeeListItem.${this.props.data.firstName}${this.props.data.lastName}`)}
+        ref={this.props.generateTestHook(`${state.routeName}.${this.props.data.firstName}${this.props.data.lastName}`)}
         onPress={ () => navigate('EmployeeDetails', {employeeId: this.props.data.id}) }
         underlayColor={'#EEEEEE'}>
         <View style={styles.container}>

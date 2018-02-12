@@ -33,14 +33,19 @@ export default class EmployeeList extends Component {
     });
   }
 
+  _renderItem = ({item}) => <EmployeeListItem navigation={this.props.navigation} data={item} />;
+  _itemSeparator = (sectionId, rowId) => <View key={rowId} style={styles.separator} />;
+  _headerSearchBar = () => <SearchBar onChange={this.search.bind(this)} />;
+  _keyExtractor = (item, index) => item.id.toString();
+
   render() {
     return (
       <FlatList style={styles.container}
                 data={this.state.data}
-                renderItem={ ({item}) => <EmployeeListItem navigation={this.props.navigation} data={item} /> }
-                ItemSeparatorComponent={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
-                ListHeaderComponent={() => <SearchBar onChange={this.search.bind(this)} />}
-                keyExtractor={(item, index) => item.id.toString()}
+                renderItem={this._renderItem}
+                ItemSeparatorComponent={this._itemSeparator}
+                ListHeaderComponent={this._headerSearchBar}
+                keyExtractor={this._keyExtractor}
       />
     );
   }
