@@ -5,13 +5,13 @@ import { hook } from 'cavy';
 
 class EmployeeListItem extends Component {
 
-  showDetails() {
-    this.props.navigator.push({name: 'details', data: this.props.data});
-  }
-
   render() {
+    const { state, navigate } = this.props.navigation;
     return (
-      <TouchableHighlight ref={this.props.generateTestHook(`EmployeeListItem.${this.props.data.firstName}${this.props.data.lastName}`)} onPress={this.showDetails.bind(this)} underlayColor={'#EEEEEE'}>
+      <TouchableHighlight
+        ref={this.props.generateTestHook(`${state.routeName}.${this.props.data.firstName}${this.props.data.lastName}`)}
+        onPress={ () => navigate('EmployeeDetails', {employeeId: this.props.data.id}) }
+        underlayColor={'#EEEEEE'}>
         <View style={styles.container}>
           <Image source={{uri: this.props.data.picture}} style={styles.picture} />
           <View>
