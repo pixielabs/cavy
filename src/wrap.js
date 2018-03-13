@@ -1,4 +1,4 @@
-import createReactClass from 'create-react-class';
+import { toClass } from "recompose";
 
 // Public: Wrap a stateless (purely functional) component in a non-stateless
 // component so that a `ref` can be added.
@@ -24,23 +24,4 @@ import createReactClass from 'create-react-class';
 //       // ...
 //     }
 //   }
-export default function wrap(statelessComponent) {
-  var reactClass = {};
-
-  Object.keys(statelessComponent).forEach(function (key) {
-    reactClass[key] = statelessComponent[key];
-  });
-
-  if (statelessComponent.defaultProps) {
-    reactClass.getDefaultProps = function() {
-      return statelessComponent.defaultProps;
-    }
-  }
-
-  reactClass.displayName = statelessComponent.name || statelessComponent.displayName;
-  reactClass.render = function() {
-    return statelessComponent(this.props, this.context);
-  };
-
-  return createReactClass(reactClass);
-}
+export default toClass;
