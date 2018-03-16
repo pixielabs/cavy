@@ -32,7 +32,8 @@
   "dependencies": {
     "create-react-class": "^15.6.0",
     "hoist-non-react-statics": "^2.5.0",
-    "prop-types": "^15.5.10"
+    "prop-types": "^15.5.10",
+    "recompose": "^0.26.0"
   },
   "devDependencies": {
     "babel-jest": "^21.2.0",
