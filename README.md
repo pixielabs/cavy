@@ -13,19 +13,20 @@ For information on how to use Cavy's **command line interface**, check out
 [cavy-cli][cli].
 
 ## Table of Contents
-- [How does it work?](#how-does-it-work)
-  - [CLI and continuous integration](#cli-and-continuous-integration)
-  - [Where does it fit in?](#where-does-it-fit-in)
-- [Installation](#installation)
-- [Usage](#usage)
-  - [1. Set up the Tester](#1-set-up-the-tester)
-  - [2. Hook up components](#2-hook-up-components)
-  - [3. Write test cases](#3-write-test-cases)
-  - [Apps that use native code](#apps-that-use-native-code)
-- [Available spec helpers](#available-spec-helpers)
-- [Writing your own spec helpers](#writing-your-own-spec-helpers)
-- [FAQs](#faqs)
-- [Contributing](#contributing)
+
+* [How does it work?](#how-does-it-work)
+  * [CLI and continuous integration](#cli-and-continuous-integration)
+  * [Where does it fit in?](#where-does-it-fit-in)
+* [Installation](#installation)
+* [Usage](#usage)
+  * [1. Set up the Tester](#1-set-up-the-tester)
+  * [2. Hook up components](#2-hook-up-components)
+  * [3. Write test cases](#3-write-test-cases)
+  * [Apps that use native code](#apps-that-use-native-code)
+* [Available spec helpers](#available-spec-helpers)
+* [Writing your own spec helpers](#writing-your-own-spec-helpers)
+* [FAQs](#faqs)
+* [Contributing](#contributing)
 
 ## How does it work?
 
@@ -50,10 +51,10 @@ continuous integration can be found in the [cavy-cli README][cli].
 We built Cavy because, at the time of writing, React Native had only a handful
 of testing approaches available:
 
-1. Unit testing components ([Jest](https://github.com/facebook/jest)).
-2. Shallow-render testing components ([enzyme](https://github.com/airbnb/enzyme)).
-3. Testing within your native environment, using native JS hooks ([Appium](http://appium.io/)).
-4. Testing completely within your native environment ([XCTest](https://developer.apple.com/reference/xctest)).
+1.  Unit testing components ([Jest](https://github.com/facebook/jest)).
+2.  Shallow-render testing components ([enzyme](https://github.com/airbnb/enzyme)).
+3.  Testing within your native environment, using native JS hooks ([Appium](http://appium.io/)).
+4.  Testing completely within your native environment ([XCTest](https://developer.apple.com/reference/xctest)).
 
 Cavy fits in between shallow-render testing and testing within your native
 environment.
@@ -83,10 +84,10 @@ Import `Tester`, `TestHookStore` and your specs in your top-level JS file
 ```javascript
 // index.ios.js
 
-import React, { Component } from 'react';
-import { Tester, TestHookStore } from 'cavy';
-import AppSpec from './specs/AppSpec';
-import App from './app';
+import React, { Component } from "react";
+import { Tester, TestHookStore } from "cavy";
+import AppSpec from "./specs/AppSpec";
+import App from "./app";
 
 const testHookStore = new TestHookStore();
 
@@ -103,14 +104,14 @@ export default class AppWrapper extends Component {
 
 **Tester props**
 
-| Prop | Type | Description | Default |
-| :------------ |:---------------:| :--------------- | :---------------: |
-| specs (required) | Array | Your spec functions | - |
-| store (required) | TestHookStore | The newly instantiated TestHookStore component | - |
-| waitTime | Integer | Time in milliseconds that your tests should wait to find a component | 2000 |
-| startDelay | Integer | Time in milliseconds before test execution begins | 0 |
-| clearAsyncStorage | Boolean | If true, clears AsyncStorage between each test e.g. to remove a logged in user | false |
-| sendReport | Boolean | If true, Cavy sends a report to [cavy-cli][cli] | false |
+| Prop              |     Type      | Description                                                                    | Default |
+| :---------------- | :-----------: | :----------------------------------------------------------------------------- | :-----: |
+| specs (required)  |     Array     | Your spec functions                                                            |    -    |
+| store (required)  | TestHookStore | The newly instantiated TestHookStore component                                 |    -    |
+| waitTime          |    Integer    | Time in milliseconds that your tests should wait to find a component           |  2000   |
+| startDelay        |    Integer    | Time in milliseconds before test execution begins                              |    0    |
+| clearAsyncStorage |    Boolean    | If true, clears AsyncStorage between each test e.g. to remove a logged in user |  false  |
+| sendReport        |    Boolean    | If true, Cavy sends a report to [cavy-cli][cli]                                |  false  |
 
 ### 2. Hook up components
 
@@ -121,22 +122,34 @@ Add a test hook to any components you want to test by adding a ref and using the
 identifier used in tests. It takes an optional second argument in case
 you also want to set your own ref generating function.
 
+In addition to that, you may want to use the Higher Order Component (HOC) `testable`
+that hooks the `generateTestHook` function to the component passed and sets the `ref`
+property with the param to the first function. Note that in this case, you do not need
+to hook nor wrap the component upfront, as this hook and wrap is done by the HOC.
+
 ```javascript
 // src/Scene.js
 
 import React, { Component } from 'react';
 import { TextInput } from 'react-native';
-import { hook } from 'cavy';
+import { hook, testable } from 'cavy';
+
+const Input = ({onChangeText}) => (
+  <TextInput
+    onChangeText={onChangeText}
+  />
+);
+
+const TestableInput = testable('Scene.TextInput')(Input)
 
 class Scene extends Component {
   render() {
     return (
       <View>
-        <TextInput
-          ref={this.props.generateTestHook('Scene.TextInput')}
+        <TestableInput
           onChangeText={...}
         />
-      </View>      
+      </View>
     );
   }
 }
@@ -156,11 +169,11 @@ helper functions.
 // specs/AppSpec.js
 
 export default function(spec) {
-  spec.describe('My feature', function() {
-    spec.it('works', async function() {
-      await spec.fillIn('Scene.TextInput', 'some string')
-      await spec.press('Scene.button');
-      await spec.exists('NextScene');
+  spec.describe("My feature", function() {
+    spec.it("works", async function() {
+      await spec.fillIn("Scene.TextInput", "some string");
+      await spec.press("Scene.button");
+      await spec.exists("NextScene");
     });
   });
 }
@@ -175,19 +188,19 @@ your `AppWrapper` as the main entry point with `AppRegistry` instead of your
 current `App` component:
 
 ```javascript
-AppRegistry.registerComponent('AppWrapper', () => AppWrapper);
+AppRegistry.registerComponent("AppWrapper", () => AppWrapper);
 ```
 
 ## Available spec helpers
 
-| Function | Description |
-| :------------ | :--------------- |
-| `fillIn(identifier, str)` | Fills in the identified component with the string<br>Component must respond to `onChangeText` |
-| `press(identifier)` | Presses the identified component<br>Component must respond to `onPress` |
-| `pause(integer)` | Pauses the test for this length of time (milliseconds)<br>Useful if you need to allow time for a response to be received before progressing |
-| `exists(identifier)` | Returns `true` if the component can be identified (i.e. is currently on screen) |
-| `notExists(identifier)` | As above, but checks for the absence of the component |
-| `findComponent(identifier)` | Returns the identified component<br>Can be used if your component doesn't respond to either `onChangeText` or `onPress`<br>For example:<br>```const picker = await spec.findComponent('Scene.modalPicker');```<br>```picker.open();```|
+| Function                    | Description                                                                                                                                                                                                                    |
+| :-------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fillIn(identifier, str)`   | Fills in the identified component with the string<br>Component must respond to `onChangeText`                                                                                                                                  |
+| `press(identifier)`         | Presses the identified component<br>Component must respond to `onPress`                                                                                                                                                        |
+| `pause(integer)`            | Pauses the test for this length of time (milliseconds)<br>Useful if you need to allow time for a response to be received before progressing                                                                                    |
+| `exists(identifier)`        | Returns `true` if the component can be identified (i.e. is currently on screen)                                                                                                                                                |
+| `notExists(identifier)`     | As above, but checks for the absence of the component                                                                                                                                                                          |
+| `findComponent(identifier)` | Returns the identified component<br>Can be used if your component doesn't respond to either `onChangeText` or `onPress`<br>For example:<br>`const picker = await spec.findComponent('Scene.modalPicker');`<br>`picker.open();` |
 
 ## Writing your own spec helpers
 
@@ -202,20 +215,21 @@ where you want the test to fail. For example, the following tests whether a `<Te
 export async function containsText(component, text) {
   if (!component.props.children.includes(text)) {
     throw new Error(`Could not find text ${text}`);
-  };
+  }
 }
 ```
+
 ```javascript
 // specs/AppSpec.js
 
-import { containsText } from './helpers';
+import { containsText } from "./helpers";
 
 export default function(spec) {
-  spec.describe('Changing the text', function() {
-    spec.it('works', async function() {
-      await spec.press('Scene.button');
-      const text = await spec.findComponent('Scene.text');
-      await containsText(text, 'you pressed the button');
+  spec.describe("Changing the text", function() {
+    spec.it("works", async function() {
+      await spec.press("Scene.button");
+      const text = await spec.findComponent("Scene.text");
+      await containsText(text, "you pressed the button");
     });
   });
 }
@@ -247,15 +261,17 @@ What that looks like specifically, we're not 100% sure yet. We're very happy to
 discuss possible alternatives!
 
 ## Contributing
+
 Before contributing, please read the [code of conduct](CODE_OF_CONDUCT.md).
-- Check out the latest master to make sure the feature hasn't been implemented
+
+* Check out the latest master to make sure the feature hasn't been implemented
   or the bug hasn't been fixed yet.
-- Check out the issue tracker to make sure someone already hasn't requested it
+* Check out the issue tracker to make sure someone already hasn't requested it
   and/or contributed it.
-- Fork the project.
-- Start a feature/bugfix branch.
-- Commit and push until you are happy with your contribution.
-- Please try not to mess with the package.json, version, or history. If you
+* Fork the project.
+* Start a feature/bugfix branch.
+* Commit and push until you are happy with your contribution.
+* Please try not to mess with the package.json, version, or history. If you
   want to have your own version, or is otherwise necessary, that is fine, but
   please isolate to its own commit so we can cherry-pick around it.
 
