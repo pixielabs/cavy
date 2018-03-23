@@ -39,7 +39,7 @@ export default class TestScope {
   // Resets the app after each test case by changing the component key to force
   // React to re-render the entire component tree.
   async runTests() {
-    let testResults = [];
+    const testResults = [];
     let errorCount = 0;
 
     const start = new Date();
@@ -72,7 +72,7 @@ export default class TestScope {
       results: testResults,
       errorCount: errorCount,
       duration: duration
-    }
+    };
 
     if (this.shouldSendReport) {
       await this.sendReport(report);
@@ -99,7 +99,7 @@ export default class TestScope {
           console.log("If you are using cavy-cli, maybe it's not set up correctly or not reachable from this device?");
           console.groupEnd();
         } else {
-          console.group('Error sending test results')
+          console.group('Error sending test results');
           console.warn(error.message);
           console.groupEnd();
         }
@@ -125,9 +125,9 @@ export default class TestScope {
   // this.waitTime if the component is never found in the test hook
   // store.
   findComponent(identifier) {
-    let promise = new Promise((resolve, reject) => {
-      let startTime = Date.now();
-      let loop = setInterval(() => {
+    const promise = new Promise((resolve, reject) => {
+      const startTime = Date.now();
+      const loop = setInterval(() => {
         const component = this.testHooks.get(identifier);
         if (component) {
           clearInterval(loop);
@@ -212,7 +212,7 @@ export default class TestScope {
   //
   // Returns a promise, use await when calling this function.
   async pause(time) {
-    let promise = new Promise((resolve, reject) => {
+    const promise = new Promise((resolve, reject) => {
       setTimeout(function() {
         resolve();
       }, time);

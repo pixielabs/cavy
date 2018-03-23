@@ -71,7 +71,7 @@ export default class Tester extends Component {
   async runTests() {
     const scope = new TestScope(this, this.props.waitTime, this.props.startDelay,
       this.props.sendReport);
-    for (var i = 0; i < this.props.specs.length; i++) {
+    for (let i = 0; i < this.props.specs.length; i++) {
       await this.props.specs[i](scope);
     }
     scope.run();

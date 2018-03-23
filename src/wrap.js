@@ -25,7 +25,7 @@ import createReactClass from 'create-react-class';
 //     }
 //   }
 export default function wrap(statelessComponent) {
-  var reactClass = {};
+  let reactClass = {};
 
   Object.keys(statelessComponent).forEach(function (key) {
     reactClass[key] = statelessComponent[key];
