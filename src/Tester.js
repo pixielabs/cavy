@@ -25,7 +25,7 @@ import {
 //                     test execution begins.
 // clearAsyncStorage - A boolean to determine whether to clear AsyncStorage
 //                     between each test. Defaults to `false`.
-// sendReport        - Boolean, set this to `true` to have Cavy try and 
+// sendReport        - Boolean, set this to `true` to have Cavy try and
 //                     send a report to cavy-cli. Set to `false` by
 //                     default.
 //
@@ -112,11 +112,11 @@ Tester.propTypes = {
 
 Tester.childContextTypes = {
   testHooks: PropTypes.instanceOf(TestHookStore)
-}
+};
 
 Tester.defaultProps = {
   waitTime: 2000,
   startDelay: 0,
   clearAsyncStorage: false,
   sendReport: false
-}
+};
