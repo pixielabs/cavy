@@ -8,7 +8,7 @@ class ComponentNotFoundError extends Error {
     super(message);
     this.name = 'ComponentNotFoundError';
   }
-};
+}
 
 export default class TestScope {
 
