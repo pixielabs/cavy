@@ -62,6 +62,9 @@ export default function hook(WrappedComponent) {
           return;
         }
         if (component) {
+          if (this.context.testHooks.get(identifier)) {
+            return;
+          }
           this.context.testHooks.add(identifier, component);
         } else {
           this.context.testHooks.remove(identifier, component);
