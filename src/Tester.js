@@ -1,13 +1,9 @@
 import React, { Component, Children } from 'react';
 import PropTypes from 'prop-types';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, View } from 'react-native';
 
 import TestHookStore from './TestHookStore';
 import TestScope from './TestScope';
-
-import {
-  View
-} from 'react-native';
 
 // Public: Wrap your entire app in Tester to run tests against that app,
 // interacting with registered components in your test cases via the Cavy
@@ -71,7 +67,7 @@ export default class Tester extends Component {
   async runTests() {
     const scope = new TestScope(this, this.props.waitTime, this.props.startDelay,
       this.props.sendReport);
-    for (var i = 0; i < this.props.specs.length; i++) {
+    for (let i = 0; i < this.props.specs.length; i++) {
       await this.props.specs[i](scope);
     }
     scope.run();
