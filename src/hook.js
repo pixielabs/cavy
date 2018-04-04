@@ -55,13 +55,16 @@ export default function hook(WrappedComponent) {
     //
     // Returns the ref-generating anonymous function which will be called by
     // React.
-    generateTestHook(identifier, f = () => {}) {
+    generateTestHook(identifier, f = () => {}, useStore = false) {
       return (component) => {
         if (!this.context.testHooks) {
           f(component);
           return
         }
         if (component) {
+          if(useStore && this.context.testHooks.get(identifier)) {
+            return;
+          }
           this.context.testHooks.add(identifier, component);
         } else {
           this.context.testHooks.remove(identifier, component);
