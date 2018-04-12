@@ -18,6 +18,10 @@ jobs:
           command: npm i
 
       - run:
+          name: Run unit tests
+          command: npm test
+
+      - run:
           name: Link local copy of cavy
           command: npm link
 
