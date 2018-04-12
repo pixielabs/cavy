@@ -13,8 +13,7 @@ jobs:
           name: Install React Native dependencies
           command: |
             brew update
-            brew install watchman
-            exit 0
+            brew install watchman || exit 0
 
       - run:
           name: Install Node dependencies
