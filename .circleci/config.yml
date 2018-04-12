@@ -14,9 +14,7 @@ jobs:
           command: |
             brew update
             brew install watchman
-            # Because it fails
-            brew link --overwrite python@2
-            brew install watchman
+            exit 0
 
       - run:
           name: Install Node dependencies
