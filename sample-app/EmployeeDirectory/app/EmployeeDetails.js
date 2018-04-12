@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, ListView, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, FlatList, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import ActionBar from './ActionBar';
 import EmployeeListItem from './EmployeeListItem';
 import * as employeeService from './services/employee-service-mock';
@@ -8,38 +8,49 @@ export default class EmployeeDetails extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})};
-    employeeService.findById(this.props.data.id).then(employee => {
+    this.state = {
+      employee: null,
+      reports: null
+    };
+  }
+
+  componentDidMount() {
+    const { params } = this.props.navigation.state;
+    const employeeId = params ? params.employeeId : null;
+    this.fetchData(employeeId);
+  }
+
+  fetchData(id) {
+    employeeService.findById(id).then(employee => {
       this.setState({
         employee: employee,
-        dataSource: this.state.dataSource.cloneWithRows(employee.reports)
+        reports: employee.reports
       });
     });
   }
 
-  openManager() {
-    this.props.navigator.push({name: 'details', data: this.state.employee.manager});
-  }
-
   render() {
+    const { navigate } = this.props.navigation;
+
     if (this.state && this.state.employee) {
       let employee = this.state.employee;
       let manager;
       if (employee.manager) {
-        manager = <TouchableOpacity style={styles.manager} onPress={this.openManager.bind(this)}>
+        manager = <TouchableOpacity style={styles.manager} onPress={() => navigate('EmployeeDetails', {employeeId: employee.manager.id})}>
                   <Image source={{uri: employee.manager.picture}} style={styles.smallPicture} />
                   <Text style={styles.lightText}>{employee.manager.firstName} {employee.manager.lastName}</Text>
                   <Text style={styles.lightText}>{employee.manager.title}</Text>
                   </TouchableOpacity>;
       }
+
       let directReports;
       if (employee.reports && employee.reports.length > 0) {
         directReports =
-          <ListView style={styles.list}
-                    dataSource={this.state.dataSource}
-                    enableEmptySections={true}
-                    renderRow={(data) => <EmployeeListItem navigator={this.props.navigator} data={data} />}
-                    renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
+          <FlatList style={styles.list}
+                    data={this.state.reports}
+                    renderItem={ ({item}) => <EmployeeListItem navigation={this.props.navigation} data={item} /> }
+                    ItemSeparatorComponent={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
+                    keyExtractor={(item, index) => item.id.toString()}
           />;
       } else {
         directReports = <View style={styles.emptyList}><Text style={styles.lightText}>No direct reports</Text></View>;
@@ -64,7 +75,6 @@ export default class EmployeeDetails extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 60,
     backgroundColor: '#FFFFFF',
     flex: 1
   },

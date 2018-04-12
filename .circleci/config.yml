@@ -11,11 +11,17 @@ jobs:
 
       - run:
           name: Install React Native dependencies
-          command: brew install watchman
+          command: |
+            brew update
+            brew install watchman || exit 0
 
       - run:
           name: Install Node dependencies
           command: npm i
+
+      - run:
+          name: Run unit tests
+          command: npm test
 
       - run:
           name: Link local copy of cavy

@@ -59,7 +59,7 @@ export default function hook(WrappedComponent) {
     generateTestHook(identifier, f = () => {}) {
       return (component) => {
         if (!this.context.testHooks) {
-          f(component)
+          f(component);
           return
         }
         if (component) {
@@ -74,11 +74,11 @@ export default function hook(WrappedComponent) {
     render() {
       return <WrappedComponent generateTestHook={this.generateTestHook} {...this.props} />;
     }
-  }
+  };
 
   wrapperComponent.contextTypes = {
     testHooks: PropTypes.instanceOf(TestHookStore)
-  }
+  };
 
   return hoistStatics(wrapperComponent, WrappedComponent);
 }
