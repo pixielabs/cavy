@@ -1,5 +1,8 @@
 import createReactClass from 'create-react-class';
-
+// @deprecated Function wrap(statelessComponent) is deprecated. We suggest
+// using Recompose's `toClass` helper function instead.
+// See: https://github.com/acdlite/recompose#build-your-own-libraries
+//
 // Public: Wrap a stateless (purely functional) component in a non-stateless
 // component so that a `ref` can be added.
 //

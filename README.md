@@ -118,34 +118,23 @@ Add a test hook to any components you want to test by adding a ref and using the
 `generateTestHook` function. Then export a hooked version of the parent component.
 
 `generateTestHook` takes a string as its first argument - this is the
-identifier to be used in tests. It takes an optional second argument in case
+identifier used in tests. It takes an optional second argument in case
 you also want to set your own ref generating function.
-
-Stateless functional components cannot be assigned a ref since they don't
-have instances. Use the `wrap` function to wrap them inside a non-stateless
-component.
 
 ```javascript
 // src/Scene.js
 
 import React, { Component } from 'react';
 import { TextInput } from 'react-native';
-import { FuncComponent } from 'somewhere';
-
-import { hook, wrap } from 'cavy';
+import { hook } from 'cavy';
 
 class Scene extends Component {
   render() {
-    const WrappedComponent = wrap(FuncComponent);
     return (
       <View>
         <TextInput
           ref={this.props.generateTestHook('Scene.TextInput')}
           onChangeText={...}
-        />
-        <WrappedComponent
-          ref={this.props.generateTestHook('Scene.Component')}
-          onPress={...}
         />
       </View>      
     );
@@ -155,6 +144,8 @@ class Scene extends Component {
 const TestableScene = hook(Scene);
 export default TestableScene;
 ```
+
+**Note on functional components:** Functional components cannot be assigned a ref since they don't have instances. We suggest using [Recompose](https://github.com/acdlite/recompose#build-your-own-libraries)'s `toClass` helper function to convert it to a class component first.
 
 ### 3. Write test cases
 
@@ -188,11 +179,6 @@ AppRegistry.registerComponent('AppWrapper', () => AppWrapper);
 ```
 
 ## Available spec helpers
-
-This is a list of all the currently available spec helper functions. In each case,
-the `identifier` is refers to the string passed in to `this.props.generateTestHook(identifier)`.
-
-[See below](#writing-your-own-spec-helpers) for how to write your own.
 
 | Function | Description |
 | :------------ | :--------------- |
