@@ -146,6 +146,29 @@ export default function(spec) {
 }
 ```
 
+Cavy also offers the possibility to add lifecycle methods to your tests, on a per-spec basis. Those lifecycle methods might be used for something like mocking certain parts of your app, or setting up other things, like logging. 
+
+Defining those methods is done like so:
+
+
+```javascript
+export default function(spec) {
+  spec.describe('My feature', function() {
+    // -- those methods get executed before/after every testcase
+    spec.beforeEach(() => {});
+    spec.afterEach(() => {});
+    
+    // -- those methods get executed before/after all tests are executed
+    spec.beforeAll(() => {});
+    spec.afterAll(() => {});
+    
+    spec.it('works', async function() {
+      // ...
+    });
+  });
+}
+```
+
 [See below](#available-spec-helpers) for a list of currently available spec
 helper functions.
 
