@@ -1,3 +1,12 @@
+# 0.5.0
+
+- Support [cavy-cli](https://github.com/pixielabs/cavy-cli).
+
+cavy-cli is the next step in Cavy's development. With it, we can start to
+support Continuous Integration, conditionally running tests, and a bunch of
+other cool stuff. Thanks to [Tyler Pate](https://github.com/TGPSKI) whose
+suggestions inspired our approach.
+
 # 0.4.1
 
 - Stop using deprecated `PropTypes` and `createClass`. Thanks

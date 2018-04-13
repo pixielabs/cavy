@@ -12,8 +12,7 @@ const testHookStore = new TestHookStore();
 class AppWrapper extends Component {
   render() {
     return (
-      <Tester specs={[EmployeeListSpec]} store={testHookStore} waitTime={1000}
-        startDelay={3000} sendReport={true}>
+      <Tester specs={[EmployeeListSpec]} store={testHookStore} waitTime={1000} startDelay={3000}>
         <EmployeeDirectoryApp />
       </Tester>
     );

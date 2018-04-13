@@ -1,11 +1,30 @@
 # Cavy
 
 [![npm version](https://badge.fury.io/js/cavy.svg)](https://badge.fury.io/js/cavy)
+[![CircleCI](https://circleci.com/gh/pixielabs/cavy.svg?style=svg)](https://circleci.com/gh/pixielabs/cavy)
 
 ![Cavy logo](https://cloud.githubusercontent.com/assets/126989/22546798/6cf18938-e936-11e6-933f-da756b9ee7b8.png)
 
 **Cavy** is a cross-platform integration test framework for React Native, by
 [Pixie Labs](http://pixielabs.io).
+
+This README covers installing and setting up Cavy, writing Cavy tests and FAQs.
+For information on how to use Cavy's **command line interface**, check out
+[cavy-cli][cli].
+
+## Table of Contents
+- [How does it work?](#how-does-it-work)
+  - [Where does it fit in?](#where-does-it-fit-in)
+  - [Cavy's components](#cavys-components)
+- [Installation](#installation)
+- [Basic usage](#basic-usage)
+  - [Hook up components for testing](#hook-up-components-for-testing)
+  - [Write your test cases](#write-your-test-cases)
+  - [Set up your test wrapper](#set-up-your-test-wrapper)
+  - [Apps that use native code](#apps-that-use-native-code)
+- [Available spec helpers](#available-spec-helpers)
+- [FAQs](#faqs)
+- [Contributing](#contributing)
 
 ## How does it work?
 
@@ -17,6 +36,16 @@ is running on a host device (e.g. your Android or iOS simulator).
 
 This allows you to do far more accurate integration testing than if you run
 your React app within a simulated rendering environment.
+
+### CLI and continuous integration
+
+By default, Cavy outputs test results to the console when your app runs.
+However, you can also run Cavy tests directly from the command line using
+Cavy's own command line interface - [cavy-cli][cli]. Just set the `sendReport`
+prop on your `<Tester>` component to `true` (see below).
+
+Further details on how you can use cavy-cli to fully automate your tests with
+continuous integration can be found [in the cavy-cli README][cli].
 
 ### Where does it fit in?
 
@@ -53,7 +82,8 @@ or `npm`:
 
 ## Basic usage
 
-Check out [the sample app](https://github.com/pixielabs/cavy/tree/master/sample-app/EmployeeDirectory) for example usage. Here it is running:
+Check out [the sample app](https://github.com/pixielabs/cavy/tree/master/sample-app/EmployeeDirectory)
+for example usage. Here it is running:
 
 ![Sample app running](https://cloud.githubusercontent.com/assets/126989/22829358/193b5c0a-ef9a-11e6-994e-d4df852a6181.gif)
 
@@ -62,12 +92,13 @@ Check out [the sample app](https://github.com/pixielabs/cavy/tree/master/sample-
 Add 'hooks' to any components you want to test by adding a `ref` and using the
 `generateTestHook` function.
 
-`generateTestHook` takes a string as its first argument - this is the identifier
-to be used in tests. It takes an optional second argument in case you want to
-set your own `ref` generating function.
+`generateTestHook` takes a string as its first argument - this is the
+identifier to be used in tests. It takes an optional second argument in case
+you want to set your own `ref` generating function.
 
-Stateless functional components cannot be assigned a `ref` since they don't have
-instances. Use the `wrap` function to wrap them inside a non-stateless component.
+Stateless functional components cannot be assigned a `ref` since they don't
+have instances. Use the `wrap` function to wrap them inside a non-stateless
+component.
 
 ```javascript
 import React, { Component } from 'react';
@@ -124,8 +155,8 @@ Import `Tester`, `TestHookStore` and your specs in your top-level JS file
 (typically this is your `index.{ios,android}.js` files), and instantiate a new
 `TestHookStore`.
 
-Wrap your app in a Tester component, passing in the `TestHookStore` and an array
-containing your imported spec functions.
+Wrap your app in a Tester component, passing in the `TestHookStore` and an
+array containing your imported spec functions.
 
 Optional props:
 
@@ -139,6 +170,9 @@ Optional props:
 `clearAsyncStorage` - Boolean, set this to `true` to clear AsyncStorage between
                       each test e.g. to remove a logged in user.
                       Set to `false` by default.
+
+`sendReport`        - Boolean, set this to `true` to have Cavy send a report to
+                      [cavy-cli][cli]. Set to `false` by default.
 
 ```javascript
 import React, { Component } from 'react';
@@ -227,7 +261,7 @@ What that looks like specifically, we're not 100% sure yet. We're very happy to
 discuss possible alternatives!
 
 ## Contributing
-
+Before contributing, please read the [code of conduct](CODE_OF_CONDUCT.md).
 - Check out the latest master to make sure the feature hasn't been implemented
   or the bug hasn't been fixed yet.
 - Check out the issue tracker to make sure someone already hasn't requested it
@@ -240,3 +274,4 @@ discuss possible alternatives!
   please isolate to its own commit so we can cherry-pick around it.
 
 [crna]: https://github.com/react-community/create-react-native-app
+[cli]: https://github.com/pixielabs/cavy-cli

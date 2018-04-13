@@ -4,8 +4,7 @@ Base code borrowed from [Christophe Coenraets](https://github.com/ccoenraets/emp
 
 ## How to run
 
-Follow Christophe's installation instructions, using the `app` folder from
-this folder instead of his. Don't forget to `yarn add cavy` too!
+You will need the React Native command line tools to run the sample app. Install dependencies with `yarn`, then run the app with `react-native run-ios`.
 
 Here's what it should look like when it runs:
 
