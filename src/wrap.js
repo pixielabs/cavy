@@ -1,5 +1,6 @@
 import createReactClass from 'create-react-class';
-// Function wrap(statelessComponent) will soon be deprecated. We suggest
+
+// Cavy's wrap(statelessComponent) will soon be deprecated. We suggest
 // using Recompose's `toClass` helper function instead.
 // See: https://github.com/acdlite/recompose#build-your-own-libraries
 //
