@@ -14,15 +14,16 @@ For information on how to use Cavy's **command line interface**, check out
 
 ## Table of Contents
 - [How does it work?](#how-does-it-work)
+  - [CLI and continuous integration](#cli-and-continuous-integration)
   - [Where does it fit in?](#where-does-it-fit-in)
-  - [Cavy's components](#cavys-components)
 - [Installation](#installation)
-- [Basic usage](#basic-usage)
-  - [Hook up components for testing](#hook-up-components-for-testing)
-  - [Write your test cases](#write-your-test-cases)
-  - [Set up your test wrapper](#set-up-your-test-wrapper)
+- [Usage](#usage)
+  - [1. Set up the Tester](#1-set-up-the-tester)
+  - [2. Hook up components](#2-hook-up-components)
+  - [3. Write test cases](#3-write-test-cases)
   - [Apps that use native code](#apps-that-use-native-code)
 - [Available spec helpers](#available-spec-helpers)
+- [Writing your own spec helpers](#writing-your-own-spec-helpers)
 - [FAQs](#faqs)
 - [Contributing](#contributing)
 
@@ -34,9 +35,6 @@ application. Unlike a tool like [enzyme](https://github.com/airbnb/enzyme)
 which uses a simulated renderer, Cavy runs within your live application as it
 is running on a host device (e.g. your Android or iOS simulator).
 
-This allows you to do far more accurate integration testing than if you run
-your React app within a simulated rendering environment.
-
 ### CLI and continuous integration
 
 By default, Cavy outputs test results to the console when your app runs.
@@ -45,7 +43,7 @@ Cavy's own command line interface - [cavy-cli][cli]. Just set the `sendReport`
 prop on your `<Tester>` component to `true` (see below).
 
 Further details on how you can use cavy-cli to fully automate your tests with
-continuous integration can be found [in the cavy-cli README][cli].
+continuous integration can be found in the [cavy-cli README][cli].
 
 ### Where does it fit in?
 
@@ -60,16 +58,6 @@ of testing approaches available:
 Cavy fits in between shallow-render testing and testing within your native
 environment.
 
-### Cavy's components
-
-Cavy provides 3 tools to let you run integration tests:
-
-1. A store of 'test hooks'; key-value pairs between a string identifier and a
-   component somewhere in your app component tree.
-2. A set of helper functions to write spec files.
-3. A `<Tester>` component you wrap around your entire app to make the test hook
-   store available, and autorun your test cases on boot.
-
 ## Installation
 
 To get started using Cavy, install it using `yarn`:
@@ -80,101 +68,21 @@ or `npm`:
 
     npm i --save-dev cavy
 
-## Basic usage
+## Usage
 
 Check out [the sample app](https://github.com/pixielabs/cavy/tree/master/sample-app/EmployeeDirectory)
 for example usage. Here it is running:
 
 ![Sample app running](https://cloud.githubusercontent.com/assets/126989/22829358/193b5c0a-ef9a-11e6-994e-d4df852a6181.gif)
 
-### Hook up components for testing
-
-Add 'hooks' to any components you want to test by adding a `ref` and using the
-`generateTestHook` function.
-
-`generateTestHook` takes a string as its first argument - this is the
-identifier to be used in tests. It takes an optional second argument in case
-you want to set your own `ref` generating function.
-
-Stateless functional components cannot be assigned a `ref` since they don't
-have instances. Use the `wrap` function to wrap them inside a non-stateless
-component.
-
-```javascript
-import React, { Component } from 'react';
-import { TextInput } from 'react-native';
-import { FuncComponent } from 'somewhere';
-
-import { hook, wrap } from 'cavy';
-
-class Scene extends Component {
-  render() {
-    const WrappedComponent = wrap(FuncComponent);
-    return (
-      <View>
-        <TextInput
-          ref={this.props.generateTestHook('Scene.TextInput')}
-          onChangeText={...}
-        />
-        <WrappedComponent
-          ref={this.props.generateTestHook('Scene.Component')}
-          onPress={...}
-        />
-      </View>      
-    );
-  }
-}
-
-const TestableScene = hook(Scene);
-export default TestableScene;
-```
-
-### Write your test cases
-
-Using your component identifiers, write your spec functions. We suggest saving
-these in a spec folder, naming them something like `./specs/AppSpec.js`.
-
-```javascript
-export default function(spec) {
-  spec.describe('My feature', function() {
-    spec.it('works', async function() {
-      await spec.fillIn('Scene.TextInput', 'some string')
-      await spec.press('Scene.button');
-      await spec.exists('NextScene')
-    });
-  });
-}
-```
-
-[See below](#available-spec-helpers) for a list of currently available spec
-helper functions.
-
-### Set up your test wrapper
+### 1. Set up the Tester
 
 Import `Tester`, `TestHookStore` and your specs in your top-level JS file
-(typically this is your `index.{ios,android}.js` files), and instantiate a new
-`TestHookStore`.
-
-Wrap your app in a Tester component, passing in the `TestHookStore` and an
-array containing your imported spec functions.
-
-Optional props:
-
-`waitTime`          - Integer, the time in milliseconds that your tests should
-                      wait to find specified 'hooked' components.
-                      Set to `2000` (2 seconds) by default.
-
-`startDelay`        - Integer, the time in milliseconds before test execution
-                      begins. Set to `0` by default.
-
-`clearAsyncStorage` - Boolean, set this to `true` to clear AsyncStorage between
-                      each test e.g. to remove a logged in user.
-                      Set to `false` by default.
-
-`sendReport`        - Boolean, set this to `true` to have Cavy send a report to
-                      [cavy-cli][cli]. Set to `false` by default.
+(typically this is your `index.{ios,android}.js` files). Instantiate a new `TestHookStore` and render your app inside a `Tester`.
 
 ```javascript
+// index.ios.js
+
 import React, { Component } from 'react';
 import { Tester, TestHookStore } from 'cavy';
 import AppSpec from './specs/AppSpec';
@@ -193,11 +101,74 @@ export default class AppWrapper extends Component {
 }
 ```
 
-**Congratulations! You are now all set up to start testing your app with Cavy.**
+**Tester props**
 
-Your tests will run automatically when you run your app.
+| Prop | Type | Description | Default |
+| :------------ |:---------------:| :--------------- | :---------------: |
+| specs (required) | Array | Your spec functions | - |
+| store (required) | TestHookStore | The newly instantiated TestHookStore component | - |
+| waitTime | Integer | Time in milliseconds that your tests should wait to find a component | 2000 |
+| startDelay | Integer | Time in milliseconds before test execution begins | 0 |
+| clearAsyncStorage | Boolean | If true, clears AsyncStorage between each test e.g. to remove a logged in user | false |
+| sendReport | Boolean | If true, Cavy sends a report to [cavy-cli][cli] | false |
 
-#### Apps that use native code
+### 2. Hook up components
+
+Add a test hook to any components you want to test by adding a ref and using the
+`generateTestHook` function. Then export a hooked version of the parent component.
+
+`generateTestHook` takes a string as its first argument - this is the
+identifier used in tests. It takes an optional second argument in case
+you also want to set your own ref generating function.
+
+```javascript
+// src/Scene.js
+
+import React, { Component } from 'react';
+import { TextInput } from 'react-native';
+import { hook } from 'cavy';
+
+class Scene extends Component {
+  render() {
+    return (
+      <View>
+        <TextInput
+          ref={this.props.generateTestHook('Scene.TextInput')}
+          onChangeText={...}
+        />
+      </View>      
+    );
+  }
+}
+
+const TestableScene = hook(Scene);
+export default TestableScene;
+```
+
+**Note on functional components:** Functional components cannot be assigned a ref since they don't have instances. We suggest using [Recompose](https://github.com/acdlite/recompose#build-your-own-libraries)'s `toClass` helper function to convert it to a class component first.
+
+### 3. Write test cases
+
+Write your spec functions referencing your hooked-up components. [See below](#available-spec-helpers) for a list of currently available spec
+helper functions.
+
+```javascript
+// specs/AppSpec.js
+
+export default function(spec) {
+  spec.describe('My feature', function() {
+    spec.it('works', async function() {
+      await spec.fillIn('Scene.TextInput', 'some string')
+      await spec.press('Scene.button');
+      await spec.exists('NextScene');
+    });
+  });
+}
+```
+
+**Congratulations! You are now all set up to start testing your app with Cavy.** Your tests will run automatically when you run your app.
+
+### Apps that use native code
 
 If you're not using [Create React Native App][crna], you'll need to register
 your `AppWrapper` as the main entry point with `AppRegistry` instead of your
@@ -209,30 +180,45 @@ AppRegistry.registerComponent('AppWrapper', () => AppWrapper);
 
 ## Available spec helpers
 
-`fillIn(identifier, str)` - fills in the identified 'TextInput'-compatible
-component with the provided string (str). Your component must respond to the
-property `onChangeText`.
+| Function | Description |
+| :------------ | :--------------- |
+| `fillIn(identifier, str)` | Fills in the identified component with the string<br>Component must respond to `onChangeText` |
+| `press(identifier)` | Presses the identified component<br>Component must respond to `onPress` |
+| `pause(integer)` | Pauses the test for this length of time (milliseconds)<br>Useful if you need to allow time for a response to be received before progressing |
+| `exists(identifier)` | Returns `true` if the component can be identified (i.e. is currently on screen) |
+| `notExists(identifier)` | As above, but checks for the absence of the component |
+| `findComponent(identifier)` | Returns the identified component<br>Can be used if your component doesn't respond to either `onChangeText` or `onPress`<br>For example:<br>```const picker = await spec.findComponent('Scene.modalPicker');```<br>```picker.open();```|
 
-`press(identifier)` - presses the identified component. Your component must
-respond to the property `onPress`.
+## Writing your own spec helpers
 
-`pause(integer)` - pauses the running test for the length of time, specified in
-milliseconds (integer). This is useful if you need to allow time for a response
-to be received before progressing.
+Want to test something not included above? Write your own spec helper function!
 
-`exists(identifier)` - returns `true` if the component can be identified (i.e.
-is currently on screen).
-
-`notExists(identifier)` - as above, but checks for the absence of the
-component.
-
-`findComponent(identifier)` - returns the identified component. This function
-should be used if your testable component does not respond to either
-`onChangeText` or `onPress`, for example:
+Your function will need to be asynchronous and should throw an error in situations
+where you want the test to fail. For example, the following tests whether a `<Text>` component displays the correct text.
 
 ```javascript
-picker = await spec.findComponent('Scene.modalPicker');
-picker.open();
+// specs/helpers.js
+
+export async function containsText(component, text) {
+  if (!component.props.children.includes(text)) {
+    throw new Error(`Could not find text ${text}`);
+  };
+}
+```
+```javascript
+// specs/AppSpec.js
+
+import { containsText } from './helpers';
+
+export default function(spec) {
+  spec.describe('Changing the text', function() {
+    spec.it('works', async function() {
+      await spec.press('Scene.button');
+      const text = await spec.findComponent('Scene.text');
+      await containsText(text, 'you pressed the button');
+    });
+  });
+}
 ```
 
 ## FAQs
