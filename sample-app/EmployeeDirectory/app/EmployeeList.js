@@ -33,7 +33,11 @@ export default class EmployeeList extends Component {
     });
   }
 
-  _renderItem = ({item}) => <EmployeeListItem navigation={this.props.navigation} data={item} />;
+  _renderItem = ({item}) =>
+    <EmployeeListItem
+      onPress={() => this.props.navigation.navigate('EmployeeDetails', { employeeId: item.id })}
+      {...item}
+    />;
   _itemSeparator = (sectionId, rowId) => <View key={rowId} style={styles.separator} />;
   _headerSearchBar = () => <SearchBar onChange={this.search.bind(this)} />;
   _keyExtractor = (item, index) => item.id.toString();

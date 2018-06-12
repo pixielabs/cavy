@@ -1,30 +1,31 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableHighlight, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TouchableHighlight,
+  StyleSheet
+} from 'react-native';
 
-import { hook } from 'cavy';
+import { testable } from 'cavy';
 
-class EmployeeListItem extends Component {
+const EmployeeListItem = props => (
+  <TouchableHighlight
+    underlayColor={'#EEEEEE'}
+  >
+    <View style={styles.container}>
+      <Image source={{ uri: props.picture }} style={styles.picture} />
+      <View>
+        <Text>
+          {props.firstName} {props.lastName}
+        </Text>
+        <Text style={styles.title}>{props.title}</Text>
+      </View>
+    </View>
+  </TouchableHighlight>
+);
 
-  render() {
-    const { state, navigate } = this.props.navigation;
-    return (
-      <TouchableHighlight
-        ref={this.props.generateTestHook(`${state.routeName}.${this.props.data.firstName}${this.props.data.lastName}`)}
-        onPress={ () => navigate('EmployeeDetails', {employeeId: this.props.data.id}) }
-        underlayColor={'#EEEEEE'}>
-        <View style={styles.container}>
-          <Image source={{uri: this.props.data.picture}} style={styles.picture} />
-          <View>
-            <Text>{this.props.data.firstName} {this.props.data.lastName}</Text>
-            <Text style={styles.title}>{this.props.data.title}</Text>
-          </View>
-        </View>
-      </TouchableHighlight>
-    )
-  }
-}
-
-export default hook(EmployeeListItem);
+export default testable('EmployeeListItem', 'id')(EmployeeListItem);
 
 const styles = StyleSheet.create({
   container: {

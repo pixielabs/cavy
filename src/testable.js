@@ -1,12 +1,23 @@
 import { compose, toClass, mapProps } from "recompose";
 import hook from "./hook";
 
-const mapRef = nameRef =>
-  mapProps(({ generateTestHook, ...args }) => ({
-    ...args,
-    ref: generateTestHook(nameRef)
+const updateNameRef = (props, nameRef, propName) => {
+  if (propName) {
+    const propValue = props[propName];
+    return propValue ? `${nameRef}.${propValue}` : nameRef;
+  }
+  return nameRef;
+};
+const mapRef = nameRef => propName => {
+  return mapProps(props => ({
+    ...props,
+    ref: props.generateTestHook(updateNameRef(props, nameRef, propName))
   }));
+};
 
-const enhancedTestable = nameRef => compose(hook, mapRef(nameRef), toClass);
+const enhancedTestable = nameRef => propName =>
+  compose(hook, mapRef(nameRef)(propName), toClass);
 
-export default nameRef => enhancedTestable(nameRef);
+export default (nameRef, propName = null) =>
+  enhancedTestable(nameRef)(propName)
+

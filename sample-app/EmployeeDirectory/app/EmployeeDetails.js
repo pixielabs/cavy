@@ -48,7 +48,11 @@ export default class EmployeeDetails extends Component {
         directReports =
           <FlatList style={styles.list}
                     data={this.state.reports}
-                    renderItem={ ({item}) => <EmployeeListItem navigation={this.props.navigation} data={item} /> }
+                    renderItem={ ({item}) =>
+                    <EmployeeListItem
+                      onPress={() => this.props.navigation.navigate('EmployeeDetails', { employeeId: item.id })}
+                      {...item}
+                    />}
                     ItemSeparatorComponent={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
                     keyExtractor={(item, index) => item.id.toString()}
           />;
