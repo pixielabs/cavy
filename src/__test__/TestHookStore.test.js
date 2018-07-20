@@ -14,15 +14,6 @@ describe("TestHookStore", () => {
     expect(testHookStore.get("key")).toEqual("value");
   })
 
-  it("warns when adding an existing component", () => {
-    const testHookStore = new TestHookStore();
-    testHookStore.add("key", "value1");
-    const warnSpy = jest.spyOn(global.console, 'warn');
-    testHookStore.add("key", "value2");
-
-    expect(warnSpy).toBeCalled();
-  });
-
   it("overrides when adding an existing component", () => {
     const testHookStore = new TestHookStore();
     testHookStore.add("key", "value1");
