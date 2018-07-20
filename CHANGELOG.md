@@ -1,3 +1,8 @@
+# 0.6.0
+
+- Remove `console.warn` when overwriting a component.
+- Add deprecation message when calling `wrap`.
+
 # 0.5.0
 
 - Support [cavy-cli](https://github.com/pixielabs/cavy-cli).
