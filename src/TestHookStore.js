@@ -19,10 +19,6 @@ export default class TestHookStore {
   //
   // Returns undefined.
   add(identifier, component) {
-    if (this.hooks[identifier]) {
-      console.warn(`A component for ${identifier} has already been registered. Overwriting.`);
-    }
-
     this.hooks[identifier] = component;
   }
 
