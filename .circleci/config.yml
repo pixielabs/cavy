@@ -44,6 +44,11 @@ jobs:
           name: Build app and run tests
           command: |
             cd ~/sample-app/CavyDirectory
+            rm -rf $TMPDIR/react-*
+            rm -rf $TMPDIR/haste-*
+            rm -rf $TMPDIR/metro-*
+            watchman watch-del-all
+            react-native start --reset-cache &
             cavy run-ios
 
 workflows:
