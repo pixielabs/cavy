@@ -35,7 +35,7 @@ jobs:
           name: Install sample app dependencies
           command: |
             mv sample-app ~/
-            cd ~/sample-app/EmployeeDirectory
+            cd ~/sample-app/CavyDirectory
             npm i
             npm link cavy
             cp rn-cli.config.js.example rn-cli.config.js
@@ -43,7 +43,7 @@ jobs:
       - run:
           name: Build app and run tests
           command: |
-            cd ~/sample-app/EmployeeDirectory
+            cd ~/sample-app/CavyDirectory
             cavy run-ios
 
 workflows:
