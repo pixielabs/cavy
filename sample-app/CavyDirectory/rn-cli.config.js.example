@@ -5,7 +5,7 @@
 // To do so, copy this file to rn-cli.config.js before running react-native.
 var path = require("path");
 var config = {
-    getProjectRoots() {
+    getWatchFolders() {
         return [
             // Keep your project directory.
             path.resolve(__dirname),
