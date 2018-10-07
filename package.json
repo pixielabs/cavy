@@ -21,7 +21,7 @@
     "specs"
   ],
   "peerDependencies": {
-    "react-native": ">= 0.40.0 <= 0.55"
+    "react-native": ">= 0.40.0 <= 0.57.2"
   },
   "author": "Pixie Labs",
   "license": "MIT",

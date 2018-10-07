@@ -70,10 +70,10 @@ or `npm`:
 
 ## Usage
 
-Check out [the sample app](https://github.com/pixielabs/cavy/tree/master/sample-app/EmployeeDirectory)
+Check out [the sample app](https://github.com/pixielabs/cavy/tree/master/sample-app/CavyDirectory)
 for example usage. Here it is running:
 
-![Sample app running](https://cloud.githubusercontent.com/assets/126989/22829358/193b5c0a-ef9a-11e6-994e-d4df852a6181.gif)
+![Sample app running](https://user-images.githubusercontent.com/126989/46582861-98358a80-ca45-11e8-989e-be33742651b1.gif)
 
 ### 1. Set up the Tester
 
