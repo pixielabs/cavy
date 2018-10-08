@@ -17,7 +17,9 @@ jobs:
 
       - run:
           name: Install Node dependencies
-          command: npm i
+          command: |
+            npm i
+            npm i react
 
       - run:
           name: Run unit tests
@@ -35,7 +37,7 @@ jobs:
           name: Install sample app dependencies
           command: |
             mv sample-app ~/
-            cd ~/sample-app/EmployeeDirectory
+            cd ~/sample-app/CavyDirectory
             npm i
             npm link cavy
             cp rn-cli.config.js.example rn-cli.config.js
@@ -43,7 +45,12 @@ jobs:
       - run:
           name: Build app and run tests
           command: |
-            cd ~/sample-app/EmployeeDirectory
+            cd ~/sample-app/CavyDirectory
+            rm -rf $TMPDIR/react-*
+            rm -rf $TMPDIR/haste-*
+            rm -rf $TMPDIR/metro-*
+            watchman watch-del-all
+            react-native start --reset-cache &
             cavy run-ios
 
 workflows:
