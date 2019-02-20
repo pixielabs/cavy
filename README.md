@@ -221,6 +221,37 @@ export default function(spec) {
 }
 ```
 
+## TypeScript support
+
+If you're using TypeScript, you'll want to add types in two places: in your tests themeselves, and in components that make use of the `generateTestHooks` prop provided by `hook`.
+
+### In tests
+
+To get type safety around your specs, just specify that the top-level function takes an object of type `TestScope`.
+
+```typescript
+import { TestScope } from 'cavy';
+
+export default function(spec: TestScope) {
+  spec.describe('My feature', function() {
+    // ...
+  });
+}
+```
+
+### In hooked components
+
+You can add support for `generateTestHook` by wrapping your component's props in `WithTestHook`. For example:
+
+```typescript
+type Props = WithTestHook<{
+  mobilePhone: string;
+  email: string;
+}>
+```
+
+`Props` will now have `generateTestHook`!
+
 ## FAQs
 
 #### How does Cavy compare to Appium? What is the benefit?
