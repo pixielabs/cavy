@@ -84,7 +84,7 @@ export default class Tester extends Component {
   async clearAsync() {
     if (this.props.clearAsyncStorage) {
       try {
-        await AsyncStorage.clear();
+        await AsyncStorage.getAllKeys().then(AsyncStorage.multiRemove)
       } catch(e) {
         console.warn("[Cavy] failed to clear AsyncStorage:", e);
       }
