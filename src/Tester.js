@@ -78,7 +78,9 @@ export default class Tester extends Component {
   }
 
   reRender() {
-    this.setState({key: Math.random()});
+    if (!this.props.preventReRender) {
+      this.setState({key: Math.random()});
+    }
   }
 
   async clearAsync() {
@@ -107,7 +109,8 @@ Tester.propTypes = {
   waitTime: PropTypes.number,
   startDelay: PropTypes.number,
   clearAsyncStorage: PropTypes.bool,
-  sendReport: PropTypes.bool
+  sendReport: PropTypes.bool,
+  preventReRender: PropTypes.bool
 };
 
 Tester.childContextTypes = {
@@ -118,5 +121,6 @@ Tester.defaultProps = {
   waitTime: 2000,
   startDelay: 0,
   clearAsyncStorage: false,
-  sendReport: false
+  sendReport: false,
+  preventReRender: false
 };
