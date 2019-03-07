@@ -111,6 +111,7 @@ export default class AppWrapper extends Component {
 | startDelay | Integer | Time in milliseconds before test execution begins | 0 |
 | clearAsyncStorage | Boolean | If true, clears AsyncStorage between each test e.g. to remove a logged in user | false |
 | sendReport | Boolean | If true, Cavy sends a report to [cavy-cli][cli] | false |
+| preventReRender | Boolean | If true, prevent Cavy from resetting between test cases | false |
 
 ### 2. Hook up components
 
