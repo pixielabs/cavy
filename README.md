@@ -6,11 +6,12 @@
 ![Cavy logo](https://cloud.githubusercontent.com/assets/126989/22546798/6cf18938-e936-11e6-933f-da756b9ee7b8.png)
 
 **Cavy** is a cross-platform integration test framework for React Native, by
-[Pixie Labs](http://pixielabs.io).
+[Pixie Labs](http://pixielabs.io). You can run tests in-app, or via Cavy's
+command line interface **[cavy-cli][cli]**.
 
-This README covers installing and setting up Cavy, writing Cavy tests and FAQs.
-For information on how to use Cavy's **command line interface**, check out
-[cavy-cli][cli].
+This README covers installing and setting up Cavy, writing tests and FAQs.
+For information on how to use Cavy's command line interface, check out the
+[corresponding README][cli].
 
 ## Table of Contents
 - [How does it work?](#how-does-it-work)
