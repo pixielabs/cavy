@@ -22,6 +22,7 @@ For information on how to use Cavy's command line interface, check out the
   - [1. Set up the Tester](#1-set-up-the-tester)
   - [2. Hook up components](#2-hook-up-components)
   - [3. Write test cases](#3-write-test-cases)
+  - [4. Run tests](#4-run-tests)
   - [Apps that use native code](#apps-that-use-native-code)
 - [Available spec helpers](#available-spec-helpers)
 - [Writing your own spec helpers](#writing-your-own-spec-helpers)
@@ -176,8 +177,12 @@ export default function(spec) {
 }
 ```
 
-**Congratulations! You are now all set up to start testing your app with Cavy.**
-Your tests will run automatically when you run your app.
+### 4. Run tests
+Congratulations! You are now all set up to start testing your app with Cavy.
+
+Following the set up above, your tests will run automatically when you boot your
+app. However, if using [cavy-cli][cli], you can configure your app to only run
+tests when initiated through the command line.
 
 ### Apps that use native code
 
