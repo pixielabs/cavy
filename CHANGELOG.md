@@ -1,6 +1,11 @@
+# 0.6.2
+
+- Fix for when `clearAsyncStorage` option is used but there are no entries in
+AsyncStorage. Thanks [haikyuu](https://github.com/haikyuu)!
+
 # 0.6.1
 
-- Update `babel-presets-env` and `.babelrc`.  Thanks 
+- Update `babel-presets-env` and `.babelrc`.  Thanks
   [eriben](https://github.com/eriben).
 
 # 0.6.0
