@@ -182,7 +182,8 @@ Congratulations! You are now all set up to start testing your app with Cavy.
 
 Following the set up above, your tests will run automatically when you boot your
 app. However, if using [cavy-cli][cli], you can configure your app to only run
-tests when initiated through the command line.
+tests when initiated through the command line. See the [cavy-cli][cli] README
+for further instructions.
 
 ### Apps that use native code
 
