@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import hoistStatics from 'hoist-non-react-statics';
 
 import TestHookStore from './TestHookStore';
+import { TesterContext } from './Tester';
 
 // Public: Higher-order React component to factilitate adding hooks to the
 // global test hook store.
@@ -25,13 +26,8 @@ import TestHookStore from './TestHookStore';
 //
 // Returns the new component.
 export default function hook(WrappedComponent) {
+
   const wrapperComponent = class extends Component {
-
-    constructor(props, context) {
-      super(props, context);
-      this.generateTestHook = this.generateTestHook.bind(this);
-    }
-
     // Public: Call `this.props.generateTestHook` in a ref within your
     // component to add it to the test hook store for later use in a spec.
     //
@@ -72,13 +68,18 @@ export default function hook(WrappedComponent) {
     }
 
     render() {
-      return <WrappedComponent generateTestHook={this.generateTestHook} {...this.props} />;
+      console.log(this.context);
+      return (
+        <WrappedComponent generateTestHook={this.generateTestHook} {...this.props} />
+      )
     }
   };
 
-  wrapperComponent.contextTypes = {
-    testHooks: PropTypes.instanceOf(TestHookStore)
-  };
+  wrapperComponent.contextType = TesterContext;
 
-  return hoistStatics(wrapperComponent, WrappedComponent);
+  // wrapperComponent.contextTypes = {
+  //   testHooks: PropTypes.instanceOf(TestHookStore)
+  // };
+
+  return wrapperComponent;
 }

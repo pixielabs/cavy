@@ -21,7 +21,7 @@
     "specs"
   ],
   "peerDependencies": {
-    "react-native": ">= 0.40.0 <= 0.57.2"
+    "react-native": "~0.59.0"
   },
   "author": "Pixie Labs",
   "license": "MIT",
@@ -32,7 +32,8 @@
   "dependencies": {
     "create-react-class": "^15.6.0",
     "hoist-non-react-statics": "^2.5.0",
-    "prop-types": "^15.5.10"
+    "prop-types": "^15.5.10",
+    "react": "^16.8.6"
   },
   "devDependencies": {
     "babel-jest": "^21.2.0",

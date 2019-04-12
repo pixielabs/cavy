@@ -9,7 +9,7 @@
   "dependencies": {
     "cavy": "^0.6.1",
     "react": "16.5.0",
-    "react-native": "0.57.1",
+    "react-native": "0.59.0",
     "react-navigation": "^2.17.0"
   },
   "devDependencies": {

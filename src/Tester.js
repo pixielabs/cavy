@@ -48,20 +48,23 @@ import {
 //       );
 //     }
 //   }
-export default class Tester extends Component {
 
-  getChildContext() {
-    return {
-      testHooks: this.testHookStore
-    }
-  }
+export const TesterContext = React.createContext();
+
+export default class Tester extends Component {
+  //
+  // getChildContext() {
+  //   return {
+  //     testHooks: this.testHookStore
+  //   }
+  // }
 
   constructor(props, context) {
     super(props, context);
     this.state = {
       key: Math.random()
     };
-    this.testHookStore = props.store;
+    // this.testHookStore = props.store;
   }
 
   componentDidMount() {
@@ -93,13 +96,16 @@ export default class Tester extends Component {
 
   render() {
     return (
-      <View key={this.state.key} style={{flex: 1}}>
-        {Children.only(this.props.children)}
-      </View>
+      <TesterContext.Provider value={'foo'}>
+        <View key={this.state.key} style={{flex: 1}}>
+          {Children.only(this.props.children)}
+        </View>
+      </TesterContext.Provider>
     );
   }
-
 }
+
+// export const TesterContextConsumer = TesterContext.Consumer;
 
 Tester.propTypes = {
   store: PropTypes.instanceOf(TestHookStore),
@@ -110,9 +116,9 @@ Tester.propTypes = {
   sendReport: PropTypes.bool
 };
 
-Tester.childContextTypes = {
-  testHooks: PropTypes.instanceOf(TestHookStore)
-};
+// Tester.childContextTypes = {
+//   testHooks: PropTypes.instanceOf(TestHookStore)
+// };
 
 Tester.defaultProps = {
   waitTime: 2000,
