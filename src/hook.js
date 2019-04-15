@@ -53,33 +53,29 @@ export default function hook(WrappedComponent) {
     // Returns the ref-generating anonymous function which will be called by
     // React.
     generateTestHook(identifier, f = () => {}) {
+      const testHookStore = this.context;
       return (component) => {
-        if (!this.context.testHooks) {
+        if (!testHookStore) {
           f(component);
           return
         }
         if (component) {
-          this.context.testHooks.add(identifier, component);
+          testHookStore.add(identifier, component);
         } else {
-          this.context.testHooks.remove(identifier, component);
+          testHookStore.remove(identifier, component);
         }
         f(component);
       }
     }
 
     render() {
-      console.log(this.context);
       return (
-        <WrappedComponent generateTestHook={this.generateTestHook} {...this.props} />
+        <WrappedComponent generateTestHook={this.generateTestHook.bind(this)} {...this.props} />
       )
     }
   };
 
   wrapperComponent.contextType = TesterContext;
-
-  // wrapperComponent.contextTypes = {
-  //   testHooks: PropTypes.instanceOf(TestHookStore)
-  // };
 
   return wrapperComponent;
 }

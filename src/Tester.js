@@ -5,9 +5,7 @@ import { AsyncStorage } from 'react-native';
 import TestHookStore from './TestHookStore';
 import TestScope from './TestScope';
 
-import {
-  View
-} from 'react-native';
+import { View } from 'react-native';
 
 // Public: Wrap your entire app in Tester to run tests against that app,
 // interacting with registered components in your test cases via the Cavy
@@ -52,19 +50,13 @@ import {
 export const TesterContext = React.createContext();
 
 export default class Tester extends Component {
-  //
-  // getChildContext() {
-  //   return {
-  //     testHooks: this.testHookStore
-  //   }
-  // }
 
   constructor(props, context) {
     super(props, context);
     this.state = {
       key: Math.random()
     };
-    // this.testHookStore = props.store;
+    this.testHookStore = props.store;
   }
 
   componentDidMount() {
@@ -96,7 +88,7 @@ export default class Tester extends Component {
 
   render() {
     return (
-      <TesterContext.Provider value={'foo'}>
+      <TesterContext.Provider value={this.testHookStore}>
         <View key={this.state.key} style={{flex: 1}}>
           {Children.only(this.props.children)}
         </View>
@@ -104,8 +96,6 @@ export default class Tester extends Component {
     );
   }
 }
-
-// export const TesterContextConsumer = TesterContext.Consumer;
 
 Tester.propTypes = {
   store: PropTypes.instanceOf(TestHookStore),
@@ -115,10 +105,6 @@ Tester.propTypes = {
   clearAsyncStorage: PropTypes.bool,
   sendReport: PropTypes.bool
 };
-
-// Tester.childContextTypes = {
-//   testHooks: PropTypes.instanceOf(TestHookStore)
-// };
 
 Tester.defaultProps = {
   waitTime: 2000,
