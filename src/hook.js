@@ -54,6 +54,7 @@ export default function hook(WrappedComponent) {
     // React.
     generateTestHook(identifier, f = () => {}) {
       const testHookStore = this.context;
+
       return (component) => {
         if (!testHookStore) {
           f(component);
@@ -70,11 +71,14 @@ export default function hook(WrappedComponent) {
 
     render() {
       return (
-        <WrappedComponent generateTestHook={this.generateTestHook.bind(this)} {...this.props} />
+        <WrappedComponent
+          generateTestHook={this.generateTestHook.bind(this)}
+          {...this.props}
+        />
       )
     }
   };
-
+  
   wrapperComponent.contextType = TesterContext;
 
   return wrapperComponent;

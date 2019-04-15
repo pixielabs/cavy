@@ -11,8 +11,8 @@ import { View } from 'react-native';
 // interacting with registered components in your test cases via the Cavy
 // helpers (defined in TestScope).
 //
-// This component wraps your app inside a <View> to facilitate
-// re-rendering with a new key after each test case.
+// This component wraps your app inside a <TesterContext.Provider> which ensures
+// the testHookStore is in scope when Cavy runs your tests.
 //
 // store             - An instance of TestHookStore.
 // specs             - An array of spec functions.
@@ -88,10 +88,8 @@ export default class Tester extends Component {
 
   render() {
     return (
-      <TesterContext.Provider value={this.testHookStore}>
-        <View key={this.state.key} style={{flex: 1}}>
-          {Children.only(this.props.children)}
-        </View>
+      <TesterContext.Provider key={this.state.key} value={this.testHookStore}>
+        {Children.only(this.props.children)}
       </TesterContext.Provider>
     );
   }
