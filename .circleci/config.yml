@@ -41,7 +41,6 @@ jobs:
             cd ~/sample-app/CavyDirectory
             npm i
             npm link cavy
-            cp rn-cli.config.js.example rn-cli.config.js
 
       - run:
           name: Build app and run tests
