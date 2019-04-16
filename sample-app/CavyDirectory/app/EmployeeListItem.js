@@ -1,30 +1,21 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableHighlight, StyleSheet } from 'react-native';
 
-import { hook } from 'cavy';
-
-class EmployeeListItem extends Component {
-
-  render() {
-    const { state, navigate } = this.props.navigation;
-    return (
-      <TouchableHighlight
-        ref={this.props.generateTestHook(`${state.routeName}.${this.props.data.firstName}${this.props.data.lastName}`)}
-        onPress={ () => navigate('EmployeeDetails', {employeeId: this.props.data.id}) }
-        underlayColor={'#EEEEEE'}>
-        <View style={styles.container}>
-          <Image source={{uri: this.props.data.picture}} style={styles.picture} />
-          <View>
-            <Text>{this.props.data.firstName} {this.props.data.lastName}</Text>
-            <Text style={styles.title}>{this.props.data.title}</Text>
-          </View>
+export default ({ data, navigation }) => {
+  return (
+    <TouchableHighlight
+      onPress={ () => navigation.navigate('EmployeeDetails', {employeeId: data.id}) }
+      underlayColor={'#EEEEEE'}>
+      <View style={styles.container}>
+        <Image source={{uri: data.picture}} style={styles.picture} />
+        <View>
+          <Text>{data.firstName} {data.lastName}</Text>
+          <Text style={styles.title}>{data.title}</Text>
         </View>
-      </TouchableHighlight>
-    )
-  }
-}
-
-export default hook(EmployeeListItem);
+      </View>
+    </TouchableHighlight>
+  )
+};
 
 const styles = StyleSheet.create({
   container: {
