@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableHighlight, StyleSheet } from 'react-native';
 
+import { useCavy } from 'cavy';
+
 export default ({ data, navigation }) => {
+  const generateTestHook = useCavy();
+  
   return (
     <TouchableHighlight
+      ref={generateTestHook(`${navigation.state.routeName}.${data.firstName}${data.lastName}`)}
       onPress={ () => navigation.navigate('EmployeeDetails', {employeeId: data.id}) }
       underlayColor={'#EEEEEE'}>
       <View style={styles.container}>
