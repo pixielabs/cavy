@@ -5,8 +5,6 @@ import { AsyncStorage } from 'react-native';
 import TestHookStore from './TestHookStore';
 import TestScope from './TestScope';
 
-import { View } from 'react-native';
-
 // Public: Wrap your entire app in Tester to run tests against that app,
 // interacting with registered components in your test cases via the Cavy
 // helpers (defined in TestScope).
