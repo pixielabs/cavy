@@ -17,7 +17,7 @@ import { TesterContext } from './Tester';
 //   import { hook } from 'cavy';
 //
 //   class MyComponent extends React.Component {
-//     // ....
+//     // ...
 //   }
 //
 //   const TestableMyComponent = hook(MyComponent);
