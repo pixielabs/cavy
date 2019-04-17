@@ -21,7 +21,7 @@
     "specs"
   ],
   "peerDependencies": {
-    "react-native": ">= 0.40.0 <= 0.57.2"
+    "react-native": ">= 0.40.0 <= 0.59.4"
   },
   "author": "Pixie Labs",
   "license": "MIT",
@@ -35,6 +35,7 @@
     "prop-types": "^15.5.10"
   },
   "devDependencies": {
+    "@babel/runtime": "^7.4.3",
     "babel-jest": "^21.2.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react-native": "^4.0.0",
