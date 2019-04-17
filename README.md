@@ -6,11 +6,12 @@
 ![Cavy logo](https://cloud.githubusercontent.com/assets/126989/22546798/6cf18938-e936-11e6-933f-da756b9ee7b8.png)
 
 **Cavy** is a cross-platform integration test framework for React Native, by
-[Pixie Labs](http://pixielabs.io).
+[Pixie Labs](http://pixielabs.io). You can run tests in-app, or via Cavy's
+command line interface **[cavy-cli][cli]**.
 
-This README covers installing and setting up Cavy, writing Cavy tests and FAQs.
-For information on how to use Cavy's **command line interface**, check out
-[cavy-cli][cli].
+This README covers installing and setting up Cavy, writing tests and FAQs.
+For information on how to use Cavy's command line interface, check out the
+[corresponding README][cli].
 
 ## Table of Contents
 - [How does it work?](#how-does-it-work)
@@ -21,6 +22,7 @@ For information on how to use Cavy's **command line interface**, check out
   - [1. Set up the Tester](#1-set-up-the-tester)
   - [2. Hook up components](#2-hook-up-components)
   - [3. Write test cases](#3-write-test-cases)
+  - [4. Run tests](#4-run-tests)
   - [Apps that use native code](#apps-that-use-native-code)
 - [Available spec helpers](#available-spec-helpers)
 - [Writing your own spec helpers](#writing-your-own-spec-helpers)
@@ -68,6 +70,10 @@ or `npm`:
 
     npm i --save-dev cavy
 
+If you're using TypeScript, you'll also need to install the types package:
+
+    yarn add @types/cavy
+
 ## Usage
 
 Check out [the sample app](https://github.com/pixielabs/cavy/tree/master/sample-app/CavyDirectory)
@@ -78,7 +84,8 @@ for example usage. Here it is running:
 ### 1. Set up the Tester
 
 Import `Tester`, `TestHookStore` and your specs in your top-level JS file
-(typically this is your `index.{ios,android}.js` files). Instantiate a new `TestHookStore` and render your app inside a `Tester`.
+(typically this is your `index.{ios,android}.js` files). Instantiate a new
+`TestHookStore` and render your app inside a `Tester`.
 
 ```javascript
 // index.ios.js
@@ -145,11 +152,15 @@ const TestableScene = hook(Scene);
 export default TestableScene;
 ```
 
-**Note on functional components:** Functional components cannot be assigned a ref since they don't have instances. We suggest using [Recompose](https://github.com/acdlite/recompose#build-your-own-libraries)'s `toClass` helper function to convert it to a class component first.
+**Note on functional components:** Functional components cannot be assigned a
+ref since they don't have instances. We suggest using
+[Recompose](https://github.com/acdlite/recompose#build-your-own-libraries)'s
+`toClass` helper function to convert it to a class component first.
 
 ### 3. Write test cases
 
-Write your spec functions referencing your hooked-up components. [See below](#available-spec-helpers) for a list of currently available spec
+Write your spec functions referencing your hooked-up components.
+[See below](#available-spec-helpers) for a list of currently available spec
 helper functions.
 
 ```javascript
@@ -166,7 +177,13 @@ export default function(spec) {
 }
 ```
 
-**Congratulations! You are now all set up to start testing your app with Cavy.** Your tests will run automatically when you run your app.
+### 4. Run tests
+Congratulations! You are now all set up to start testing your app with Cavy.
+
+Following the set up above, your tests will run automatically when you boot your
+app. However, if using [cavy-cli][cli], you can configure your app to only run
+tests when initiated through the command line. See the [cavy-cli][cli] README
+for further instructions.
 
 ### Apps that use native code
 
@@ -193,8 +210,9 @@ AppRegistry.registerComponent('AppWrapper', () => AppWrapper);
 
 Want to test something not included above? Write your own spec helper function!
 
-Your function will need to be asynchronous and should throw an error in situations
-where you want the test to fail. For example, the following tests whether a `<Text>` component displays the correct text.
+Your function will need to be asynchronous and should throw an error in
+situations where you want the test to fail. For example, the following tests
+whether a `<Text>` component displays the correct text.
 
 ```javascript
 // specs/helpers.js
