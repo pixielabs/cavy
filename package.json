@@ -21,7 +21,8 @@
     "specs"
   ],
   "peerDependencies": {
-    "react-native": "~0.59.0"
+    "react-native": "~0.59.0",
+    "react": "16.8.3"
   },
   "author": "Pixie Labs",
   "license": "MIT",
@@ -31,9 +32,7 @@
   "homepage": "https://github.com/pixielabs/cavy#readme",
   "dependencies": {
     "create-react-class": "^15.6.0",
-    "hoist-non-react-statics": "^2.5.0",
-    "prop-types": "^15.5.10",
-    "react": "^16.8.6"
+    "prop-types": "^15.5.10"
   },
   "devDependencies": {
     "@babel/runtime": "^7.4.3",
