@@ -25,8 +25,6 @@ import createReactClass from 'create-react-class';
 //     }
 //   }
 export default function wrap(statelessComponent) {
-  console.log("Cavy's wrap function is deprecated and will be removed in 1.0.0. Please use Recompose's `toClass` instead. https://github.com/acdlite/recompose#build-your-own-libraries");
-
   var reactClass = {};
 
   Object.keys(statelessComponent).forEach(function (key) {
