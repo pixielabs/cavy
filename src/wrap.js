@@ -27,7 +27,10 @@ import { useImperativeHandle, forwardRef } from 'react';
 //   export default hook(MyComponent);
 //
 export default function wrap(functionComponent) {
+  // `forwardRef` accepts a render function that receives our props and ref.
   return forwardRef((props, ref) => {
+    // It returns the wrapped component after calling `useImperativeHandle`, so
+    // that our ref can be used to call the inner function component's props.
     useImperativeHandle(ref, () => props);
     return functionComponent(props);
   });
