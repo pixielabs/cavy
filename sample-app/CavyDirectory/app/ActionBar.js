@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import {View, Text, Image, StyleSheet, TouchableOpacity, Linking} from 'react-native';
+import {View, StyleSheet, Linking} from 'react-native';
 
-import { hook } from 'cavy';
+import ActionButton from './ActionButton';
+
+import { hook, wrap } from 'cavy';
 
 class ActionBar extends Component {
 
@@ -28,20 +30,13 @@ class ActionBar extends Component {
   }
 
   render() {
+    const TestableActionButton = wrap(ActionButton);
+
     return (
       <View style={styles.container}>
-        <TouchableOpacity ref={this.props.generateTestHook('ActionBar.EmailButton')} onPress={this.sendMail.bind(this)} style={styles.action}>
-          <Image source={require('./assets/email.png')} style={styles.icon} />
-          <Text style={styles.actionText}>email</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.callNumber.bind(this)} style={styles.action}>
-          <Image source={require('./assets/call.png')} style={styles.icon} />
-          <Text style={styles.actionText}>call</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.sendMessage.bind(this)} style={styles.action}>
-          <Image source={require('./assets/sms.png')} style={styles.icon} />
-          <Text style={styles.actionText}>message</Text>
-        </TouchableOpacity>
+        <TestableActionButton ref={this.props.generateTestHook('ActionBar.EmailButton')} text="email" icon={require('./assets/email.png')} onPress={this.sendMail.bind(this)}/>
+        <ActionButton text="call" icon={require('./assets/call.png')} onPress={this.callNumber.bind(this)}/>
+        <ActionButton text="message" icon={require('./assets/sms.png')} onPress={this.sendMessage.bind(this)}/>
       </View>
     );
   }
@@ -55,16 +50,5 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     backgroundColor: '#FAFAFF',
     paddingVertical: 8
-  },
-  action: {
-    flex: 1,
-    alignItems: 'center'
-  },
-  actionText: {
-    color: '#007AFF'
-  },
-  icon: {
-    height: 20,
-    width: 20
   }
 });

@@ -1,11 +1,7 @@
 import createReactClass from 'create-react-class';
 
-// Deprecated: Wrap a stateless (purely functional) component in a
+// Wrap a stateless (purely functional) component in a
 // non-stateless component so that a `ref` can be added.
-//
-// Cavy's wrap(statelessComponent) is deprecated. We suggest using Recompose's
-// `toClass` helper function instead.
-// See: https://github.com/acdlite/recompose#build-your-own-libraries
 //
 // For example, the react-native-elements <Button /> is purely functional, so
 // a ref cannot be assigned and thus it cannot be added to your Cavy test hook
