@@ -121,8 +121,12 @@ export default class AppWrapper extends Component {
 
 ### 2. Hook up components
 
-Add a test hook to any components you want to test by adding a ref and using the
-`generateTestHook` function. Then export a hooked version of the parent component.
+To add test hooks to components, first add a ref using the `generateTestHook`
+function then export a hooked version of the parent component.
+
+If you need to test a function component, create a testable version of it using
+the `wrap` function. Then assign it a ref using `generateTestHook` (see example
+below).
 
 `generateTestHook` takes a string as its first argument - this is the
 identifier used in tests. It takes an optional second argument in case
@@ -133,15 +137,24 @@ you also want to set your own ref generating function.
 
 import React, { Component } from 'react';
 import { TextInput } from 'react-native';
-import { hook } from 'cavy';
+import { FunctionComponent } from 'some-ui-library';
+import { hook, wrap } from 'cavy';
 
 class Scene extends Component {
   render() {
+    // If you need to test a function component, use `wrap` so that you can
+    // assign it a ref.
+    const TestableFunctionComponent = wrap(FunctionComponent);
+
     return (
       <View>
         <TextInput
           ref={this.props.generateTestHook('Scene.TextInput')}
           onChangeText={...}
+        />
+        <TestableFunctionComponent
+          ref={this.props.generateTestHook('Scene.FunctionComponent')}
+          otherProp={...}
         />
       </View>      
     );
