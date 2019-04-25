@@ -1,4 +1,4 @@
-import createReactClass from 'create-react-class';
+import { useImperativeHandle, forwardRef } from 'react';
 
 // Wrap a stateless (purely functional) component in a
 // non-stateless component so that a `ref` can be added.
@@ -11,36 +11,27 @@ import createReactClass from 'create-react-class';
 //
 // Example
 //
-//   import {
-//     Button
-//   } from 'react-native-elements';
-//   import { wrap } from 'cavy';
+//   import { Button } from 'react-native-elements';
+//   import { hook, wrap } from 'cavy';
 //
 //   class MyComponent extends React.Component {
 //     // ...
 //     render() {
-//       const wrappedButton = wrap(Button);
+//       const WrappedButton = wrap(Button);
 //
-//       // ...
+//       return (
+//         <WrappedButton ref={this.generateTestHook('button')} onPress={}/>
+//       )
 //     }
 //   }
-export default function wrap(statelessComponent) {
-  var reactClass = {};
+//   export default hook(MyComponent);
+//
+export default function wrap(functionComponent) {
 
-  Object.keys(statelessComponent).forEach(function (key) {
-    reactClass[key] = statelessComponent[key];
-  });
-
-  if (statelessComponent.defaultProps) {
-    reactClass.getDefaultProps = function() {
-      return statelessComponent.defaultProps;
-    }
-  }
-
-  reactClass.displayName = statelessComponent.name || statelessComponent.displayName;
-  reactClass.render = function() {
-    return statelessComponent(this.props, this.context);
+  const wrappedComponent = function(props, ref) {
+    useImperativeHandle(ref, () => props);
+    return functionComponent(props);
   };
 
-  return createReactClass(reactClass);
+  return forwardRef(wrappedComponent);
 }
