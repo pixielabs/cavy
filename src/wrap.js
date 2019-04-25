@@ -27,11 +27,8 @@ import { useImperativeHandle, forwardRef } from 'react';
 //   export default hook(MyComponent);
 //
 export default function wrap(functionComponent) {
-
-  const wrappedComponent = function(props, ref) {
+  return forwardRef((props, ref) => {
     useImperativeHandle(ref, () => props);
     return functionComponent(props);
-  };
-
-  return forwardRef(wrappedComponent);
+  });
 }
