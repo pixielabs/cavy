@@ -43,6 +43,12 @@ jobs:
             npm link cavy
 
       - run:
+          name: Link React versions together
+          command: |
+            cd ~/repo
+            npm link ../sample-app/CavyDirectory/node_modules/react
+
+      - run:
           name: Build app and run tests
           command: |
             cd ~/sample-app/CavyDirectory
