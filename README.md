@@ -133,6 +133,7 @@ you also want to set your own ref generating function.
 
 import React, { Component } from 'react';
 import { View, TextInput } from 'react-native';
+
 import { hook } from 'cavy';
 
 class Scene extends Component {
@@ -159,8 +160,9 @@ to obtain a `generateTestHook` function:
 // src/components/MyComponent.js
 
 import React, { Component } from 'react';
+import { View, TextInput } from 'react-native';
+
 import { useCavy } from 'cavy';
-import { TextInput } from 'react-native';
 
 export default () => {
   const generateTestHook = useCavy();
