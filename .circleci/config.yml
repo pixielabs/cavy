@@ -44,8 +44,7 @@ jobs:
 
       - run:
           name: Link React versions together
-          command: |
-            cd $CIRCLE_WORKING_DIRECTORY
+          command:
             npm link ../sample-app/CavyDirectory/node_modules/react
 
       - run:
