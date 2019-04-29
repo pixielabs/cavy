@@ -1,13 +1,17 @@
 import { useImperativeHandle, forwardRef } from 'react';
 
-// Wrap a stateless (purely functional) component in a
-// non-stateless component so that a `ref` can be added.
+// Higher-order component that wraps a function component in `forwardRef()`
+// and uses `useImperativeHandle` to make the properties of that component
+// available via the component ref so that Cavy can interact directly with it
+// via the testHookStore.
 //
-// For example, the react-native-elements <Button /> is purely functional, so
-// a ref cannot be assigned and thus it cannot be added to your Cavy test hook
-// store.
+// More information on forwarding refs:
+// <https://reactjs.org/docs/forwarding-refs.html>
 //
-// statelessComponent - The purely functional React component you want to wrap.
+// More information on `useImperativeHandle`:
+// <https://reactjs.org/docs/hooks-reference.html#useimperativehandle>
+//
+// functionComponent - The function component you want to test.
 //
 // Example
 //
