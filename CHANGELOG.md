@@ -1,10 +1,10 @@
 # 1.0.0
 
+- **BREAKING** Drop official support for React Native < 0.59 and React < 16.8.0.
 - Update `<Tester>` to use the newer Context API introduced in React 16.3.
 - Added a custom [React Hook](https://reactjs.org/docs/hooks-intro.html) called
   `useCavy()` which can be used to access `generateTestHook` from your
   functional components.
-- Drop official support for React Native < 0.59 and React < 16.8.0.
 
 This version brings Cavy in line with how people use React nowadays (moving
 towards using functional components). However React Hooks were added in React
