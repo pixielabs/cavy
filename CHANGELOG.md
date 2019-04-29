@@ -1,3 +1,10 @@
+# 1.1.0
+
+- Un-deprecate `wrap` (was deprecated in 0.6.0) and rewrite it using React
+  Hooks. `wrap` is now the accepted way to test function components, replacing
+  our previous recommendation to use Recompose's `toClass` (which has been
+  deprecated in favour of React Hooks). 🎉
+
 # 1.0.0
 
 - **BREAKING** Drop official support for React Native < 0.59 and React < 16.8.0.
