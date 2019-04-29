@@ -190,11 +190,6 @@ export default () => {
 };
 ```
 
-**Note on interacting with functional components:** Functional components
-cannot be assigned a ref since they don't have instances. We suggest using
-[Recompose](https://github.com/acdlite/recompose#build-your-own-libraries)'s
-`toClass` helper function to convert it to a class component first.
-
 ### 3. Write test cases
 
 Write your spec functions referencing your hooked-up components.
