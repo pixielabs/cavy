@@ -20,7 +20,7 @@ jobs:
           name: Install Node dependencies
           command: |
             npm i
-            npm i react
+            npm i react@16.8.3
 
       - run:
           name: Run unit tests
@@ -41,6 +41,11 @@ jobs:
             cd ~/sample-app/CavyDirectory
             npm i
             npm link cavy
+
+      - run:
+          name: Link React versions together
+          command:
+            npm link ../sample-app/CavyDirectory/node_modules/react
 
       - run:
           name: Build app and run tests

@@ -1,3 +1,21 @@
+# 1.0.0
+
+- Update `<Tester>` to use the newer Context API introduced in React 16.3.
+- Added a custom [React Hook](https://reactjs.org/docs/hooks-intro.html) called
+  `useCavy()` which can be used to access `generateTestHook` from your
+  functional components.
+- Drop official support for React Native < 0.59 and React < 16.8.0.
+
+This version brings Cavy in line with how people use React nowadays (moving
+towards using functional components). However React Hooks were added in React
+Native 0.59 and React 16.8.0, so you will need to upgrade your application to
+continue to use Cavy from version 1.0.0 onwards. You can continue to use
+0.6.2 in the meantime.
+
+If you don't use `useCavy()` Cavy 1.0.0 should work with React Native >= 0.57.5
+which was [the earliest version that supported the new Context API](https://github.com/facebook/react-native/issues/21975)
+however this is not officially supported.
+
 # 0.6.2
 
 - Fix for when `clearAsyncStorage` option is used but there are no entries in

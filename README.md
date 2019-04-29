@@ -136,7 +136,7 @@ you also want to set your own ref generating function.
 // src/Scene.js
 
 import React, { Component } from 'react';
-import { TextInput } from 'react-native';
+import { View, TextInput } from 'react-native';
 import { FunctionComponent } from 'some-ui-library';
 import { hook, wrap } from 'cavy';
 
@@ -165,8 +165,33 @@ const TestableScene = hook(Scene);
 export default TestableScene;
 ```
 
-**Note on functional components:** Functional components cannot be assigned a
-ref since they don't have instances. We suggest using
+If your component is functional, you can call the custom React Hook `useCavy()`
+to obtain a `generateTestHook` function:
+
+```javascript
+// src/components/MyComponent.js
+
+import React, { Component } from 'react';
+import { View, TextInput } from 'react-native';
+
+import { useCavy } from 'cavy';
+
+export default () => {
+  const generateTestHook = useCavy();
+  
+  return (
+    <View>
+      <TextInput
+        ref={generateTestHook('MyComponent.TextInput')}
+        onChangeText={...}
+      />
+    </View>   
+  )
+};
+```
+
+**Note on interacting with functional components:** Functional components
+cannot be assigned a ref since they don't have instances. We suggest using
 [Recompose](https://github.com/acdlite/recompose#build-your-own-libraries)'s
 `toClass` helper function to convert it to a class component first.
 
