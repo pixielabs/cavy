@@ -1,52 +1,41 @@
-import createReactClass from 'create-react-class';
+import { useImperativeHandle, forwardRef } from 'react';
 
-// Deprecated: Wrap a stateless (purely functional) component in a
-// non-stateless component so that a `ref` can be added.
+// Higher-order component that wraps a function component in `forwardRef()`
+// and uses `useImperativeHandle` to make the properties of that component
+// available via the component ref so that Cavy can interact directly with it
+// via the testHookStore.
 //
-// Cavy's wrap(statelessComponent) is deprecated. We suggest using Recompose's
-// `toClass` helper function instead.
-// See: https://github.com/acdlite/recompose#build-your-own-libraries
+// More information on forwarding refs:
+// <https://reactjs.org/docs/forwarding-refs.html>
 //
-// For example, the react-native-elements <Button /> is purely functional, so
-// a ref cannot be assigned and thus it cannot be added to your Cavy test hook
-// store.
+// More information on `useImperativeHandle`:
+// <https://reactjs.org/docs/hooks-reference.html#useimperativehandle>
 //
-// statelessComponent - The purely functional React component you want to wrap.
+// functionComponent - The function component you want to test.
 //
 // Example
 //
-//   import {
-//     Button
-//   } from 'react-native-elements';
-//   import { wrap } from 'cavy';
+//   import { Button } from 'react-native-elements';
+//   import { hook, wrap } from 'cavy';
 //
 //   class MyComponent extends React.Component {
 //     // ...
 //     render() {
-//       const wrappedButton = wrap(Button);
+//       const WrappedButton = wrap(Button);
 //
-//       // ...
+//       return (
+//         <WrappedButton ref={this.generateTestHook('button')} onPress={}/>
+//       )
 //     }
 //   }
-export default function wrap(statelessComponent) {
-  console.log("Cavy's wrap function is deprecated and will be removed in 1.0.0. Please use Recompose's `toClass` instead. https://github.com/acdlite/recompose#build-your-own-libraries");
-
-  var reactClass = {};
-
-  Object.keys(statelessComponent).forEach(function (key) {
-    reactClass[key] = statelessComponent[key];
+//   export default hook(MyComponent);
+//
+export default function wrap(functionComponent) {
+  // `forwardRef` accepts a render function that receives our props and ref.
+  return forwardRef((props, ref) => {
+    // It returns the wrapped component after calling `useImperativeHandle`, so
+    // that our ref can be used to call the inner function component's props.
+    useImperativeHandle(ref, () => props);
+    return functionComponent(props);
   });
-
-  if (statelessComponent.defaultProps) {
-    reactClass.getDefaultProps = function() {
-      return statelessComponent.defaultProps;
-    }
-  }
-
-  reactClass.displayName = statelessComponent.name || statelessComponent.displayName;
-  reactClass.render = function() {
-    return statelessComponent(this.props, this.context);
-  };
-
-  return createReactClass(reactClass);
 }
