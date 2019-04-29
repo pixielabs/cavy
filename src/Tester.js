@@ -5,16 +5,12 @@ import { AsyncStorage } from 'react-native';
 import TestHookStore from './TestHookStore';
 import TestScope from './TestScope';
 
-import {
-  View
-} from 'react-native';
-
 // Public: Wrap your entire app in Tester to run tests against that app,
 // interacting with registered components in your test cases via the Cavy
 // helpers (defined in TestScope).
 //
-// This component wraps your app inside a <View> to facilitate
-// re-rendering with a new key after each test case.
+// This component wraps your app inside a <TesterContext.Provider> which ensures
+// the testHookStore is in scope when Cavy runs your tests.
 //
 // store             - An instance of TestHookStore.
 // specs             - An array of spec functions.
@@ -48,13 +44,10 @@ import {
 //       );
 //     }
 //   }
-export default class Tester extends Component {
 
-  getChildContext() {
-    return {
-      testHooks: this.testHookStore
-    }
-  }
+export const TesterContext = React.createContext();
+
+export default class Tester extends Component {
 
   constructor(props, context) {
     super(props, context);
@@ -93,12 +86,11 @@ export default class Tester extends Component {
 
   render() {
     return (
-      <View key={this.state.key} style={{flex: 1}}>
+      <TesterContext.Provider key={this.state.key} value={this.testHookStore}>
         {Children.only(this.props.children)}
-      </View>
+      </TesterContext.Provider>
     );
   }
-
 }
 
 Tester.propTypes = {
@@ -108,10 +100,6 @@ Tester.propTypes = {
   startDelay: PropTypes.number,
   clearAsyncStorage: PropTypes.bool,
   sendReport: PropTypes.bool
-};
-
-Tester.childContextTypes = {
-  testHooks: PropTypes.instanceOf(TestHookStore)
 };
 
 Tester.defaultProps = {

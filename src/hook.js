@@ -1,84 +1,62 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import hoistStatics from 'hoist-non-react-statics';
 
 import TestHookStore from './TestHookStore';
+import { TesterContext } from './Tester';
+import generateTestHook from './generateTestHook';
 
 // Public: Higher-order React component to factilitate adding hooks to the
-// global test hook store.
+// global test hook store. Once you've hooked your main component (see example
+// below), you can set an inner component's ref with `this.props.generateTestHook`
+// to add it to the testHookStore for later use in a spec.
+//
+// React will call `generateTestHook` twice during the render lifecycle; once to
+// 'unset' the ref, and once to set it.
 //
 // WrappedComponent - Component to be wrapped, will be passed an initial
 //                    property called 'generateTestHook' which is a function
-//                    generator that will add a component to the test hook
-//                    store.
+//                    generator that will add a component to the testHookStore.
 //
 // Example
 //
 //   import { hook } from 'cavy';
 //
 //   class MyComponent extends React.Component {
-//     // ....
+//
+//     render() {
+//       const { generateTestHook } = this.props;
+//       return (
+//         <TextInput
+//           ref={generateTestHook('MyComponent.textinput', (c) => this.textInput = c)}
+//            ...
+//         />
+//         <Button
+//           ref={generateTestHook('MyComponent.button')}
+//           title='Press me!'
+//         />
+//        }
+//     }
 //   }
 //
 //   const TestableMyComponent = hook(MyComponent);
 //   export default TestableMyComponent;
 //
-// Returns the new component.
+// Returns the new component with the ref generating function generateTestHook as a prop.
 export default function hook(WrappedComponent) {
+
   const wrapperComponent = class extends Component {
-
-    constructor(props, context) {
-      super(props, context);
-      this.generateTestHook = this.generateTestHook.bind(this);
-    }
-
-    // Public: Call `this.props.generateTestHook` in a ref within your
-    // component to add it to the test hook store for later use in a spec.
-    //
-    // React calls this function twice during the render lifecycle; once to
-    // 'unset' the ref, and once to set it.
-    //
-    // identifier - String, the key the component will be stored under in the
-    //              test hook store.
-    // f          - Your own ref generating function (optional).
-    //
-    // Examples
-    //
-    //   <TextInput
-    //     ref={this.props.generateTestHook('MyComponent.textinput', (c) => this.textInput = c)}
-    //     // ...
-    //   />
-    //
-    //   <Button
-    //     ref={this.props.generateTestHook('MyComponent.button')}
-    //     title="Press me!"
-    //   />
-    //
-    // Returns the ref-generating anonymous function which will be called by
-    // React.
-    generateTestHook(identifier, f = () => {}) {
-      return (component) => {
-        if (!this.context.testHooks) {
-          f(component);
-          return
-        }
-        if (component) {
-          this.context.testHooks.add(identifier, component);
-        } else {
-          this.context.testHooks.remove(identifier, component);
-        }
-        f(component);
-      }
-    }
-
     render() {
-      return <WrappedComponent generateTestHook={this.generateTestHook} {...this.props} />;
+      const testHookStore = this.context;
+      return (
+        <WrappedComponent
+          generateTestHook={generateTestHook(testHookStore)}
+          {...this.props}
+        />
+      )
     }
   };
 
-  wrapperComponent.contextTypes = {
-    testHooks: PropTypes.instanceOf(TestHookStore)
-  };
+  wrapperComponent.contextType = TesterContext;
 
-  return hoistStatics(wrapperComponent, WrappedComponent);
+  return wrapperComponent;
 }
