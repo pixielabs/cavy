@@ -121,8 +121,8 @@ export default class AppWrapper extends Component {
 
 ### 2. Hook up components
 
-Add a test hook to any components you want to test by adding a ref and using the
-`generateTestHook` function. Then export a hooked version of the parent component.
+Add a test hook to any components you want to test by adding a ref using
+`generateTestHook`. Then export a hooked version of the parent component.
 
 `generateTestHook` takes a string as its first argument - this is the
 identifier used in tests. It takes an optional second argument in case
@@ -132,7 +132,7 @@ you also want to set your own ref generating function.
 // src/Scene.js
 
 import React, { Component } from 'react';
-import { TextInput } from 'react-native';
+import { View, TextInput } from 'react-native';
 import { hook } from 'cavy';
 
 class Scene extends Component {
@@ -152,8 +152,32 @@ const TestableScene = hook(Scene);
 export default TestableScene;
 ```
 
-**Note on functional components:** Functional components cannot be assigned a
-ref since they don't have instances. We suggest using
+If your component is functional, you can call the custom React Hook `useCavy()`
+to obtain a `generateTestHook` function:
+
+```javascript
+// src/components/MyComponent.js
+
+import React, { Component } from 'react';
+import { useCavy } from 'cavy';
+import { TextInput } from 'react-native';
+
+export default () => {
+  const generateTestHook = useCavy();
+  
+  return (
+    <View>
+      <TextInput
+        ref={generateTestHook('MyComponent.TextInput')}
+        onChangeText={...}
+      />
+    </View>   
+  )
+};
+```
+
+**Note on interacting with functional components:** Functional components
+cannot be assigned a ref since they don't have instances. We suggest using
 [Recompose](https://github.com/acdlite/recompose#build-your-own-libraries)'s
 `toClass` helper function to convert it to a class component first.
 
