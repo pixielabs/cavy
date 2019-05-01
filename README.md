@@ -87,6 +87,9 @@ Import `Tester`, `TestHookStore` and your specs in your top-level JS file
 (typically this is your `index.{ios,android}.js` files). Instantiate a new
 `TestHookStore` and render your app inside a `Tester`.
 
+The example below assumes that you are running your tests via
+**[cavy-cli][cli]**, and therefore sets the `sendReport` prop to `true`.
+
 ```javascript
 // index.ios.js
 
@@ -100,7 +103,7 @@ const testHookStore = new TestHookStore();
 export default class AppWrapper extends Component {
   render() {
     return (
-      <Tester specs={[AppSpec]} store={testHookStore} waitTime={4000}>
+      <Tester specs={[AppSpec]} store={testHookStore} sendReport={true}>
         <App />
       </Tester>
     );
