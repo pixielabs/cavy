@@ -37,7 +37,7 @@ export default class TestRunner {
 
     // Compile the report object.
     const report = {
-      results: this.stResults,
+      results: this.testResults,
       errorCount: this.errorCount,
       duration: duration
     }

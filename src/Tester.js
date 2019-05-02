@@ -45,7 +45,6 @@ import TestRunner from './TestRunner';
 //       );
 //     }
 //   }
-
 export const TesterContext = React.createContext();
 
 export default class Tester extends Component {
@@ -62,6 +61,7 @@ export default class Tester extends Component {
     this.runTests();
   }
 
+  // Run all test suites.
   async runTests() {
     const { specs, waitTime, startDelay, sendReport } = this.props;
     const testSuites = [];
@@ -71,7 +71,7 @@ export default class Tester extends Component {
       await specs[i](scope);
       testSuites.push(scope);
     }
-
+    // Instantiate the test runner, pass in the array of suites and run the tests.
     const runner = new TestRunner(this, testSuites, startDelay, sendReport);
     runner.run();
   }
@@ -80,6 +80,7 @@ export default class Tester extends Component {
     this.setState({key: Math.random()});
   }
 
+  // Clear everything from AsyncStorage, warn if anything goes wrong.
   async clearAsync() {
     if (this.props.clearAsyncStorage) {
       try {
