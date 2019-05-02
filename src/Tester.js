@@ -64,7 +64,6 @@ export default class Tester extends Component {
 
   async runTests() {
     const { specs, waitTime, startDelay, sendReport } = this.props;
-
     const testSuites = [];
     // Iterate over each suite of specs and create a new TestScope for each.
     for (var i = 0; i < specs.length; i++) {

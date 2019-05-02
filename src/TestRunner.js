@@ -15,18 +15,18 @@ export default class TestRunner {
     this.runTestSuites();
   }
 
-  // Internal: Synchronously run each test case one after the other, outputting
-  // on the console if the test case passes or fails, and adding to testResult
-  // array for reporting purposes.
-  // Resets the app after each test case by changing the component key to force
-  // React to re-render the entire component tree.
+  // Internal: Synchronously runs each test suite one after the other,
+  // sending a test report to cavy-cli if needed.
   async runTestSuites() {
     const start = new Date();
     console.log(`Cavy test suite started at ${start}.`);
 
+    // Iterate through each suite...
     for (let i = 0; i < this.testSuites.length; i++) {
+      // And then through the suite's test cases...
       for (let j = 0; j < this.testSuites[i].testCases.length; j++) {
         let scope = this.testSuites[i];
+        // And run each test, within the test scope.
         await this.runTest(scope, scope.testCases[j]);
       }
     }
@@ -35,23 +35,32 @@ export default class TestRunner {
     const duration = (stop - start) / 1000;
     console.log(`Cavy test suite stopped at ${stop}, duration: ${duration} seconds.`);
 
+    // Compile the report object.
     const report = {
       results: this.stResults,
       errorCount: this.errorCount,
       duration: duration
     }
-
+    // Send report to cavy-cli.
     if (this.shouldSendReport) { await this.sendReport(report) };
   }
 
+  // Internal: Synchronously runs each test case within a test suite, outputting
+  // on the console if the test passes or fails, and adding to testResult
+  // array for reporting purposes.
+  //
+  // Order of actions:
+  // 1. Clears AsyncStorage
+  // 2. Calls a beforeEach function
+  // 3. Re-renders the app
+  // 4. Runs the test
   async runTest(scope, test) {
-    // Clear AsyncStorage.
+
     await this.component.clearAsync();
-    // Run `beforeEach` function.
     if (scope.beforeEach) { await scope.beforeEach.call(scope) };
-    // Rerender the app.
     this.component.reRender();
-    // Run the test.
+
+    // Run the test, console logging the result.
     let { description, f } = test;
     try {
       await f.call(scope);
@@ -64,6 +73,7 @@ export default class TestRunner {
 
       console.warn(errorMsg);
       this.testResults.push({message: errorMsg, passed: false});
+      // Increase error count for reporting.
       this.errorCount += 1;
     }
   }
