@@ -5,12 +5,14 @@ export default class TestRunner {
     this.testSuites = testSuites;
     this.startDelay = startDelay;
     this.shouldSendReport = sendReport;
+    this.testResults = [];
+    this.errorCount = 0;
   }
 
   // Internal: Start tests after optional delay time.
   async run() {
     if (this.startDelay) { await this.pause(this.startDelay)};
-    this.runTests();
+    this.runTestSuites();
   }
 
   // Internal: Synchronously run each test case one after the other, outputting
@@ -18,33 +20,14 @@ export default class TestRunner {
   // array for reporting purposes.
   // Resets the app after each test case by changing the component key to force
   // React to re-render the entire component tree.
-  async runTests() {
-    let testResults = [];
-    let errorCount = 0;
-
+  async runTestSuites() {
     const start = new Date();
     console.log(`Cavy test suite started at ${start}.`);
 
     for (let i = 0; i < this.testSuites.length; i++) {
-
       for (let j = 0; j < this.testSuites[i].testCases.length; j++) {
-
-        let { description, f } = this.testSuites[i].testCases[j];
-        try {
-          await f.call(this.testSuites[i]);
-          let successMsg = `${description}  ✅`;
-
-          console.log(successMsg);
-          testResults.push({message: successMsg, passed: true});
-        } catch (e) {
-          let errorMsg = `${description}  ❌\n   ${e.message}`;
-
-          console.warn(errorMsg);
-          testResults.push({message: errorMsg, passed: false});
-          errorCount += 1;
-        }
-        await this.component.clearAsync();
-        this.component.reRender();
+        let scope = this.testSuites[i];
+        await this.runTest(scope, scope.testCases[j]);
       }
     }
 
@@ -53,14 +36,37 @@ export default class TestRunner {
     console.log(`Cavy test suite stopped at ${stop}, duration: ${duration} seconds.`);
 
     const report = {
-      results: testResults,
-      errorCount: errorCount,
+      results: this.stResults,
+      errorCount: this.errorCount,
       duration: duration
     }
 
     if (this.shouldSendReport) { await this.sendReport(report) };
   }
 
+  async runTest(scope, test) {
+    // Clear AsyncStorage.
+    await this.component.clearAsync();
+    // Run `beforeEach` function.
+    if (scope.beforeEach) { await scope.beforeEach.call(scope) };
+    // Rerender the app.
+    this.component.reRender();
+    // Run the test.
+    let { description, f } = test;
+    try {
+      await f.call(scope);
+      let successMsg = `${description}  ✅`;
+
+      console.log(successMsg);
+      this.testResults.push({message: successMsg, passed: true});
+    } catch (e) {
+      let errorMsg = `${description}  ❌\n   ${e.message}`;
+
+      console.warn(errorMsg);
+      this.testResults.push({message: errorMsg, passed: false});
+      this.errorCount += 1;
+    }
+  }
 
   // Internal: Make a post request to the cavy-cli server with the test report.
   sendReport(report) {
@@ -90,12 +96,8 @@ export default class TestRunner {
       });
   }
 
-  // Public: Pause the test for a specified length of time, perhaps to allow
-  // time for a request response to be received.
-  //
-  // time - Integer length of time to pause for (in milliseconds).
-  //
-  // Returns a promise, use await when calling this function.
+  // Internal: Pauses the test runner for a length of time.
+  // Returns a promise.
   async pause(time) {
     let promise = new Promise((resolve, reject) => {
       setTimeout(function() {
@@ -105,5 +107,4 @@ export default class TestRunner {
 
     return promise;
   }
-
 }

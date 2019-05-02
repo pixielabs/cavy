@@ -93,6 +93,13 @@ export default class TestScope {
     this.testCases.push({description, f});
   }
 
+  // Public: Runs a function before each test case.
+  //
+  // f - the function to run
+  beforeEach(f) {
+    this.beforeEach = f;
+  }
+
   // Public: Fill in a `TextInput`-compatible component with a string value.
   // Your component should respond to the property `onChangeText`.
   //
