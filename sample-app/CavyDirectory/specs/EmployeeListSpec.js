@@ -1,9 +1,5 @@
 export default function(spec) {
-
-  spec.beforeEach(function(){
-    console.log("i'm a beforeEach fuction");
-  })
-
+  
   spec.describe('Listing the employees', function() {
 
     spec.it('filters the list by search input', async function() {

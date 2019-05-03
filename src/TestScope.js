@@ -1,8 +1,5 @@
-// Internal: Wrapper around an app being tested, and a bunch of test cases.
-//
-// The TestScope also includes all the functions available when writing your
-// spec files.
-
+// Custom error returned when Cavy cannot find the component in the
+// TestHookStore.
 class ComponentNotFoundError extends Error {
   constructor(message) {
     super(message);
@@ -10,6 +7,13 @@ class ComponentNotFoundError extends Error {
   }
 }
 
+// Internal: TestScope is responsible for building up testCases to be run by
+// the TestRunner, and includes all the functions available when writing these
+// specs.
+//
+// component - the Tester component within which the app is wrapped.
+// waitTime  - length of time in ms that cavy should wait before giving up on
+//             finding a component in the testHookStore.
 export default class TestScope {
 
   constructor(component, waitTime) {

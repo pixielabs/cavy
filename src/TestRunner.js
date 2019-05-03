@@ -1,3 +1,15 @@
+// Internal: TestRunner is responsible for actually running through each
+// suite of tests and executing the specs.
+//
+// It also presents the test results and ensures a report is sent to cavy-cli
+// if necessary.
+//
+// component  - the Tester component within which the app is wrapped.
+// testSuites - an array of TestScopes, each of which relate to a single suite
+//              of tests.
+// startDelay - length of time in ms that cavy should wait before starting
+//              tests.
+// sendReport - boolean - if true, attempt to send a test report to cavy-cli.
 export default class TestRunner {
 
   constructor(component, testSuites, startDelay, sendReport) {
@@ -55,7 +67,6 @@ export default class TestRunner {
   // 3. Re-renders the app
   // 4. Runs the test
   async runTest(scope, test) {
-
     await this.component.clearAsync();
     if (scope.beforeEach) { await scope.beforeEach.call(scope) };
     this.component.reRender();
