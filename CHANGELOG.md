@@ -2,7 +2,7 @@
 
 - Add a `beforeEach` function that can be used on a per-spec basis. Thanks to [PatrickBRT](https://github.com/PatrickBRT) whose work inspired our approach!
 - **BREAKING** Clear AsyncStorage and re-render the app before each test runs.
-No final resetting of the app at the end of the test suite.
+- Cavy no longer resets your app at the end of the test suite.
 
 # 1.1.0
 
