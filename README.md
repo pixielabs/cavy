@@ -199,10 +199,29 @@ Write your spec functions referencing your hooked-up components.
 [See below](#available-spec-helpers) for a list of currently available spec
 helper functions.
 
+You can use `spec.beforeEach` to call a function before each test runs. The
+`beforeEach` function will be called after `AsyncStorage` is cleared but before
+the app re-renders and the test is run i.e. the order of actions for each test
+execution is:
+
+1. AsyncStorage is cleared (if the `clearAsyncStorage` prop is set to true in `Tester`)
+2. The `beforeEach` function is called (if defined for this test)
+3. The app is re-rendered
+4. The test is run
+
+At the moment, there is no beforeEach function in Cavy that is called _after_
+the app is re-rendered. We suggest that you create your own helper function to
+call from within your tests if you need this functionality.
+
 ```javascript
 // specs/AppSpec.js
 
 export default function(spec) {
+
+  spec.beforeEach(function() {
+    // This function will run before each test in this spec file.
+  });
+
   spec.describe('My feature', function() {
     spec.it('works', async function() {
       await spec.fillIn('Scene.TextInput', 'some string')
