@@ -4,6 +4,7 @@ import { AsyncStorage } from 'react-native';
 
 import TestHookStore from './TestHookStore';
 import TestScope from './TestScope';
+import TestRunner from './TestRunner';
 
 // Public: Wrap your entire app in Tester to run tests against that app,
 // interacting with registered components in your test cases via the Cavy
@@ -44,7 +45,6 @@ import TestScope from './TestScope';
 //       );
 //     }
 //   }
-
 export const TesterContext = React.createContext();
 
 export default class Tester extends Component {
@@ -61,19 +61,26 @@ export default class Tester extends Component {
     this.runTests();
   }
 
+  // Run all test suites.
   async runTests() {
-    const scope = new TestScope(this, this.props.waitTime, this.props.startDelay,
-      this.props.sendReport);
-    for (var i = 0; i < this.props.specs.length; i++) {
-      await this.props.specs[i](scope);
+    const { specs, waitTime, startDelay, sendReport } = this.props;
+    const testSuites = [];
+    // Iterate over each suite of specs and create a new TestScope for each.
+    for (var i = 0; i < specs.length; i++) {
+      const scope = new TestScope(this, waitTime);
+      await specs[i](scope);
+      testSuites.push(scope);
     }
-    scope.run();
+    // Instantiate the test runner, pass in the array of suites and run the tests.
+    const runner = new TestRunner(this, testSuites, startDelay, sendReport);
+    runner.run();
   }
 
   reRender() {
     this.setState({key: Math.random()});
   }
 
+  // Clear everything from AsyncStorage, warn if anything goes wrong.
   async clearAsync() {
     if (this.props.clearAsyncStorage) {
       try {

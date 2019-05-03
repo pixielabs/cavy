@@ -1,5 +1,5 @@
 export default function(spec) {
-
+  
   spec.describe('Listing the employees', function() {
 
     spec.it('filters the list by search input', async function() {
