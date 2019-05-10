@@ -39,9 +39,11 @@ is running on a host device (e.g. your Android or iOS simulator).
 
 ### CLI and continuous integration
 
-By default, Cavy outputs test results to the console when your app boots.
-However, you can also run Cavy tests directly from the command line using
-Cavy's own command line interface - [cavy-cli][cli].
+When your app boots, Cavy will run your test suite and output the results to the
+console. Cavy will also check whether there is a cavy-cli server running and,
+if so, send a report of the test results.
+
+You can also run Cavy tests directly using [cavy-cli][cli].
 
 Further details on how you can use cavy-cli to fully automate your tests with
 continuous integration can be found in the [cavy-cli README][cli].
