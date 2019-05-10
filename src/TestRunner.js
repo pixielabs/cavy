@@ -48,13 +48,8 @@ export default class TestRunner {
     const duration = (stop - start) / 1000;
     console.log(`Cavy test suite stopped at ${stop}, duration: ${duration} seconds.`);
 
-    // Compile the report object.
-    const report = {
-      results: this.testResults,
-      errorCount: this.errorCount,
-      duration: duration
-    }
-
+    // Handle use of deprecated prop `sendReport` and honour previous expected
+    // behaviour by not reporting results if set to false;
     if (this.shouldSendReport != undefined) {
       const message = 'Deprecation warning: using the `sendReport` prop is ' +
                       'deprecated. By default, Cavy now checks whether the ' +
@@ -63,6 +58,13 @@ export default class TestRunner {
       console.warn(message);
 
       if (!this.shouldSendReport) return;
+    }
+
+    // Compile the report object.
+    const report = {
+      results: this.testResults,
+      errorCount: this.errorCount,
+      duration: duration
     }
 
     // Send report to reporter (default is cavy-cli)
