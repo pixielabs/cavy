@@ -68,13 +68,6 @@ export default class TestRunner {
       duration: duration
     }
 
-    // Compile the report object.
-    const report = {
-      results: this.testResults,
-      errorCount: this.errorCount,
-      duration: duration
-    }
-
     // Send report to reporter (default is cavy-cli)
     await this.sendReport(report);
   }
