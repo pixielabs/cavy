@@ -11,10 +11,13 @@
 //              tests.
 export default class TestRunner {
 
-  constructor(component, testSuites, startDelay) {
+  constructor(component, testSuites, startDelay, sendReport) {
     this.component = component;
     this.testSuites = testSuites;
     this.startDelay = startDelay;
+    // Using the sendReport prop is deprecated - cavy checks whether the
+    // cavy-cli server is listening and sends a report if true.
+    this.shouldSendReport = sendReport;
     this.testResults = [];
     this.errorCount = 0;
   }
@@ -51,6 +54,17 @@ export default class TestRunner {
       errorCount: this.errorCount,
       duration: duration
     }
+
+    if (this.shouldSendReport != undefined) {
+      const message = 'Deprecation warning: using the `sendReport` prop is ' +
+                      'deprecated. By default, Cavy now checks whether the ' +
+                      'cavy-cli server is running and sends a report if a ' +
+                      'connection is detected.'
+      console.warn(message);
+
+      if (!this.shouldSendReport) return;
+    }
+
     // Send report to reporter (default is cavy-cli)
     await this.reportResults(report);
   }
