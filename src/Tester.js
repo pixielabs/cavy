@@ -22,9 +22,6 @@ import TestRunner from './TestRunner';
 //                     test execution begins.
 // clearAsyncStorage - A boolean to determine whether to clear AsyncStorage
 //                     between each test. Defaults to `false`.
-// sendReport        - Boolean, set this to `true` to have Cavy try and
-//                     send a report to cavy-cli. Set to `false` by
-//                     default.
 //
 // Example
 //
@@ -63,7 +60,7 @@ export default class Tester extends Component {
 
   // Run all test suites.
   async runTests() {
-    const { specs, waitTime, startDelay, sendReport } = this.props;
+    const { specs, waitTime, startDelay } = this.props;
     const testSuites = [];
     // Iterate over each suite of specs and create a new TestScope for each.
     for (var i = 0; i < specs.length; i++) {
@@ -72,7 +69,7 @@ export default class Tester extends Component {
       testSuites.push(scope);
     }
     // Instantiate the test runner, pass in the array of suites and run the tests.
-    const runner = new TestRunner(this, testSuites, startDelay, sendReport);
+    const runner = new TestRunner(this, testSuites, startDelay);
     runner.run();
   }
 
@@ -105,13 +102,11 @@ Tester.propTypes = {
   specs: PropTypes.arrayOf(PropTypes.func),
   waitTime: PropTypes.number,
   startDelay: PropTypes.number,
-  clearAsyncStorage: PropTypes.bool,
-  sendReport: PropTypes.bool
+  clearAsyncStorage: PropTypes.bool
 };
 
 Tester.defaultProps = {
   waitTime: 2000,
   startDelay: 0,
-  clearAsyncStorage: false,
-  sendReport: false
+  clearAsyncStorage: false
 };

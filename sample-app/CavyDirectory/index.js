@@ -18,7 +18,7 @@ class AppWrapper extends Component {
   render() {
     return (
       <Tester specs={[EmployeeListSpec]} store={testHookStore} waitTime={1000}
-        startDelay={3000} sendReport={true}>
+        startDelay={3000}>
         <EmployeeDirectoryApp />
       </Tester>
     );

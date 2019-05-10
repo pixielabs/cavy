@@ -120,7 +120,6 @@ export default class AppWrapper extends Component {
 | waitTime | Integer | Time in milliseconds that your tests should wait to find a component | 2000 |
 | startDelay | Integer | Time in milliseconds before test execution begins | 0 |
 | clearAsyncStorage | Boolean | If true, clears AsyncStorage between each test e.g. to remove a logged in user | false |
-| sendReport | Boolean | If true, Cavy sends a report to [cavy-cli][cli] | false |
 
 ### 2. Hook up components
 
@@ -181,7 +180,7 @@ import { useCavy } from 'cavy';
 
 export default () => {
   const generateTestHook = useCavy();
-  
+
   return (
     <View>
       <TextInput

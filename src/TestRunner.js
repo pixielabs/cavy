@@ -9,14 +9,12 @@
 //              of tests.
 // startDelay - length of time in ms that cavy should wait before starting
 //              tests.
-// sendReport - boolean - if true, attempt to send a test report to cavy-cli.
 export default class TestRunner {
 
-  constructor(component, testSuites, startDelay, sendReport) {
+  constructor(component, testSuites, startDelay) {
     this.component = component;
     this.testSuites = testSuites;
     this.startDelay = startDelay;
-    this.shouldSendReport = sendReport;
     this.testResults = [];
     this.errorCount = 0;
   }
@@ -53,8 +51,8 @@ export default class TestRunner {
       errorCount: this.errorCount,
       duration: duration
     }
-    // Send report to cavy-cli.
-    if (this.shouldSendReport) { await this.sendReport(report) };
+    // Send report to reporter (default is cavy-cli)
+    await this.sendReport(report);
   }
 
   // Internal: Synchronously runs each test case within a test suite, outputting
