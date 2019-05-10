@@ -52,7 +52,7 @@ export default class TestRunner {
       duration: duration
     }
     // Send report to reporter (default is cavy-cli)
-    await this.sendReport(report);
+    await this.reportResults(report);
   }
 
   // Internal: Synchronously runs each test case within a test suite, outputting
@@ -87,6 +87,24 @@ export default class TestRunner {
     }
   }
 
+  reportResults(report) {
+    const url = 'http://127.0.0.1:8082/';
+    return fetch(url)
+      .then((response) => {
+        return response.text();
+      })
+      .then((text) => {
+        if (text == 'cavy-cli running') {
+          this.sendReport(report);
+        } else {
+          console.log('Error sending test results');
+        }
+      })
+      .catch((error) => {
+        this.handleError(error, url);
+      })
+  }
+
   // Internal: Make a post request to the cavy-cli server with the test report.
   sendReport(report) {
     const url = 'http://127.0.0.1:8082/report';
@@ -103,16 +121,20 @@ export default class TestRunner {
         console.log('Cavy test report successfully sent to cavy-cli');
       })
       .catch((error) => {
-        if (error.message.match(/Network request failed/)) {
-          console.group(`Cavy test report server is not running at ${url}`);
-          console.log("If you are using cavy-cli, maybe it's not set up correctly or not reachable from this device?");
-          console.groupEnd();
-        } else {
-          console.group('Error sending test results')
-          console.warn(error.message);
-          console.groupEnd();
-        }
+        this.handleError(error, url);
       });
+  }
+
+  handleError(error, url) {
+    if (error.message.match(/Network request failed/)) {
+      console.group(`Cavy test report server is not running at ${url}`);
+      console.log("If you are using cavy-cli, maybe it's not set up correctly or not reachable from this device?");
+      console.groupEnd();
+    } else {
+      console.group('Error sending test results')
+      console.warn(error.message);
+      console.groupEnd();
+    }
   }
 
   // Internal: Pauses the test runner for a length of time.
