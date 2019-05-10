@@ -87,42 +87,40 @@ export default class TestRunner {
     }
   }
 
-  reportResults(report) {
+  // Internal: Check that cavy-cli server is running and if so, send report.
+  async reportResults(report) {
     const url = 'http://127.0.0.1:8082/';
-    return fetch(url)
-      .then((response) => {
-        return response.text();
-      })
-      .then((text) => {
-        if (text == 'cavy-cli running') {
-          this.sendReport(report);
-        } else {
-          console.log('Error sending test results');
-        }
-      })
-      .catch((error) => {
-        this.handleError(error, url);
-      })
+
+    try {
+      const response = await fetch(url);
+      const text = await response.text();
+
+      if (text == 'cavy-cli running') {
+        return this.send(report);
+      } else {
+        throw new Error('Unexpected response');
+      }
+    } catch (e) {
+      console.log(`Skipping sending test report to cavy-cli - ${e.message}.`)
+    }
   }
 
   // Internal: Make a post request to the cavy-cli server with the test report.
-  sendReport(report) {
+  async send(report) {
     const url = 'http://127.0.0.1:8082/report';
+
     const options = {
       method: 'POST',
       body: JSON.stringify(report),
-      headers: {
-        'Content-Type': 'application/json'
-      }
+      headers: { 'Content-Type': 'application/json' }
     };
 
-    return fetch(url, options)
-      .then((response) => {
-        console.log('Cavy test report successfully sent to cavy-cli');
-      })
-      .catch((error) => {
-        this.handleError(error, url);
-      });
+    try {
+      await fetch(url, options);
+      console.log('Cavy test report successfully sent to cavy-cli');
+    } catch (e) {
+      this.handleError(e, url);
+    }
   }
 
   handleError(error, url) {
