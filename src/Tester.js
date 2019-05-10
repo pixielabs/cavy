@@ -5,6 +5,7 @@ import { AsyncStorage } from 'react-native';
 import TestHookStore from './TestHookStore';
 import TestScope from './TestScope';
 import TestRunner from './TestRunner';
+import reporter from './reporter';
 
 // Public: Wrap your entire app in Tester to run tests against that app,
 // interacting with registered components in your test cases via the Cavy
@@ -69,7 +70,7 @@ export default class Tester extends Component {
       testSuites.push(scope);
     }
     // Instantiate the test runner, pass in the array of suites and run the tests.
-    const runner = new TestRunner(this, testSuites, startDelay, sendReport);
+    const runner = new TestRunner(this, testSuites, startDelay, reporter, sendReport);
     runner.run();
   }
 
