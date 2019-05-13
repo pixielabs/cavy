@@ -311,14 +311,6 @@ Jest is a useful tool for unit testing individual React Native components,
 whereas Cavy is an integration testing tool allowing you to run end-to-end user
 interface tests.
 
-#### How about supporting stateless components?
-
-We'd love for Cavy to be better compatible with stateless functional components
-and would be more than happy to see its reliance on refs replaced with something
-better suited to the task...
-What that looks like specifically, we're not 100% sure yet. We're very happy to
-discuss possible alternatives!
-
 ## Contributing
 Before contributing, please read the [code of conduct](CODE_OF_CONDUCT.md).
 - Check out the latest master to make sure the feature hasn't been implemented
