@@ -135,18 +135,8 @@ export default class TestRunner {
       await fetch(url, options);
       console.log('Cavy test report successfully sent to cavy-cli');
     } catch (e) {
-      this.handleError(e, url);
-    }
-  }
-
-  handleError(error, url) {
-    if (error.message.match(/Network request failed/)) {
-      console.group(`Cavy test report server is not running at ${url}`);
-      console.log("If you are using cavy-cli, maybe it's not set up correctly or not reachable from this device?");
-      console.groupEnd();
-    } else {
       console.group('Error sending test results')
-      console.warn(error.message);
+      console.warn(e.message);
       console.groupEnd();
     }
   }
