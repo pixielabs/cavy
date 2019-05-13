@@ -2,9 +2,6 @@
 
 // Internal: Check that cavy-cli server is running and if so, send report.
 export default async function(report) {
-  console.log('in here');
-  console.log(report);
-
   const url = 'http://127.0.0.1:8082/';
 
   try {
@@ -23,9 +20,6 @@ export default async function(report) {
 
 // Internal: Make a post request to the cavy-cli server with the test report.
 async function send(report) {
-  console.log('in send');
-  console.log(report);
-
   const url = 'http://127.0.0.1:8082/report';
 
   const options = {
