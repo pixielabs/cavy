@@ -53,6 +53,9 @@ export default class Tester extends Component {
       key: Math.random()
     };
     this.testHookStore = props.store;
+    // Default to sending a test report to cavy-cli if no custom reporter is
+    // supplied.
+    this.reporter = props.reporter || reporter;
   }
 
   componentDidMount() {
@@ -69,8 +72,9 @@ export default class Tester extends Component {
       await specs[i](scope);
       testSuites.push(scope);
     }
+
     // Instantiate the test runner, pass in the array of suites and run the tests.
-    const runner = new TestRunner(this, testSuites, startDelay, reporter, sendReport);
+    const runner = new TestRunner(this, testSuites, startDelay, this.reporter, sendReport);
     runner.run();
   }
 
@@ -104,6 +108,7 @@ Tester.propTypes = {
   waitTime: PropTypes.number,
   startDelay: PropTypes.number,
   clearAsyncStorage: PropTypes.bool,
+  reporter: PropTypes.func,
   // Deprecated (see note in TestRunner component).
   sendReport: PropTypes.bool
 };
