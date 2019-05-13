@@ -15,7 +15,7 @@ export default class TestRunner {
     this.component = component;
     this.testSuites = testSuites;
     this.startDelay = startDelay;
-    this.sendReport = reporter;
+    this.reporter = reporter;
     // Using the sendReport prop is deprecated - cavy checks whether the
     // cavy-cli server is listening and sends a report if true.
     this.shouldSendReport = sendReport;
@@ -69,7 +69,7 @@ export default class TestRunner {
     }
 
     // Send report to reporter (default is cavy-cli)
-    await this.sendReport(report);
+    await this.reporter(report);
   }
 
   // Internal: Synchronously runs each test case within a test suite, outputting

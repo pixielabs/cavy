@@ -32,14 +32,8 @@ async function send(report) {
     await fetch(url, options);
     console.log('Cavy test report successfully sent to cavy-cli');
   } catch (e) {
-    if (e.message.match(/Network request failed/)) {
-      console.group(`Cavy test report server is not running at ${url}`);
-      console.log("If you are using cavy-cli, maybe it's not set up correctly or not reachable from this device?");
-      console.groupEnd();
-    } else {
-      console.group('Error sending test results')
-      console.warn(error.message);
-      console.groupEnd();
-    }
+    console.group('Error sending test results')
+    console.warn(e.message);
+    console.groupEnd();
   }
 }
