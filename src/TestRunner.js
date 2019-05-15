@@ -11,10 +11,11 @@
 //              tests.
 export default class TestRunner {
 
-  constructor(component, testSuites, startDelay, sendReport) {
+  constructor(component, testSuites, startDelay, reporter, sendReport) {
     this.component = component;
     this.testSuites = testSuites;
     this.startDelay = startDelay;
+    this.reporter = reporter;
     // Using the sendReport prop is deprecated - cavy checks whether the
     // cavy-cli server is listening and sends a report if true.
     this.shouldSendReport = sendReport;
@@ -68,7 +69,7 @@ export default class TestRunner {
     }
 
     // Send report to reporter (default is cavy-cli)
-    await this.reportResults(report);
+    await this.reporter(report);
   }
 
   // Internal: Synchronously runs each test case within a test suite, outputting
@@ -100,44 +101,6 @@ export default class TestRunner {
       this.testResults.push({message: errorMsg, passed: false});
       // Increase error count for reporting.
       this.errorCount += 1;
-    }
-  }
-
-  // Internal: Check that cavy-cli server is running and if so, send report.
-  async reportResults(report) {
-    const url = 'http://127.0.0.1:8082/';
-
-    try {
-      const response = await fetch(url);
-      const text = await response.text();
-
-      if (text == 'cavy-cli running') {
-        return this.send(report);
-      } else {
-        throw new Error('Unexpected response');
-      }
-    } catch (e) {
-      console.log(`Skipping sending test report to cavy-cli - ${e.message}.`)
-    }
-  }
-
-  // Internal: Make a post request to the cavy-cli server with the test report.
-  async send(report) {
-    const url = 'http://127.0.0.1:8082/report';
-
-    const options = {
-      method: 'POST',
-      body: JSON.stringify(report),
-      headers: { 'Content-Type': 'application/json' }
-    };
-
-    try {
-      await fetch(url, options);
-      console.log('Cavy test report successfully sent to cavy-cli');
-    } catch (e) {
-      console.group('Error sending test results')
-      console.warn(e.message);
-      console.groupEnd();
     }
   }
 
