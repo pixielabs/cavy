@@ -9,13 +9,15 @@
 //              of tests.
 // startDelay - length of time in ms that cavy should wait before starting
 //              tests.
-// sendReport - boolean - if true, attempt to send a test report to cavy-cli.
 export default class TestRunner {
 
-  constructor(component, testSuites, startDelay, sendReport) {
+  constructor(component, testSuites, startDelay, reporter, sendReport) {
     this.component = component;
     this.testSuites = testSuites;
     this.startDelay = startDelay;
+    this.reporter = reporter;
+    // Using the sendReport prop is deprecated - cavy checks whether the
+    // cavy-cli server is listening and sends a report if true.
     this.shouldSendReport = sendReport;
     this.testResults = [];
     this.errorCount = 0;
@@ -47,14 +49,27 @@ export default class TestRunner {
     const duration = (stop - start) / 1000;
     console.log(`Cavy test suite stopped at ${stop}, duration: ${duration} seconds.`);
 
+    // Handle use of deprecated prop `sendReport` and honour previous expected
+    // behaviour by not reporting results if set to false;
+    if (this.shouldSendReport != undefined) {
+      const message = 'Deprecation warning: using the `sendReport` prop is ' +
+                      'deprecated. By default, Cavy now checks whether the ' +
+                      'cavy-cli server is running and sends a report if a ' +
+                      'connection is detected.'
+      console.warn(message);
+
+      if (!this.shouldSendReport) return;
+    }
+
     // Compile the report object.
     const report = {
       results: this.testResults,
       errorCount: this.errorCount,
       duration: duration
     }
-    // Send report to cavy-cli.
-    if (this.shouldSendReport) { await this.sendReport(report) };
+
+    // Send report to reporter (default is cavy-cli)
+    await this.reporter(report);
   }
 
   // Internal: Synchronously runs each test case within a test suite, outputting
@@ -87,34 +102,6 @@ export default class TestRunner {
       // Increase error count for reporting.
       this.errorCount += 1;
     }
-  }
-
-  // Internal: Make a post request to the cavy-cli server with the test report.
-  sendReport(report) {
-    const url = 'http://127.0.0.1:8082/report';
-    const options = {
-      method: 'POST',
-      body: JSON.stringify(report),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-
-    return fetch(url, options)
-      .then((response) => {
-        console.log('Cavy test report successfully sent to cavy-cli');
-      })
-      .catch((error) => {
-        if (error.message.match(/Network request failed/)) {
-          console.group(`Cavy test report server is not running at ${url}`);
-          console.log("If you are using cavy-cli, maybe it's not set up correctly or not reachable from this device?");
-          console.groupEnd();
-        } else {
-          console.group('Error sending test results')
-          console.warn(error.message);
-          console.groupEnd();
-        }
-      });
   }
 
   // Internal: Pauses the test runner for a length of time.

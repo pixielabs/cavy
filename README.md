@@ -39,10 +39,11 @@ is running on a host device (e.g. your Android or iOS simulator).
 
 ### CLI and continuous integration
 
-By default, Cavy outputs test results to the console when your app runs.
-However, you can also run Cavy tests directly from the command line using
-Cavy's own command line interface - [cavy-cli][cli]. Just set the `sendReport`
-prop on your `<Tester>` component to `true` (see below).
+When your app boots, Cavy will run your test suite and output the results to the
+console. Cavy will also check whether there is a cavy-cli server running and,
+if so, send a report of the test results.
+
+You can also run Cavy tests directly using [cavy-cli][cli].
 
 Further details on how you can use cavy-cli to fully automate your tests with
 continuous integration can be found in the [cavy-cli README][cli].
@@ -87,9 +88,6 @@ Import `Tester`, `TestHookStore` and your specs in your top-level JS file
 (typically this is your `index.{ios,android}.js` files). Instantiate a new
 `TestHookStore` and render your app inside a `Tester`.
 
-The example below assumes that you are running your tests via
-**[cavy-cli][cli]**, and therefore sets the `sendReport` prop to `true`.
-
 ```javascript
 // index.ios.js
 
@@ -103,7 +101,7 @@ const testHookStore = new TestHookStore();
 export default class AppWrapper extends Component {
   render() {
     return (
-      <Tester specs={[AppSpec]} store={testHookStore} sendReport={true}>
+      <Tester specs={[AppSpec]} store={testHookStore}>
         <App />
       </Tester>
     );
@@ -120,7 +118,6 @@ export default class AppWrapper extends Component {
 | waitTime | Integer | Time in milliseconds that your tests should wait to find a component | 2000 |
 | startDelay | Integer | Time in milliseconds before test execution begins | 0 |
 | clearAsyncStorage | Boolean | If true, clears AsyncStorage between each test e.g. to remove a logged in user | false |
-| sendReport | Boolean | If true, Cavy sends a report to [cavy-cli][cli] | false |
 
 ### 2. Hook up components
 
@@ -181,7 +178,7 @@ import { useCavy } from 'cavy';
 
 export default () => {
   const generateTestHook = useCavy();
-  
+
   return (
     <View>
       <TextInput

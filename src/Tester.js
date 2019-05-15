@@ -5,6 +5,7 @@ import { AsyncStorage } from 'react-native';
 import TestHookStore from './TestHookStore';
 import TestScope from './TestScope';
 import TestRunner from './TestRunner';
+import reporter from './reporter';
 
 // Public: Wrap your entire app in Tester to run tests against that app,
 // interacting with registered components in your test cases via the Cavy
@@ -22,9 +23,6 @@ import TestRunner from './TestRunner';
 //                     test execution begins.
 // clearAsyncStorage - A boolean to determine whether to clear AsyncStorage
 //                     between each test. Defaults to `false`.
-// sendReport        - Boolean, set this to `true` to have Cavy try and
-//                     send a report to cavy-cli. Set to `false` by
-//                     default.
 //
 // Example
 //
@@ -55,6 +53,9 @@ export default class Tester extends Component {
       key: Math.random()
     };
     this.testHookStore = props.store;
+    // Default to sending a test report to cavy-cli if no custom reporter is
+    // supplied.
+    this.reporter = props.reporter || reporter;
   }
 
   componentDidMount() {
@@ -71,8 +72,9 @@ export default class Tester extends Component {
       await specs[i](scope);
       testSuites.push(scope);
     }
+
     // Instantiate the test runner, pass in the array of suites and run the tests.
-    const runner = new TestRunner(this, testSuites, startDelay, sendReport);
+    const runner = new TestRunner(this, testSuites, startDelay, this.reporter, sendReport);
     runner.run();
   }
 
@@ -106,12 +108,13 @@ Tester.propTypes = {
   waitTime: PropTypes.number,
   startDelay: PropTypes.number,
   clearAsyncStorage: PropTypes.bool,
+  reporter: PropTypes.func,
+  // Deprecated (see note in TestRunner component).
   sendReport: PropTypes.bool
 };
 
 Tester.defaultProps = {
   waitTime: 2000,
   startDelay: 0,
-  clearAsyncStorage: false,
-  sendReport: false
+  clearAsyncStorage: false
 };
