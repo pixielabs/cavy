@@ -1,3 +1,11 @@
+# 2.1.0
+
+- Deprecate the `sendReport` prop. By default Cavy checks to see whether
+cavy-cli is running and sends the test report if a response is received.
+- Add the ability to use a custom `reporter` when running Cavy tests. If
+supplied, Cavy will send the test report to the custom reporter rather than
+cavy-cli.
+
 # 2.0.0
 
 - Add a `beforeEach` function that can be used on a per-spec basis. Thanks to [PatrickBRT](https://github.com/PatrickBRT) whose work inspired our approach!
