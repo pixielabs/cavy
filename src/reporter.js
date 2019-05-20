@@ -14,7 +14,16 @@ export default async function(report) {
       throw new Error('Unexpected response');
     }
   } catch (e) {
-    console.log(`Skipping sending test report to cavy-cli - ${e.message}.`)
+    // If cavy-cli is not running, let people know in a friendly way
+    if (e.message.match(/Network request failed/)) {
+      message = "Skipping sending test report to cavy-cli - if you'd " +
+      'like information on how to set up cavy-cli, check out the README ' +
+      'https://github.com/pixielabs/cavy-cli'
+
+      console.log(message);
+    } else {
+      console.log(`Skipping sending test report to cavy-cli - ${e.message}.`);
+    }
   }
 }
 
@@ -32,7 +41,7 @@ async function send(report) {
     await fetch(url, options);
     console.log('Cavy test report successfully sent to cavy-cli');
   } catch (e) {
-    console.group('Error sending test results')
+    console.group('Error sending test results');
     console.warn(e.message);
     console.groupEnd();
   }
