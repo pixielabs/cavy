@@ -16,7 +16,7 @@ export default async function(report) {
   } catch (e) {
     // If cavy-cli is not running, let people know in a friendly way
     if (e.message.match(/Network request failed/)) {
-      message = "Skipping sending test report to cavy-cli - if you'd " +
+      const message = "Skipping sending test report to cavy-cli - if you'd " +
       'like information on how to set up cavy-cli, check out the README ' +
       'https://github.com/pixielabs/cavy-cli'
 
