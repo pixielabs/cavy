@@ -26,6 +26,7 @@ For information on how to use Cavy's command line interface, check out the
   - [Apps that use native code](#apps-that-use-native-code)
 - [Available spec helpers](#available-spec-helpers)
 - [Writing your own spec helpers](#writing-your-own-spec-helpers)
+- [Writing your own reporter](#writing-your-own-reporter)
 - [FAQs](#faqs)
 - [Contributing](#contributing)
 
@@ -115,6 +116,7 @@ export default class AppWrapper extends Component {
 | :------------ |:---------------:| :--------------- | :---------------: |
 | specs (required) | Array | Your spec functions | - |
 | store (required) | TestHookStore | The newly instantiated TestHookStore component | - |
+| reporter | Function | Called once all tests have finished. Takes the test report as an argument. If undefined, Cavy will send a test report to [cavy-cli](cli) if the test server is running. | undefined |
 | waitTime | Integer | Time in milliseconds that your tests should wait to find a component | 2000 |
 | startDelay | Integer | Time in milliseconds before test execution begins | 0 |
 | clearAsyncStorage | Boolean | If true, clears AsyncStorage between each test e.g. to remove a logged in user | false |
@@ -291,6 +293,19 @@ export default function(spec) {
 }
 ```
 
+## Writing your own reporter
+
+Don't want to use [cavy-cli](cli) to handle your tests results? Write your own
+reporter!
+
+Cavy will default to sending a test report to cavy-cli if it detects the test
+server is running. However, passing your own custom reporter function as a prop
+into the`<Tester>` component overrides this functionality - Cavy will call your
+function with the report as an argument instead of cavy-cli.
+
+For example, [cavy-native-reporter] is an open source reporter for Cavy that
+reports test results to native Android or iOS test runners.
+
 ## FAQs
 
 #### How does Cavy compare to Appium? What is the benefit?
@@ -323,3 +338,4 @@ Before contributing, please read the [code of conduct](CODE_OF_CONDUCT.md).
 
 [crna]: https://github.com/react-community/create-react-native-app
 [cli]: https://github.com/pixielabs/cavy-cli
+[cavy-native-reporter]: https://github.com/pixielabs/cavy-native-reporter)
