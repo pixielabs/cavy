@@ -15,7 +15,6 @@ class ComponentNotFoundError extends Error {
 // waitTime  - length of time in ms that cavy should wait before giving up on
 //             finding a component in the testHookStore.
 export default class TestScope {
-
   constructor(component, waitTime) {
     this.component = component;
     this.testHooks = component.testHookStore;

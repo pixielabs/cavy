@@ -4,7 +4,6 @@
 // See Tester.js for an example of instantiating a TestHookStore for use with
 // a `<Tester />` component.
 export default class TestHookStore {
-
   constructor() {
     this.hooks = {};
   }
