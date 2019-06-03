@@ -116,7 +116,7 @@ export default class AppWrapper extends Component {
 | :------------ |:---------------:| :--------------- | :---------------: |
 | specs (required) | Array | Your spec functions | - |
 | store (required) | TestHookStore | The newly instantiated TestHookStore component | - |
-| reporter | Function | Called once all tests have finished. Takes the test report as an argument. If undefined, Cavy will send a test report to [cavy-cli](cli) if the test server is running. | undefined |
+| reporter | Function | Called once all tests have finished. Takes the test report as an argument. If undefined, Cavy will send a test report to [cavy-cli](cli) if it is running. | undefined |
 | waitTime | Integer | Time in milliseconds that your tests should wait to find a component | 2000 |
 | startDelay | Integer | Time in milliseconds before test execution begins | 0 |
 | clearAsyncStorage | Boolean | If true, clears AsyncStorage between each test e.g. to remove a logged in user | false |
