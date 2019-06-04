@@ -16,6 +16,10 @@ import reporter from './reporter';
 //
 // store             - An instance of TestHookStore.
 // specs             - An array of spec functions.
+// reporter          - A function that is called with the test report as an
+//                     argument in place of sending the report to cavy-cli. If
+//                     no reporter prop is present, then Cavy will by default
+//                     send the report to cavy-cli if the test server is running.
 // waitTime          - An integer representing the time in milliseconds that
 //                     the testing framework should wait for the function
 //                     findComponent() to return the 'hooked' component.
@@ -43,10 +47,10 @@ import reporter from './reporter';
 //       );
 //     }
 //   }
+//
 export const TesterContext = React.createContext();
 
 export default class Tester extends Component {
-
   constructor(props, context) {
     super(props, context);
     this.state = {

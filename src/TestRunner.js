@@ -9,8 +9,10 @@
 //              of tests.
 // startDelay - length of time in ms that cavy should wait before starting
 //              tests.
+// reporter   - the function called with the test report as an argument once
+//              all tests have finished.
+//
 export default class TestRunner {
-
   constructor(component, testSuites, startDelay, reporter, sendReport) {
     this.component = component;
     this.testSuites = testSuites;

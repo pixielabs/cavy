@@ -43,7 +43,6 @@ import generateTestHook from './generateTestHook';
 //
 // Returns the new component with the ref generating function generateTestHook as a prop.
 export default function hook(WrappedComponent) {
-
   const wrapperComponent = class extends Component {
     render() {
       const testHookStore = this.context;

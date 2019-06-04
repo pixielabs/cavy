@@ -14,7 +14,6 @@ export default function(testHookStore) {
   // f          - Your own ref generating function (optional).
   //
   return function generateTestHook(identifier, f = () => {}) {
-
     // Returns the component, preserving any user's own ref generating function
     // f(). Adds the component to the testHookStore if defined.
     return (component) => {
