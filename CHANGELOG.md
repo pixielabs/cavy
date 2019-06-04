@@ -1,3 +1,8 @@
+# 2.1.1
+
+- Fix confusing messaging when Cavy fails to connect to
+[cavy-cli](https://github.com/pixielabs/cavy-cli).
+
 # 2.1.0
 
 - Deprecate the `sendReport` prop. By default Cavy checks to see whether
@@ -8,7 +13,8 @@ cavy-cli.
 
 # 2.0.0
 
-- Add a `beforeEach` function that can be used on a per-spec basis. Thanks to [PatrickBRT](https://github.com/PatrickBRT) whose work inspired our approach!
+- Add a `beforeEach` function that can be used on a per-spec basis. Thanks to
+[PatrickBRT](https://github.com/PatrickBRT) whose work inspired our approach!
 - **BREAKING** Clear AsyncStorage and re-render the app before each test runs.
 - Cavy no longer resets your app at the end of the test suite.
 
@@ -75,7 +81,8 @@ suggestions inspired our approach.
   from beginning once the component is mounted.
 - Added a start and end console log line.
 
-With thanks to [Tyler Pate](https://github.com/TGPSKI) for both of these features!
+With thanks to [Tyler Pate](https://github.com/TGPSKI) for both of these
+features!
 
 # 0.3.1
 
