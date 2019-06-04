@@ -295,7 +295,7 @@ export default function(spec) {
 
 ## Writing your own reporter
 
-Don't want to use [cavy-cli](cli) to handle your tests results? Write your own
+Don't want to use [cavy-cli][cli] to handle your tests results? Write your own
 reporter!
 
 By default, Cavy will send a test report to cavy-cli if it detects it is running.
@@ -303,8 +303,9 @@ However, passing your own custom reporter function as a prop into the `<Tester>`
 component overrides this functionality - Cavy will call your function with the
 report as an argument instead of sending the results to cavy-cli.
 
-For an example of a custom test reporter, check out [cavy-native-reporter],
-which reports test results to native Android or iOS test runners.
+For an example of a custom test reporter, check out
+[cavy-native-reporter](https://github.com/pixielabs/cavy-native-reporter), which
+reports test results to native Android or iOS test runners.
 
 ## FAQs
 
@@ -338,4 +339,3 @@ Before contributing, please read the [code of conduct](CODE_OF_CONDUCT.md).
 
 [crna]: https://github.com/react-community/create-react-native-app
 [cli]: https://github.com/pixielabs/cavy-cli
-[cavy-native-reporter]: https://github.com/pixielabs/cavy-native-reporter)
