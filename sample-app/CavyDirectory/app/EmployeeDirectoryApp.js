@@ -4,8 +4,6 @@ import { StackNavigator } from 'react-navigation';
 import EmployeeList from './EmployeeList';
 import EmployeeDetails from './EmployeeDetails';
 
-import { hook } from 'cavy';
-
 const RootStack = StackNavigator({
   EmployeeList: {
     screen: EmployeeList,
@@ -46,5 +44,4 @@ class EmployeeDirectoryApp extends Component {
   }
 }
 
-const TestableApp = hook(EmployeeDirectoryApp);
-export default TestableApp;
+export default EmployeeDirectoryApp;
