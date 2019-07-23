@@ -1,5 +1,7 @@
 # Cavy
 
+**We are in the process of consolidating all Cavy documentation on [cavy.app](https://cavy.app). In the mean time you can use either the README or the site. Once we are finished, we'll tidy up the README. Thanks for your patience!**
+
 [![npm version](https://badge.fury.io/js/cavy.svg)](https://badge.fury.io/js/cavy)
 [![CircleCI](https://circleci.com/gh/pixielabs/cavy.svg?style=svg)](https://circleci.com/gh/pixielabs/cavy)
 
