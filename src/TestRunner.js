@@ -12,6 +12,17 @@
 // reporter   - the function called with the test report as an argument once
 //              all tests have finished.
 //
+
+// this is at class level, because it needs to be used by function addSubTests
+// addSubTests is needed to be exposed from cavy, and hence cannot be a class function.
+// since each next test suite will only run once the present test case is executed (await)
+// we can rely on subTestResults and reset it with each test suite.
+let subTestResults = [];
+
+export function addSubTests({successMsg}) {
+  subTestResults.push({message: successMsg, passed: true});
+}
+
 export default class TestRunner {
   constructor(component, testSuites, startDelay, reporter, sendReport) {
     this.component = component;
@@ -66,6 +77,7 @@ export default class TestRunner {
     // Compile the report object.
     const report = {
       results: this.testResults,
+      subResults: subTestResults,
       errorCount: this.errorCount,
       duration: duration
     }
@@ -91,6 +103,8 @@ export default class TestRunner {
     // Run the test, console logging the result.
     let { description, f } = test;
     try {
+      // reset sub tests array for each test case
+      subTestResults = [];
       await f.call(scope);
       let successMsg = `${description}  ✅`;
 
