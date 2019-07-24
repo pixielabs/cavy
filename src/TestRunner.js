@@ -19,8 +19,8 @@
 // we can rely on subTestResults and reset it with each test suite.
 let subTestResults = [];
 
-export function addSubTests({successMsg}) {
-  subTestResults.push({message: successMsg, passed: true});
+export function addSubTests({successMsg, passed = true, warning = false}) {
+  subTestResults.push({message: successMsg, passed, warning});
 }
 
 export default class TestRunner {
