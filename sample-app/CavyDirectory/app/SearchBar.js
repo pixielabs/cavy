@@ -9,6 +9,7 @@ class SearchBar extends Component {
     this.state = {
       value: ''
     }
+    this.textInput = React.createRef();
   }
 
   _onChangeText(value) {
@@ -20,7 +21,7 @@ class SearchBar extends Component {
     return (
       <View style={styles.container}>
         <TextInput
-          ref={this.props.generateTestHook('SearchBar.TextInput')}
+          ref={this.props.generateTestHook('SearchBar.TextInput', this.textInput)}
           style={styles.input}
           placeholder="Search"
           onChangeText={(value) => this._onChangeText(value)}
