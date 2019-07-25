@@ -1,5 +1,5 @@
 <p align="center">
-  ![Cavy logo](https://cloud.githubusercontent.com/assets/126989/22546798/6cf18938-e936-11e6-933f-da756b9ee7b8.png)
+  <img src='https://cloud.githubusercontent.com/assets/126989/22546798/6cf18938-e936-11e6-933f-da756b9ee7b8.png' alt='Cavy logo' />
 </p>
 
 # Cavy
