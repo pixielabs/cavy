@@ -4,19 +4,34 @@
 
 # Cavy
 
-**Cavy** is a cross-platform integration test framework for React Native, by
+[![npm version](https://badge.fury.io/js/cavy.svg)](https://badge.fury.io/js/cavy) [![CircleCI](https://circleci.com/gh/pixielabs/cavy.svg?style=svg)](https://circleci.com/gh/pixielabs/cavy)
+
+**Cavy** is a cross-platform, integration test framework for React Native, by
 [Pixie Labs](http://pixielabs.io).
 
-This README contains documentation specifically for contributing to Cavy. You
-probably want to:
+Cavy tests allow you to programmatically interact with deeply nested components
+within your application. Write your tests in pure JavaScript and run them on
+both Android and iOS.
 
- * [Read the public Cavy documentation](https://cavy.app) to get started.
- * [Read articles and watch talks about Cavy](https://cavy.app/media) to find
-   out a bit more before you write code.
+## 📋 Requirements
+- React Native >= 0.59
+- React >= 16.8.0
 
----
+## 👶 Getting started
+Get set up with Cavy by following our
+[installation guide](https://cavy.app/docs/getting-started/installing).
 
-## Contributing
+You might also want to [check out some articles and watch talks about Cavy](https://cavy.app/media)
+to find out a bit more before you write code.
+
+If you need some inspiration, head over to Cavy's
+[sample app](/sample-app/CavyDirectory), follow the instructions in the README,
+and see Cavy in action.
+
+## 📘 Documentation
+Full documentation and guides for Cavy can be found on our [website](https://cavy.app).
+
+## 💯 Contributing
 Before contributing, please read the [code of conduct](CODE_OF_CONDUCT.md).
 
 - Check out the latest master to make sure the feature hasn't been implemented
