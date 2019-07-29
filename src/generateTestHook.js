@@ -13,20 +13,26 @@ export default function(testHookStore) {
   //              test hook store.
   // f          - Your own ref generating function (optional).
   //
-  return function generateTestHook(identifier, f = () => {}) {
+  return function generateTestHook(identifier, ref) {
     // Returns the component, preserving any user's own ref generating function
-    // f(). Adds the component to the testHookStore if defined.
+    // f() or ref attribute created via React.createRef.
+    // Adds the component to the testHookStore if defined.
     return (component) => {
-      if (!testHookStore) {
-        f(component);
-        return
-      }
+      if (!testHookStore) return preservedRef(ref);
+
       if (component) {
         testHookStore.add(identifier, component);
       } else {
         testHookStore.remove(identifier, component);
       }
-      f(component);
+
+      return preservedRef(ref);
     }
+  }
+
+  // Either calls the ref generating function or returns the ref attribute.
+  function preservedRef(ref) {
+    if (typeof ref == 'function') return ref(component);
+    return ref;
   }
 };
