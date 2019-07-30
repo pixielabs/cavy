@@ -1,3 +1,7 @@
+# 2.2.1
+
+- Fix regression introduced in 2.2.0.
+
 # 2.2.0
 
 - Add support for passing refs created via `React.createRef` to `generateTestHook`.
