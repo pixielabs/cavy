@@ -18,7 +18,9 @@ export default function(testHookStore) {
     // f() or ref attribute created via React.createRef.
     // Adds the component to the testHookStore if defined.
     return (component) => {
-      if (!testHookStore) return preservedRef(ref);
+      if (!testHookStore) {
+        return (typeof ref == 'function' ? ref(component) : ref);
+      }
 
       if (component) {
         testHookStore.add(identifier, component);
@@ -26,13 +28,7 @@ export default function(testHookStore) {
         testHookStore.remove(identifier, component);
       }
 
-      return preservedRef(ref);
+      return (typeof ref == 'function' ? ref(component) : ref);
     }
-  }
-
-  // Either calls the ref generating function or returns the ref attribute.
-  function preservedRef(ref) {
-    if (typeof ref == 'function') return ref(component);
-    return ref;
   }
 };
