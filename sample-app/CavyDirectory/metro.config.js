@@ -15,7 +15,7 @@
  const extraNodeModules = {
    'react': path.resolve(__dirname, "node_modules/react")
  };
- CavyTester
+ 
  const watchFolders = [
    path.resolve(__dirname, "../../")
  ];
