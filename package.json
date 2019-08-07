@@ -1,6 +1,6 @@
 {
   "name": "cavy",
-  "version": "2.2.1",
+  "version": "3.0.0",
   "description": "An integration test framework for React Native.",
   "main": "index.js",
   "scripts": {

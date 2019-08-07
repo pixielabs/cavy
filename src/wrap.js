@@ -35,7 +35,7 @@ export default function wrap(functionComponent) {
   return forwardRef((props, ref) => {
     // It returns the wrapped component after calling `useImperativeHandle`, so
     // that our ref can be used to call the inner function component's props.
-    useImperativeHandle(ref, () => props);
+    useImperativeHandle(ref, () => ({ props }));
     return functionComponent(props);
   });
 }

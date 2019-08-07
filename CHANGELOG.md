@@ -1,3 +1,11 @@
+# 3.0.0
+
+- **BREAKING** Fixed issue whereby props were being flattened on `wrap`-ped
+function components. This is a breaking change for those users manually fetching
+a component and accessing a flattened prop as a workaround. All props are now
+accessible through the `props` key as expected. Thanks to
+[FLGMwt](https://github.com/FLGMwt) for your help!
+
 # 2.2.1
 
 - Fix regression introduced in 2.2.0.
