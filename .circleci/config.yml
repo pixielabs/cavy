@@ -35,22 +35,22 @@ jobs:
           command: npm install -g cavy-cli react-native-cli
 
       - run:
-          name: Install sample app dependencies
+          name: Install CavyTester dependency
           command: |
-            mv sample-app ~/
-            cd ~/sample-app/CavyDirectory
+            mv test ~/
+            cd ~/test/CavyTester
             npm i
             npm link cavy
 
       - run:
           name: Link React versions together
           command:
-            npm link ../sample-app/CavyDirectory/node_modules/react
+            npm link ../test/CavyTester/node_modules/react
 
       - run:
           name: Build app and run tests
           command: |
-            cd ~/sample-app/CavyDirectory
+            cd ~/test/CavyTester
             rm -rf $TMPDIR/react-*
             rm -rf $TMPDIR/haste-*
             rm -rf $TMPDIR/metro-*
