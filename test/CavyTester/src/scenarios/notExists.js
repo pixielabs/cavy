@@ -25,8 +25,6 @@ export const label = "spec.notExists checks for an element's absence";
 export const spec = spec =>
   spec.describe(key, () =>
     spec.it(label, async () => {
-      await spec.press(key);
-
       await spec.notExists(testId);
     })
   );

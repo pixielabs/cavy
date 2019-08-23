@@ -7,7 +7,9 @@ import * as exists from './scenarios/exists';
 import * as notExists from './scenarios/notExists';
 import * as buttonClassComponent from './scenarios/buttonClassComponent';
 import * as buttonFunctionComponent from './scenarios/buttonFunctionComponent';
+// Import new scenarios here
 
+// Add new scenarios here
 const scenarios = [
   exists,
   notExists,
@@ -61,8 +63,24 @@ const AppContainer = createAppContainer(MainNavigator);
 
 const store = new TestHookStore();
 
+const navigateAndRun = (scenario) => {
+  console.log('in navigateAndRun')
+  return (spec) => {
+    // Override `it` so that it presses into the scene for this test first.
+    const origIt = spec.it;
+    spec.it = (label, f) => {
+      origIt.call(spec, label, async () => {
+        await spec.press(scenario.key);
+        await f();
+      });
+    };
+
+    scenario.spec(spec);
+  }
+}
+
 const App = () => (
-  <Tester specs={scenarios.map(x => x.spec)} store={store}>
+  <Tester specs={scenarios.map(x => navigateAndRun(x))} store={store}>
     <AppContainer />
   </Tester>
 );

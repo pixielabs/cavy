@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import { Button, Text } from 'react-native';
-import { useCavy } from 'cavy';
+import { useCavy, wrap } from 'cavy';
 
-export const key = 'ButtonClassComponent';
+export const key = 'ButtonFunctionComponent';
 
 const buttonId = `${key}.Button`;
 const textId = `${key}.Text`;
 
-class ClassButton extends React.Component {
-  render() {
-    const { title, onPress } = this.props;
-    return <Button onPress={onPress} title={title} />;
-  }
-}
+const FunctionButton = ({ onPress, title }) => (
+  <Button onPress={onPress} title={title} />
+);
+
+const WrappedFunctionButton = wrap(FunctionButton);
 
 export const Screen = () => {
   const [showHiddenMessage, setShowHiddenMessage] = useState(false);
@@ -20,7 +19,7 @@ export const Screen = () => {
 
   return (
     <>
-      <ClassButton
+      <WrappedFunctionButton
         ref={generateTestHook(buttonId)}
         title="Click to show message"
         onPress={() => setShowHiddenMessage(true)}
@@ -34,12 +33,10 @@ export const Screen = () => {
   );
 };
 
-export const label = 'Class component button press';
+export const label = 'function component button can be pressed';
 export const spec = spec =>
   spec.describe(key, () =>
     spec.it(label, async () => {
-      await spec.press(key);
-
       await spec.notExists(textId);
       await spec.press(buttonId);
       await spec.exists(textId);

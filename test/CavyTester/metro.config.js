@@ -11,7 +11,7 @@ module.exports = {
       },
     }),
   },
-  watchFolders: [path.resolve(__dirname, '../')],
+  watchFolders: [path.resolve(__dirname, '../../')],
   resolver: {
     extraNodeModules,
     blacklistRE: /CavyDirectory/,
