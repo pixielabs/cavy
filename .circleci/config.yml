@@ -14,7 +14,7 @@ jobs:
           command: |
             brew update
             brew upgrade python
-            brew install watchman || exit 0
+            brew install watchman cocoapods || exit 0
 
       - run:
           name: Install Node dependencies
@@ -42,7 +42,6 @@ jobs:
             npm i
             npm link cavy
             cd ios
-            sudo gem install cocoapods
             pod install
 
       - run:
