@@ -42,8 +42,8 @@ jobs:
             npm i
             npm link cavy
             cd ios
+            sudo gem install cocoapods
             pod install
-
 
       - run:
           name: Link React versions together
