@@ -30,7 +30,7 @@ target 'CavyDirectory' do
 end
 
 target 'CavyDirectory-tvOS' do
-  # Pods for RnDiffApp-tvOS
+  # Pods for CavyDirectory-tvOS
   target 'CavyDirectory-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
