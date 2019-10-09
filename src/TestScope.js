@@ -171,4 +171,13 @@ export default class TestScope {
     }
     throw new Error(`Component with identifier ${identifier} was present`);
   }
+
+  async containsText(identifier, text) {
+    const component = await this.findComponent(identifier);
+
+    if (!component.props.children.includes(text)) {
+      throw new Error(`Could not find text ${text}`);
+    };
+  }
+
 }

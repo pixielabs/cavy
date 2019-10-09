@@ -36,4 +36,10 @@ export default function(spec) {
       await spec.exists('FunctionText');
     });
   });
+
+  spec.describe('Using wrap on Text', async function() {
+    spec.it('works', async function() {
+      await spec.containsText('EmployeeList.CEO', 'CEO');
+    });
+  });
 }
