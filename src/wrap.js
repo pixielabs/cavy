@@ -68,11 +68,14 @@ export default function wrap(Component) {
   }
 
   if (typeof Component == 'object') {
-    return class extends React.Component {
+    class WrapperComponent extends React.Component {
       render() {
         return <Component {...this.props} />
       }
     }
+    // Wrap the display name for easy debugging.
+    WrapperComponent.displayName = `Wrap(${getDisplayName(Component)})`;
+    return WrapperComponent;
   }
 
   const message = "Looks like you're passing a class component into `wrap` - " +
@@ -88,4 +91,8 @@ export default function wrap(Component) {
 // https://github.com/facebook/react/blob/12be8938a5d71ffdc21ee7cf770bf1cb63ae038e/packages/react-refresh/src/ReactFreshRuntime.js#L138
 function isNotReactClass(Component) {
   return !(Component.prototype && Component.prototype.isReactComponent);
+}
+
+function getDisplayName(Component) {
+  return Component.displayName || Component.name || 'Component';
 }
