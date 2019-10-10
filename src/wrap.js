@@ -1,5 +1,5 @@
-import React from 'react';
-import { useImperativeHandle, forwardRef } from 'react';
+import React, { useImperativeHandle, forwardRef } from 'react';
+import hoistNonReactStatics from 'hoist-non-react-statics';
 
 // With a Function Component:
 //
@@ -33,8 +33,8 @@ import { useImperativeHandle, forwardRef } from 'react';
 //
 // With a component like `Text`:
 //
-// Higher-order component that wraps a component like `Text`, which is neither
-// a React Class nor a Function Component, and returns a React Class with
+// Higher-order component that wraps a native component like `Text`, (neither
+// a React Class nor a Function Component), and returns a React Class with
 // testable props.
 //
 // Example:
@@ -67,12 +67,19 @@ export default function wrap(Component) {
     });
   }
 
+  // For native components like <Text>, the RN component itself is a plain
+  // object, not a function. For these components, the RN renderer returns
+  // an instance of `ReactNativeFiberHostComponent`, which does not expose any
+  // props. Users should wrap these components - here we're wrapping them and
+  // in a class component and exposing testable props.
   if (typeof Component == 'object') {
     class WrapperComponent extends React.Component {
       render() {
         return <Component {...this.props} />
       }
     }
+    // Copy all non-React static methods.
+    hoistNonReactStatics(WrapperComponent, Component);
     // Wrap the display name for easy debugging.
     WrapperComponent.displayName = `Wrap(${getDisplayName(Component)})`;
     return WrapperComponent;
