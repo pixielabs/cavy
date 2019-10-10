@@ -160,6 +160,9 @@ export default class TestScope {
   // test for your maximum wait time.
   //
   // identifier - Identifier for the component.
+  //
+  // Returns a promise, use await when calling this function. Promise will be
+  // rejected if the component is not found.
   async notExists(identifier) {
     try {
       await this.findComponent(identifier);
@@ -170,5 +173,21 @@ export default class TestScope {
       throw e;
     }
     throw new Error(`Component with identifier ${identifier} was present`);
+  }
+
+  // Public: Checks whether a component e.g. <Text> contains the text string
+  // as a child.
+  //
+  // identifier - Identifier for the component.
+  // text - String
+  //
+  // Returns a promise, use await when calling this function. Promise will be
+  // rejected if the component is not found.
+  async containsText(identifier, text) {
+    const component = await this.findComponent(identifier);
+
+    if (!component.props.children.includes(text)) {
+      throw new Error(`Could not find text ${text}`);
+    };
   }
 }
