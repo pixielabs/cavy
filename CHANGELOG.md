@@ -1,3 +1,12 @@
+# 3.1.0
+
+- Extend `wrap` functionality so that it can also be used turn native
+components like `Text` into testable components.
+- New `containsText` spec helper function.
+- Use [hoist-non-react-statics](https://github.com/mridgway/hoist-non-react-statics) in `hook` HOC.
+- Add a `displayName` to the `hook` HOC for ease of debugging.
+- Upgrade React Native in the sample app to 0.59.9.
+
 # 3.0.0
 
 - **BREAKING** Fixed issue whereby props were being flattened on `wrap`-ped
