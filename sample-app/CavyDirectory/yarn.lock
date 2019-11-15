@@ -1292,10 +1292,11 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
 
 cavy@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/cavy/-/cavy-3.0.0.tgz#d952b2659510b2f1f3b021dbc5dd9f10e38b2ead"
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/cavy/-/cavy-3.1.0.tgz#d0180c944fc6c11663cbfe287e17b2e36d5b18da"
+  integrity sha512-+nh/WgNeJKetTdAG+rE4UP+ZSt4nubYYp634LIULfCGRAF1nLFd5m53fC4B0dUc32/DbIj/opc1KgCGytFWstA==
   dependencies:
-    create-react-class "^15.6.0"
+    hoist-non-react-statics "^3.3.0"
     prop-types "^15.5.10"
 
 chalk@^1.1.1:
@@ -1497,7 +1498,7 @@ cosmiconfig@^5.0.5:
     js-yaml "^3.13.1"
     parse-json "^4.0.0"
 
-create-react-class@^15.6.0, create-react-class@^15.6.3:
+create-react-class@^15.6.3:
   version "15.6.3"
   resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.6.3.tgz#2d73237fb3f970ae6ebe011a9e66f46dbca80036"
   dependencies:
@@ -2282,6 +2283,13 @@ has@^1.0.1, has@^1.0.3:
 hoist-non-react-statics@^2.2.0, hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
+
+hoist-non-react-statics@^3.3.0:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz#101685d3aff3b23ea213163f6e8e12f4f111e19f"
+  integrity sha512-wbg3bpgA/ZqWrZuMOeJi8+SKMhr7X9TesL/rXMjTzh0p0JUBo3II8DHboYbuIXWRlttrUFxwcu/5kygrCw8fJw==
+  dependencies:
+    react-is "^16.7.0"
 
 hosted-git-info@^2.1.4:
   version "2.8.5"
@@ -4280,6 +4288,11 @@ react-devtools-core@^3.6.0:
 react-is@^16.5.2, react-is@^16.8.1, react-is@^16.8.3, react-is@^16.8.4:
   version "16.10.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.10.2.tgz#984120fd4d16800e9a738208ab1fba422d23b5ab"
+
+react-is@^16.7.0:
+  version "16.12.0"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
+  integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
 
 react-lifecycles-compat@^3, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
