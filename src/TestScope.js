@@ -92,8 +92,9 @@ export default class TestScope {
   //
   // See example above.
   it(label, f) {
+    const title = this.describeLabel;
     const description = `${this.describeLabel}: ${label}`;
-    this.testCases.push({description, f});
+    this.testCases.push({ title, label, description, f });
   }
 
   // Public: Runs a function before each test case.

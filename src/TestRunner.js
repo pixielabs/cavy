@@ -21,7 +21,7 @@ export default class TestRunner {
     // Using the sendReport prop is deprecated - cavy checks whether the
     // cavy-cli server is listening and sends a report if true.
     this.shouldSendReport = sendReport;
-    this.testResults = [];
+    this.results = [];
     this.errorCount = 0;
   }
 
@@ -63,9 +63,16 @@ export default class TestRunner {
       if (!this.shouldSendReport) return;
     }
 
+    const consoleReport = this.results.map(suite => {
+      return suite.testcases.map(testcase => {
+        return { message: testcase.message, passed: testcase.passed };
+      });
+    })
+
     // Compile the report object.
     const report = {
-      results: this.testResults,
+      results: consoleReport.flat(),
+      fullResults: this.results,
       errorCount: this.errorCount,
       duration: duration
     }
@@ -89,18 +96,43 @@ export default class TestRunner {
     this.component.reRender();
 
     // Run the test, console logging the result.
-    let { description, f } = test;
+    let { title, label, description, f } = test;
+
+    if (!this.results.some(suite => suite.name == title)) {
+      this.results.push({
+        name: title,
+        time: 0,
+        timestamp: Date.now(),
+        testcases: []
+      });
+    }
+
+    let testSuite = this.results.find(suite => suite.name == title);
+
     try {
       await f.call(scope);
       let successMsg = `${description}  ✅`;
-
       console.log(successMsg);
-      this.testResults.push({message: successMsg, passed: true});
+
+      testSuite.testcases.push({
+        name: label,
+        time: 0,
+        message: successMsg,
+        passed: true
+      });
+
     } catch (e) {
       let errorMsg = `${description}  ❌\n   ${e.message}`;
-
       console.warn(errorMsg);
-      this.testResults.push({message: errorMsg, passed: false});
+
+      testSuite.testcases.push({
+        name: label,
+        time: 0,
+        errorMsg: e.message,
+        message: errorMsg,
+        passed: false
+      });
+
       // Increase error count for reporting.
       this.errorCount += 1;
     }
