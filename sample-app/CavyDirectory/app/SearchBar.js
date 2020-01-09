@@ -26,6 +26,7 @@ class SearchBar extends Component {
           placeholder="Search"
           onChangeText={(value) => this._onChangeText(value)}
           value={this.state.value}
+          onFocus={() => {}}
         />
       </View>
     )

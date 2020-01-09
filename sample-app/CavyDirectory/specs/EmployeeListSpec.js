@@ -4,6 +4,7 @@ export default function(spec) {
   spec.describe('Listing the employees', function() {
     spec.it('filters the list by search input', async function() {
       await spec.exists('EmployeeList.JimCavy');
+      await spec.focus('SearchBar.TextInput');
       await spec.fillIn('SearchBar.TextInput', 'Amy');
       await spec.notExists('EmployeeList.JimCavy');
       await spec.exists('EmployeeList.AmyTaylor');
