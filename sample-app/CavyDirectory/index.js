@@ -6,13 +6,18 @@ import React, { Component } from 'react';
 import {AppRegistry} from 'react-native';
 import {name as appName} from './app.json';
 
-import { Tester, TestHookStore } from 'cavy';
+import { Tester, TestHookStore, setJSXConfig } from 'cavy';
 
 import EmployeeDirectoryApp from './app/EmployeeDirectoryApp';
 
 import EmployeeListSpec from './specs/EmployeeListSpec';
 
 const testHookStore = new TestHookStore();
+
+setJSXConfig({
+   testHookStore,
+   cavyIdPropName: 'yourPropNameForCavyId'
+});
 
 class AppWrapper extends Component {
   render() {
