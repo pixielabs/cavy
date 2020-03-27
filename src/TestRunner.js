@@ -91,8 +91,12 @@ export default class TestRunner {
   // 3. Re-renders the app
   // 4. Runs the test
   async runTest(scope, test) {
+    const startTime = new Date();
+
     await this.component.clearAsync();
+
     if (scope.beforeEach) { await scope.beforeEach.call(scope) };
+    
     this.component.reRender();
 
     // Run the test, console logging the result.
@@ -101,8 +105,7 @@ export default class TestRunner {
     if (!this.results.some(suite => suite.name == title)) {
       this.results.push({
         name: title,
-        time: 0,
-        timestamp: Date.now(),
+        timestamp: startTime,
         testcases: []
       });
     }
@@ -116,7 +119,6 @@ export default class TestRunner {
 
       testSuite.testcases.push({
         name: label,
-        time: 0,
         message: successMsg,
         passed: true
       });
@@ -127,7 +129,6 @@ export default class TestRunner {
 
       testSuite.testcases.push({
         name: label,
-        time: 0,
         errorMsg: e.message,
         message: errorMsg,
         passed: false
