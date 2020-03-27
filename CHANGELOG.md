@@ -1,3 +1,7 @@
+# 3.2.0
+
+- New `focus` spec helper function. Thanks [Austin](https://github.com/austinpgraham)!
+
 # 3.1.0
 
 - Extend `wrap` functionality so that it can also be used turn native
