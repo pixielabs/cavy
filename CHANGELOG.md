@@ -1,3 +1,9 @@
+# 3.2.1
+
+- Fix bug in `containsText` helper function, whereby you couldn't test for a
+  <Text> component containing a number. Thank you
+  [Zooheck](https://github.com/Zooheck)!
+
 # 3.2.0
 
 - New `focus` spec helper function. Thanks [Austin](https://github.com/austinpgraham)!
