@@ -201,8 +201,11 @@ export default class TestScope {
   // rejected if the component is not found.
   async containsText(identifier, text) {
     const component = await this.findComponent(identifier);
+    const stringifiedChildren = component.props.children.includes
+      ? component.props.children
+      : String(component.props.children);
 
-    if (!component.props.children.includes(text)) {
+    if (!stringifiedChildren.includes(text)) {
       throw new Error(`Could not find text ${text}`);
     }
   }
