@@ -99,9 +99,10 @@ export default class TestRunner {
     
     this.component.reRender();
 
-    // Run the test, console logging the result.
-    let { describeLabel, description, f } = test;
+    const { describeLabel, label, f } = test;
+    const description = `${describeLabel}: ${label}`;
 
+    // Run the test, console logging the result.
     try {
       await f.call(scope);
       const stop = new Date();
@@ -121,6 +122,7 @@ export default class TestRunner {
     } catch (e) {
       const stop = new Date();
       const time = (stop - start) / 1000;
+      
       let fullErrorMessage = `${description}  ❌\n   ${e.message}`;
       console.warn(fullErrorMessage);
 
