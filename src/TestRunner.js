@@ -63,16 +63,16 @@ export default class TestRunner {
       if (!this.shouldSendReport) return;
     }
 
-    const consoleReport = this.results.map(suite => {
-      return suite.testcases.map(testcase => {
-        return { message: testcase.message, passed: testcase.passed };
-      });
-    })
+    const fullResults = {
+      time: duration,
+      timestamp: start,
+      testCases: this.results
+    }
 
     // Compile the report object.
     const report = {
-      results: consoleReport.flat(),
-      fullResults: this.results,
+      results: this.results,
+      fullResults: fullResults,
       errorCount: this.errorCount,
       duration: duration
     }
@@ -91,7 +91,7 @@ export default class TestRunner {
   // 3. Re-renders the app
   // 4. Runs the test
   async runTest(scope, test) {
-    const startTime = new Date();
+    const start = new Date();
 
     await this.component.clearAsync();
 
@@ -100,38 +100,37 @@ export default class TestRunner {
     this.component.reRender();
 
     // Run the test, console logging the result.
-    let { title, label, description, f } = test;
-
-    if (!this.results.some(suite => suite.name == title)) {
-      this.results.push({
-        name: title,
-        timestamp: startTime,
-        testcases: []
-      });
-    }
-
-    let testSuite = this.results.find(suite => suite.name == title);
+    let { describeLabel, description, f } = test;
 
     try {
       await f.call(scope);
+      const stop = new Date();
+      const time = (stop - start) / 1000;
+
       let successMsg = `${description}  ✅`;
       console.log(successMsg);
 
-      testSuite.testcases.push({
-        name: label,
+      this.results.push({
+        describeLabel: describeLabel,
+        description: description,
         message: successMsg,
-        passed: true
+        passed: true,
+        time: time
       });
 
     } catch (e) {
-      let errorMsg = `${description}  ❌\n   ${e.message}`;
-      console.warn(errorMsg);
+      const stop = new Date();
+      const time = (stop - start) / 1000;
+      let fullErrorMessage = `${description}  ❌\n   ${e.message}`;
+      console.warn(fullErrorMessage);
 
-      testSuite.testcases.push({
-        name: label,
-        errorMsg: e.message,
-        message: errorMsg,
-        passed: false
+      this.results.push({
+        describeLabel: describeLabel,
+        description: description,
+        message: fullErrorMessage,
+        errorMessage: e.message,
+        passed: false,
+        time: time
       });
 
       // Increase error count for reporting.
