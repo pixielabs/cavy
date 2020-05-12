@@ -15,7 +15,7 @@ following steps:
 2. Run `npm link` to link the local version of `cavy` into your system node
    modules.
 3. `cd test/CavyTester`
-4. Run `npm link cavy` to make `CavyTester` use this local version of `cavy`A.
+4. Run `npm link cavy` to make `CavyTester` use this local version of `cavy`.
 5. Run the app! (`npm run android` or `npm run ios`)
 
 ## Adding Tests to Cavy Tester
