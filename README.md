@@ -31,6 +31,11 @@ and see Cavy in action.
 ## 📘 Documentation
 Full documentation and guides for Cavy can be found on our [website](https://cavy.app).
 
+## 🗺️ Development roadmap
+Take a look at our public [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/2447582)
+to see what we're currently working on, and what features we plan to add to
+Cavy next.
+
 ## 💯 Contributing
 Before contributing, please read the [code of conduct](CODE_OF_CONDUCT.md).
 
