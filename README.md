@@ -13,6 +13,21 @@ Cavy tests allow you to programmatically interact with deeply nested components
 within your application. Write your tests in pure JavaScript and run them on
 both Android and iOS.
 
+Cavy tests look like this:
+```js
+export default function(spec) {
+  spec.describe('A list of the employees', function() {
+    spec.it('can be filtered by search input', async function() {
+      await spec.exists('EmployeeList.JimCavy');
+      await spec.fillIn('SearchBar.TextInput', 'Amy');
+      await spec.press('Button.FilterSubmit');
+      await spec.notExists('EmployeeList.JimCavy');
+      await spec.exists('EmployeeList.AmyTaylor');
+    });
+  });
+}
+```
+
 ## 📋 Requirements
 - React Native >= 0.59
 - React >= 16.8.0
