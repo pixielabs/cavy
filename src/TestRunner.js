@@ -71,7 +71,7 @@ export default class TestRunner {
     }
 
     // Send report to reporter (default is cavy-cli)
-    await this.reporter(report);
+    await this.reporter.send(report);
   }
 
   // Internal: Synchronously runs each test case within a test suite, outputting

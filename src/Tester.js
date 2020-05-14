@@ -64,6 +64,7 @@ export default class Tester extends Component {
 
   componentDidMount() {
     this.runTests();
+    this.reporter.connect();
   }
 
   // Run all test suites.
