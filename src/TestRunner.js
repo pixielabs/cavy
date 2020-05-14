@@ -21,7 +21,7 @@ export default class TestRunner {
     // Using the sendReport prop is deprecated - cavy checks whether the
     // cavy-cli server is listening and sends a report if true.
     this.shouldSendReport = sendReport;
-    this.testResults = [];
+    this.results = [];
     this.errorCount = 0;
   }
 
@@ -63,9 +63,16 @@ export default class TestRunner {
       if (!this.shouldSendReport) return;
     }
 
+    const fullResults = {
+      time: duration,
+      timestamp: start,
+      testCases: this.results
+    }
+
     // Compile the report object.
     const report = {
-      results: this.testResults,
+      results: this.results,
+      fullResults: fullResults,
       errorCount: this.errorCount,
       duration: duration
     }
@@ -84,23 +91,50 @@ export default class TestRunner {
   // 3. Re-renders the app
   // 4. Runs the test
   async runTest(scope, test) {
+    const start = new Date();
+
     await this.component.clearAsync();
+
     if (scope.beforeEach) { await scope.beforeEach.call(scope) };
+    
     this.component.reRender();
 
+    const { describeLabel, label, f } = test;
+    const description = `${describeLabel}: ${label}`;
+
     // Run the test, console logging the result.
-    let { description, f } = test;
     try {
       await f.call(scope);
+      const stop = new Date();
+      const time = (stop - start) / 1000;
+
       let successMsg = `${description}  ✅`;
-
       console.log(successMsg);
-      this.testResults.push({message: successMsg, passed: true});
-    } catch (e) {
-      let errorMsg = `${description}  ❌\n   ${e.message}`;
 
-      console.warn(errorMsg);
-      this.testResults.push({message: errorMsg, passed: false});
+      this.results.push({
+        describeLabel: describeLabel,
+        description: description,
+        message: successMsg,
+        passed: true,
+        time: time
+      });
+
+    } catch (e) {
+      const stop = new Date();
+      const time = (stop - start) / 1000;
+      
+      let fullErrorMessage = `${description}  ❌\n   ${e.message}`;
+      console.warn(fullErrorMessage);
+
+      this.results.push({
+        describeLabel: describeLabel,
+        description: description,
+        message: fullErrorMessage,
+        errorMessage: e.message,
+        passed: false,
+        time: time
+      });
+
       // Increase error count for reporting.
       this.errorCount += 1;
     }
