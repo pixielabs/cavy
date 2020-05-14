@@ -1,9 +1,5 @@
 // cavy-cli reporter object.
 export default {
-
-  // Stores the websocket
-  ws: null,
-
   // Internal: Creates a websocket connection to the cavy-cli server.
   connect: function() {
     const url = 'ws://127.0.0.1:8082/';
