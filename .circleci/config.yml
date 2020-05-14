@@ -4,7 +4,7 @@ jobs:
 
     # Specify the Xcode version to use
     macos:
-      xcode: "9.0"
+      xcode: 10.3.0
 
     steps:
       - checkout
@@ -13,7 +13,6 @@ jobs:
           name: Install React Native dependencies
           command: |
             brew update
-            brew upgrade python
             brew install watchman cocoapods || exit 0
 
       - run:
