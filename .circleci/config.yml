@@ -12,7 +12,6 @@ jobs:
           name: Install React Native dependencies
           command: |
             brew update
-            brew upgrade python
             brew install watchman || exit 0
 
       - run:
