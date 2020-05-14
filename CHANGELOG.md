@@ -1,3 +1,10 @@
+# 3.3.0
+
+- Add `fullResults` to Cavy's test report object, containing more details about
+  the test suite and individual test cases e.g. timings and test describe block
+  labels. Cavy can now support outputting JUnit compatible test reports via
+  [cavy-cli](https://github.com/pixielabs/cavy-cli).
+
 # 3.2.1
 
 - Fix bug in `containsText` helper function, whereby you couldn't test for a
