@@ -7,6 +7,7 @@ import * as buttonClassComponent from './scenarios/buttonClassComponent';
 import * as buttonFunctionComponent from './scenarios/buttonFunctionComponent';
 import * as exists from './scenarios/exists';
 import * as fillIn from './scenarios/fillIn';
+import * as focus from './scenarios/focus';
 import * as notExists from './scenarios/notExists';
 // Import new scenarios here:
 
@@ -16,6 +17,7 @@ const scenarios = [
   buttonFunctionComponent,
   exists,
   fillIn,
+  focus,
   notExists
 ];
 
