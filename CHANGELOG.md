@@ -1,3 +1,29 @@
+# 3.3.0
+
+- Add `fullResults` to Cavy's test report object, containing more details about
+  the test suite and individual test cases e.g. timings and test describe block
+  labels. Cavy can now support outputting JUnit compatible test reports via
+  [cavy-cli](https://github.com/pixielabs/cavy-cli).
+
+# 3.2.1
+
+- Fix bug in `containsText` helper function, whereby you couldn't test for a
+  <Text> component containing a number. Thank you
+  [Zooheck](https://github.com/Zooheck)!
+
+# 3.2.0
+
+- New `focus` spec helper function. Thanks [Austin](https://github.com/austinpgraham)!
+
+# 3.1.0
+
+- Extend `wrap` functionality so that it can also be used turn native
+components like `Text` into testable components.
+- New `containsText` spec helper function.
+- Use [hoist-non-react-statics](https://github.com/mridgway/hoist-non-react-statics) in `hook` HOC.
+- Add a `displayName` to the `hook` HOC for ease of debugging.
+- Upgrade React Native in the sample app to 0.59.9.
+
 # 3.0.0
 
 - **BREAKING** Fixed issue whereby props were being flattened on `wrap`-ped

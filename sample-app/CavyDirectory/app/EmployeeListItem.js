@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, Image, TouchableHighlight, StyleSheet } from 'react-native';
 
-import { useCavy } from 'cavy';
+import { useCavy, wrap } from 'cavy';
 
 export default ({ data, navigation }) => {
   const generateTestHook = useCavy();
-  
+  const WrappedText = wrap(Text);
+
   return (
     <TouchableHighlight
       ref={generateTestHook(`${navigation.state.routeName}.${data.firstName}${data.lastName}`)}
@@ -15,7 +16,12 @@ export default ({ data, navigation }) => {
         <Image source={{uri: data.picture}} style={styles.picture} />
         <View>
           <Text>{data.firstName} {data.lastName}</Text>
-          <Text style={styles.title}>{data.title}</Text>
+          <WrappedText
+            ref={generateTestHook(`${navigation.state.routeName}.${data.title}`)}
+            style={styles.title}
+          >
+            {data.title}
+          </WrappedText>
         </View>
       </View>
     </TouchableHighlight>

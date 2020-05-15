@@ -13,6 +13,21 @@ Cavy tests allow you to programmatically interact with deeply nested components
 within your application. Write your tests in pure JavaScript and run them on
 both Android and iOS.
 
+Cavy tests look like this:
+```js
+export default function(spec) {
+  spec.describe('A list of the employees', function() {
+    spec.it('can be filtered by search input', async function() {
+      await spec.exists('EmployeeList.JimCavy');
+      await spec.fillIn('SearchBar.TextInput', 'Amy');
+      await spec.press('Button.FilterSubmit');
+      await spec.notExists('EmployeeList.JimCavy');
+      await spec.exists('EmployeeList.AmyTaylor');
+    });
+  });
+}
+```
+
 ## 📋 Requirements
 - React Native >= 0.59
 - React >= 16.8.0
@@ -30,6 +45,11 @@ and see Cavy in action.
 
 ## 📘 Documentation
 Full documentation and guides for Cavy can be found on our [website](https://cavy.app).
+
+## 🗺️ Development roadmap
+Take a look at our public [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/2447582)
+to see what we're currently working on, and what features we plan to add to
+Cavy next.
 
 ## 💯 Contributing
 Before contributing, please read the [code of conduct](CODE_OF_CONDUCT.md).

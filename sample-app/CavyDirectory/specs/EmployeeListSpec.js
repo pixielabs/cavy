@@ -1,7 +1,10 @@
+import { hasButtonText } from './helpers';
+
 export default function(spec) {
   spec.describe('Listing the employees', function() {
     spec.it('filters the list by search input', async function() {
       await spec.exists('EmployeeList.JimCavy');
+      await spec.focus('SearchBar.TextInput');
       await spec.fillIn('SearchBar.TextInput', 'Amy');
       await spec.notExists('EmployeeList.JimCavy');
       await spec.exists('EmployeeList.AmyTaylor');
@@ -14,6 +17,8 @@ export default function(spec) {
       await spec.press('EmployeeList.AmyTaylor');
       await spec.pause(1000);
       await spec.exists('ActionBar.EmailButton');
+      const button = await spec.findComponent('ActionBar.EmailButton');
+      await hasButtonText(button, 'email');
     });
   });
 
@@ -34,6 +39,12 @@ export default function(spec) {
       await spec.notExists('FunctionText');
       await spec.press('FunctionButton');
       await spec.exists('FunctionText');
+    });
+  });
+
+  spec.describe('Using wrap on Text', async function() {
+    spec.it('works', async function() {
+      await spec.containsText('EmployeeList.CEO', 'CEO');
     });
   });
 }

@@ -1,7 +1,6 @@
 version: 2
 jobs:
   ios:
-
     # Specify the Xcode version to use
     macos:
       xcode: 10.3.0
@@ -14,7 +13,7 @@ jobs:
           command: |
             brew update
             brew install watchman cocoapods || exit 0
-
+            
       - run:
           name: Install Node dependencies
           command: |
