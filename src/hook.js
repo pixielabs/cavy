@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import hoistNonReactStatic from 'hoist-non-react-statics';
 import PropTypes from 'prop-types';
 
 import TestHookStore from './TestHookStore';
@@ -43,7 +44,7 @@ import generateTestHook from './generateTestHook';
 //
 // Returns the new component with the ref generating function generateTestHook as a prop.
 export default function hook(WrappedComponent) {
-  const wrapperComponent = class extends Component {
+  const WrapperComponent = class extends Component {
     render() {
       const testHookStore = this.context;
       return (
@@ -54,8 +55,16 @@ export default function hook(WrappedComponent) {
       )
     }
   };
+  // Set the context type.
+  WrapperComponent.contextType = TesterContext;
+  // Copy all non-React static methods.
+  hoistNonReactStatic(WrapperComponent, WrappedComponent);
+  // Wrap the display name for easy debugging.
+  WrapperComponent.displayName = `Hook(${getDisplayName(WrappedComponent)})`
 
-  wrapperComponent.contextType = TesterContext;
+  return WrapperComponent;
+}
 
-  return wrapperComponent;
+function getDisplayName(WrappedComponent) {
+  return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 }

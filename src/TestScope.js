@@ -3,7 +3,7 @@
 class ComponentNotFoundError extends Error {
   constructor(message) {
     super(message);
-    this.name = 'ComponentNotFoundError';
+    this.name = "ComponentNotFoundError";
   }
 }
 
@@ -50,7 +50,11 @@ export default class TestScope {
           return resolve(component);
         } else {
           if (Date.now() - startTime >= this.waitTime) {
-            reject(new ComponentNotFoundError(`Could not find component with identifier ${identifier}`));
+            reject(
+              new ComponentNotFoundError(
+                `Could not find component with identifier ${identifier}`
+              )
+            );
             clearInterval(loop);
           }
         }
@@ -92,8 +96,7 @@ export default class TestScope {
   //
   // See example above.
   it(label, f) {
-    const description = `${this.describeLabel}: ${label}`;
-    this.testCases.push({description, f});
+    this.testCases.push({ describeLabel: this.describeLabel, label, f });
   }
 
   // Public: Runs a function before each test case.
@@ -112,7 +115,7 @@ export default class TestScope {
   // Returns a promise, use await when calling this function. Promise will be
   // rejected if the component is not found.
   async fillIn(identifier, str) {
-    const component =  await this.findComponent(identifier);
+    const component = await this.findComponent(identifier);
     component.props.onChangeText(str);
   }
 
@@ -126,6 +129,18 @@ export default class TestScope {
   async press(identifier) {
     const component = await this.findComponent(identifier);
     component.props.onPress();
+  }
+
+  // Public: 'Focus' a component (e.g. a `<TextInput />`).
+  // Your component should respond to the property `onFocus`.
+  //
+  // identifier - Identifier for the component.
+  //
+  // Returns a promise, use await when calling this function. Promise will be
+  // rejected if the component is not found.
+  async focus(identifier) {
+    const component = await this.findComponent(identifier);
+    component.props.onFocus();
   }
 
   // Public: Pause the test for a specified length of time, perhaps to allow
@@ -160,15 +175,37 @@ export default class TestScope {
   // test for your maximum wait time.
   //
   // identifier - Identifier for the component.
+  //
+  // Returns a promise, use await when calling this function. Promise will be
+  // rejected if the component is not found.
   async notExists(identifier) {
     try {
       await this.findComponent(identifier);
-    } catch(e) {
-      if (e.name == 'ComponentNotFoundError') {
+    } catch (e) {
+      if (e.name == "ComponentNotFoundError") {
         return true;
       }
       throw e;
     }
     throw new Error(`Component with identifier ${identifier} was present`);
+  }
+
+  // Public: Checks whether a component e.g. <Text> contains the text string
+  // as a child.
+  //
+  // identifier - Identifier for the component.
+  // text - String
+  //
+  // Returns a promise, use await when calling this function. Promise will be
+  // rejected if the component is not found.
+  async containsText(identifier, text) {
+    const component = await this.findComponent(identifier);
+    const stringifiedChildren = component.props.children.includes
+      ? component.props.children
+      : String(component.props.children);
+
+    if (!stringifiedChildren.includes(text)) {
+      throw new Error(`Could not find text ${text}`);
+    }
   }
 }

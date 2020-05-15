@@ -25,7 +25,7 @@ export default function(testHookStore) {
       if (component) {
         testHookStore.add(identifier, component);
       } else {
-        testHookStore.remove(identifier, component);
+        testHookStore.remove(identifier);
       }
 
       return (typeof ref == 'function' ? ref(component) : ref);
