@@ -78,7 +78,10 @@ export default class TestRunner {
     }
 
     // Send report to reporter (default is cavy-cli)
-    await this.reporter.send(report);
+    await this.reporter.send({
+      route: 'testingComplete',
+      data: report
+    });
   }
 
   // Internal: Synchronously runs each test case within a test suite, outputting
@@ -119,6 +122,11 @@ export default class TestRunner {
         time: time
       });
 
+      this.reporter.send({
+        route: 'singleResult',
+        data: { message: successMsg, passed: true }
+      });
+
     } catch (e) {
       const stop = new Date();
       const time = (stop - start) / 1000;
@@ -133,6 +141,11 @@ export default class TestRunner {
         errorMessage: e.message,
         passed: false,
         time: time
+      });
+
+      this.reporter.send({
+        route: 'singleResult',
+        data: { message: fullErrorMessage, passed: false }
       });
 
       // Increase error count for reporting.

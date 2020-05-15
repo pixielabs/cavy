@@ -7,14 +7,16 @@ export default {
   },
 
   // Internal: Send report to cavy-cli over the websocket connection.
-  send: function(report) {
+  send: function(testData) {
     // WebSocket.readyState 1 means the web socket connection is OPEN.
     if (this.ws.readyState == 1) {
       try {
-        this.ws.send(JSON.stringify(report));
-        console.log('Cavy test report successfully sent to cavy-cli');
+        this.ws.send(JSON.stringify(testData));
+        if (testData.route == 'testingComplete') {
+          console.log('Cavy test report successfully sent to cavy-cli');
+        }
       } catch (e) {
-        console.group('Error sending test results');
+        console.group('Error sending test data');
         console.warn(e.message);
         console.groupEnd();
       }
