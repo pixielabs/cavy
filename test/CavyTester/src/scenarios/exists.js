@@ -4,7 +4,7 @@ import { useCavy } from 'cavy';
 
 export const key = 'Exists';
 
-const testId = `${key}.element`;
+const testId = `${key}.Element`;
 
 export const Screen = () => {
   const generateTestHook = useCavy();
@@ -16,7 +16,6 @@ export const spec = spec =>
   spec.describe(key, () =>
     spec.it(label, async () => {
       await spec.press(key);
-
       await spec.exists(testId);
     })
   );

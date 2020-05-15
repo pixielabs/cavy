@@ -3,33 +3,35 @@ import { Button } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { Tester, TestHookStore, useCavy } from 'cavy';
 
-import * as exists from './scenarios/exists';
-import * as notExists from './scenarios/notExists';
 import * as buttonClassComponent from './scenarios/buttonClassComponent';
 import * as buttonFunctionComponent from './scenarios/buttonFunctionComponent';
-// Import new scenarios here
+import * as exists from './scenarios/exists';
+import * as fillIn from './scenarios/fillIn';
+import * as notExists from './scenarios/notExists';
+// Import new scenarios here:
 
-// Add new scenarios here
+// Add new scenarios here:
 const scenarios = [
-  exists,
-  notExists,
   buttonClassComponent,
   buttonFunctionComponent,
+  exists,
+  fillIn,
+  notExists
 ];
 
-// validate scenarios
+// Validate scenarios.
 scenarios.forEach(scenario => {
   if (!(scenario.key && scenario.label && scenario.Screen && scenario.spec)) {
     throw Error(
       'CavyTester: key, label, Screen, and spec must be defined for each scenario'
     );
   }
-
   if (!/^[a-z0-9]+$/i.exec(scenario.key)) {
     throw Error('CavyTester: Scenario keys should be alphanumeric');
   }
 });
 
+// Create our HomeScreen which contains a button to each of our test scenarios.
 const HomeScreen = ({ navigation }) => {
   const generateTestHook = useCavy();
   return (
@@ -46,6 +48,7 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 
+// Create a navigation route to each of our test scenarios.
 const scenarioRoutes = scenarios.reduce((acc, scenario) => {
   acc[scenario.key] = {
     screen: scenario.Screen,
@@ -54,6 +57,7 @@ const scenarioRoutes = scenarios.reduce((acc, scenario) => {
   return acc;
 }, {});
 
+// Our app navigator, containing the navigation to each of our test scenarios.
 const MainNavigator = createStackNavigator({
   Home: { screen: HomeScreen },
   ...scenarioRoutes,
@@ -63,10 +67,11 @@ const AppContainer = createAppContainer(MainNavigator);
 
 const store = new TestHookStore();
 
+// Map each of our test scenarios, so that each first navigates to the correct
+// scene.
 const navigateAndRun = (scenario) => {
-  console.log('in navigateAndRun')
   return (spec) => {
-    // Override `it` so that it presses into the scene for this test first.
+    // Override `it` so that it first presses into the scene.
     const origIt = spec.it;
     spec.it = (label, f) => {
       origIt.call(spec, label, async () => {
@@ -79,6 +84,7 @@ const navigateAndRun = (scenario) => {
   }
 }
 
+// Wrap our app in the Tester component, containing all our test scenarios.
 const App = () => (
   <Tester specs={scenarios.map(x => navigateAndRun(x))} store={store}>
     <AppContainer />

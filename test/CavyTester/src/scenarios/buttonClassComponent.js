@@ -34,7 +34,7 @@ export const Screen = () => {
   );
 };
 
-export const label = 'Class component button press';
+export const label = 'class component button can be pressed';
 export const spec = spec =>
   spec.describe(key, () =>
     spec.it(label, async () => {

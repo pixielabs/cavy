@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button, Text, View } from 'react-native';
+import { Text } from 'react-native';
 import { useCavy } from 'cavy';
 
 export const key = 'NotExists';
 
-const testId = `${key}.element`;
+const testId = `${key}.Element`;
 
 export const Screen = () => {
   const generateTestHook = useCavy();
