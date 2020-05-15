@@ -33,7 +33,7 @@ export const Screen = () => {
   );
 };
 
-export const label = 'function component button can be pressed';
+export const label = 'spec.press presses function component';
 export const spec = spec =>
   spec.describe(key, () =>
     spec.it(label, async () => {
