@@ -7,6 +7,7 @@ import * as pressClassComponent from './scenarios/pressClassComponent';
 import * as pressFunctionComponent from './scenarios/pressFunctionComponent';
 import * as exists from './scenarios/exists';
 import * as fillIn from './scenarios/fillIn';
+import * as findComponent from './scenarios/findComponent';
 import * as focus from './scenarios/focus';
 import * as notExists from './scenarios/notExists';
 // Import new scenarios here:
@@ -17,6 +18,7 @@ const scenarios = [
   pressFunctionComponent,
   exists,
   fillIn,
+  findComponent,
   focus,
   notExists
 ];
