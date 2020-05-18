@@ -16,7 +16,11 @@ following steps:
    modules.
 3. `cd test/CavyTester`
 4. Run `npm link cavy` to make `CavyTester` use this local version of `cavy`.
-5. Run the app! (`npm run android` or `npm run ios`)
+5. If you don't have cocoapods installed, follow [their instructions](https://cocoapods.org/) to install it
+6. `cd ios`
+7. `pod install`
+8. `cd ..`
+9. Run the app! (`npm run android` or `npm run ios`)
 
 ## Adding Tests to Cavy Tester
 
