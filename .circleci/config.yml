@@ -12,8 +12,8 @@ jobs:
           name: Install React Native dependencies
           command: |
             brew update
-            brew install watchman || exit 0
-
+            brew install watchman cocoapods || exit 0
+            
       - run:
           name: Install Node dependencies
           command: |
@@ -33,22 +33,24 @@ jobs:
           command: npm install -g cavy-cli react-native-cli
 
       - run:
-          name: Install sample app dependencies
+          name: Install CavyTester dependencies
           command: |
-            mv sample-app ~/
-            cd ~/sample-app/CavyDirectory
+            mv test ~/
+            cd ~/test/CavyTester
             npm i
             npm link cavy
+            cd ios
+            pod install
 
       - run:
           name: Link React versions together
           command:
-            npm link ../sample-app/CavyDirectory/node_modules/react
+            npm link ../test/CavyTester/node_modules/react
 
       - run:
           name: Build app and run tests
           command: |
-            cd ~/sample-app/CavyDirectory
+            cd ~/test/CavyTester
             rm -rf $TMPDIR/react-*
             rm -rf $TMPDIR/haste-*
             rm -rf $TMPDIR/metro-*
