@@ -52,6 +52,16 @@ to see what we're currently working on, and what features we plan to add to
 Cavy next.
 
 ## 💯 Contributing
+When making changes to Cavy, it's useful to have the
+[CavyTester](/test/CavyTester) app running in development for regression
+testing.
+
+Follow the instructions [in this README](/test/CavyTester/README.md) on how to
+get the tester app running against a local version of the Cavy library.
+
+Here you'll also find instructions on adding new test cases to ensure
+your functionality is fully tested. Please do this :)
+
 Before contributing, please read the [code of conduct](CODE_OF_CONDUCT.md).
 
 - Check out the latest master to make sure the feature hasn't been implemented
