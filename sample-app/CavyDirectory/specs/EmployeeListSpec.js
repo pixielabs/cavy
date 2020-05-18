@@ -21,30 +21,4 @@ export default function(spec) {
       await hasButtonText(button, 'email');
     });
   });
-
-  spec.describe('Pressing a button triggers onPress', () => {
-    spec.it('when button is defined as a class', async function() {
-      await spec.fillIn('SearchBar.TextInput', 'Amy');
-      await spec.press('EmployeeList.AmyTaylor');
-      await spec.pause(1000);
-      await spec.notExists('ClassText');
-      await spec.press('ClassButton');
-      await spec.exists('ClassText');
-    });
-
-    spec.it('when button is defined as a function', async function() {
-      await spec.fillIn('SearchBar.TextInput', 'Amy');
-      await spec.press('EmployeeList.AmyTaylor');
-      await spec.pause(1000);
-      await spec.notExists('FunctionText');
-      await spec.press('FunctionButton');
-      await spec.exists('FunctionText');
-    });
-  });
-
-  spec.describe('Using wrap on Text', async function() {
-    spec.it('works', async function() {
-      await spec.containsText('EmployeeList.CEO', 'CEO');
-    });
-  });
 }
