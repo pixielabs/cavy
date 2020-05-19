@@ -3,7 +3,6 @@ import { View, FlatList, Text, Image, StyleSheet, TouchableOpacity } from 'react
 import ActionBar from './ActionBar';
 import EmployeeListItem from './EmployeeListItem';
 import * as employeeService from './services/employee-service-mock';
-import ButtonTester from './ButtonTester';
 
 export default class EmployeeDetails extends Component {
 
@@ -66,7 +65,6 @@ export default class EmployeeDetails extends Component {
             <ActionBar mobilePhone={employee.mobilePhone} email={employee.email} />
           </View>
           {directReports}
-          <ButtonTester />
         </View>
       );
     } else {
