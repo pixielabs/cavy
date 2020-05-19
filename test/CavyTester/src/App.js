@@ -3,6 +3,8 @@ import { Button } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { Tester, TestHookStore, useCavy } from 'cavy';
 
+import * as containsText from './scenarios/containsText';
+import * as containsTextNumerical from './scenarios/containsTextNumerical';
 import * as pressClassComponent from './scenarios/pressClassComponent';
 import * as pressFunctionComponent from './scenarios/pressFunctionComponent';
 import * as exists from './scenarios/exists';
@@ -14,6 +16,8 @@ import * as notExists from './scenarios/notExists';
 
 // Add new scenarios here:
 const scenarios = [
+  containsText,
+  containsTextNumerical,
   pressClassComponent,
   pressFunctionComponent,
   exists,
