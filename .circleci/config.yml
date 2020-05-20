@@ -56,20 +56,7 @@ jobs:
             rm -rf $TMPDIR/metro-*
             watchman watch-del-all
             react-native start --reset-cache &
-            react-native run-ios
-            # cavy run-ios
-
-      - run:
-          name: Taking screen shot
-          command: |
-            sudo apt-get install scrot
-            scrot screenshot.png
-            echo screenshot.png > /tmp/artifact-1;
-
-
-      - store_artifacts:
-          path: /tmp/screenshot.png
-          destination: artifact-file
+            cavy run-ios
 
 workflows:
   version: 2
