@@ -171,6 +171,16 @@ export default class TestScope {
   // rejected if the component is not found.
   async containsText(identifier, text) {
     const component = await this.findComponent(identifier);
+
+    if (component.props === undefined) {
+      const msg = "Cannot read property 'children' of undefined.\n" +
+        "Are you using `containsText` with a React <Text> component?\n" +
+        "If so, you need to `wrap` the component first.\n" +
+        "See documentation for Cavy's `wrap` function: https://cavy.app/docs/api/test-hooks#example-3"
+
+      throw new Error(msg)
+    }
+
     const stringifiedChildren = component.props.children.includes
       ? component.props.children
       : String(component.props.children);
