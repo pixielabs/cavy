@@ -1,4 +1,5 @@
-// cavy-cli reporter class.
+// Internal: CavyReporter is responsible for sending the test results to
+// the CLI.
 export default class CavyReporter {
   // Internal: Creates a websocket connection to the cavy-cli server.
   onStart() {
