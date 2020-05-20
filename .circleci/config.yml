@@ -62,9 +62,8 @@ jobs:
       - run:
           name: Taking screen shot
           command: |
-            sudo apt-get install scrot
-            scrot screenshot.png
-            echo screenshot.png > /tmp/artifact-1;
+            screencapture screenshot.jpg;
+            echo screenshot.png > /tmp/screenshot.png;
 
 
       - store_artifacts:
