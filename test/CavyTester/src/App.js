@@ -5,6 +5,7 @@ import { Tester, TestHookStore, useCavy } from 'cavy';
 
 import * as containsText from './scenarios/containsText';
 import * as containsTextNumerical from './scenarios/containsTextNumerical';
+import * as containsTextUnwrapped from './scenarios/containsTextUnwrapped';
 import * as pressClassComponent from './scenarios/pressClassComponent';
 import * as pressFunctionComponent from './scenarios/pressFunctionComponent';
 import * as exists from './scenarios/exists';
@@ -18,6 +19,7 @@ import * as notExists from './scenarios/notExists';
 const scenarios = [
   containsText,
   containsTextNumerical,
+  containsTextUnwrapped,
   pressClassComponent,
   pressFunctionComponent,
   exists,
