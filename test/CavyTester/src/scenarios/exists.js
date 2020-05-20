@@ -15,7 +15,6 @@ export const label = 'spec.exists checks for element';
 export const spec = spec =>
   spec.describe(key, () =>
     spec.it(label, async () => {
-      await spec.press(key);
       await spec.exists(testId);
     })
   );

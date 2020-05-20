@@ -106,6 +106,8 @@ export default class TestScope {
     this.beforeEach = f;
   }
 
+  // ACTIONS
+
   // Public: Fill in a `TextInput`-compatible component with a string value.
   // Your component should respond to the property `onChangeText`.
   //
@@ -159,6 +161,27 @@ export default class TestScope {
     return promise;
   }
 
+  // Public: Checks whether a component e.g. <Text> contains the text string
+  // as a child.
+  //
+  // identifier - Identifier for the component.
+  // text - String
+  //
+  // Returns a promise, use await when calling this function. Promise will be
+  // rejected if the component is not found.
+  async containsText(identifier, text) {
+    const component = await this.findComponent(identifier);
+    const stringifiedChildren = component.props.children.includes
+      ? component.props.children
+      : String(component.props.children);
+
+    if (!stringifiedChildren.includes(text)) {
+      throw new Error(`Could not find text ${text}`);
+    }
+  }
+
+  // ASSERTIONS
+
   // Public: Check a component exists.
   //
   // identifier - Identifier for the component.
@@ -188,24 +211,5 @@ export default class TestScope {
       throw e;
     }
     throw new Error(`Component with identifier ${identifier} was present`);
-  }
-
-  // Public: Checks whether a component e.g. <Text> contains the text string
-  // as a child.
-  //
-  // identifier - Identifier for the component.
-  // text - String
-  //
-  // Returns a promise, use await when calling this function. Promise will be
-  // rejected if the component is not found.
-  async containsText(identifier, text) {
-    const component = await this.findComponent(identifier);
-    const stringifiedChildren = component.props.children.includes
-      ? component.props.children
-      : String(component.props.children);
-
-    if (!stringifiedChildren.includes(text)) {
-      throw new Error(`Could not find text ${text}`);
-    }
   }
 }
