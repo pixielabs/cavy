@@ -80,11 +80,15 @@ export default class TestRunner {
     // Send report to reporter (default is cavy-cli)
     if (this.reporter instanceof Function) {
       await this.reporter(report);
+    } else if (this.reporter.type == 'inProgress') {
+      await this.reporter.onFinish(report);
+    } else if (this.reporter.type == 'simple') {
+      await this.reporter.send(report);
     } else {
-      await this.reporter.onFinish({
-        route: 'testingComplete',
-        data: report
-      });
+      message = 'Could not find a valid custom reporter. For more ' +
+                'information on custom reporters, see the documentation ' +
+                'here: https://cavy.app/docs/guides/writing-custom-reporters';
+      console.log(message);
     }
   }
 
@@ -126,10 +130,11 @@ export default class TestRunner {
         time: time
       });
 
-      this.reporter.onFinish({
-        route: 'singleResult',
-        data: { message: successMsg, passed: true }
-      });
+      if (!(this.reporter instanceof Function)
+        && this.reporter.type == 'inProgress' ) {
+        const result = { message: successMsg, passed: true };
+        this.reporter.send(result);
+      }
 
     } catch (e) {
       const stop = new Date();
@@ -147,10 +152,11 @@ export default class TestRunner {
         time: time
       });
 
-      this.reporter.onFinish({
-        route: 'singleResult',
-        data: { message: fullErrorMessage, passed: false }
-      });
+      if (!(this.reporter instanceof Function)
+        && this.reporter.type == 'inProgress' ) {
+        const result = { message: fullErrorMessage, passed: false };
+        this.reporter.send(result);
+      }
 
       // Increase error count for reporting.
       this.errorCount += 1;
