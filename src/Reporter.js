@@ -1,13 +1,14 @@
-// cavy-cli reporter object.
-export default {
+// Internal: CavyReporter is responsible for sending the test results to
+// the CLI.
+export default class CavyReporter {
   // Internal: Creates a websocket connection to the cavy-cli server.
-  connect: function() {
+  onStart() {
     const url = 'ws://127.0.0.1:8082/';
     this.ws = new WebSocket(url);
-  },
+  }
 
   // Internal: Send report to cavy-cli over the websocket connection.
-  send: function(testData) {
+  onFinish(testData) {
     // WebSocket.readyState 1 means the web socket connection is OPEN.
     if (this.ws.readyState == 1) {
       try {
