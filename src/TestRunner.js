@@ -85,7 +85,7 @@ export default class TestRunner {
     } else if (this.reporter.type == 'simple') {
       await this.reporter.send(report);
     } else {
-      message = 'Could not find a valid custom reporter. For more ' +
+      message = 'Could not find a valid reporter. For more ' +
                 'information on custom reporters, see the documentation ' +
                 'here: https://cavy.app/docs/guides/writing-custom-reporters';
       console.log(message);
