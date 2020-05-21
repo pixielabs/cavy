@@ -1,6 +1,6 @@
-// Internal: CavyReporter is responsible for sending the test results to
+// Internal: Reporter is responsible for sending the test results to
 // the CLI.
-export default class CavyReporter {
+export default class Reporter {
   constructor() {
     // Set the Reporter type to inProgress.
     this.type = 'inProgress';
