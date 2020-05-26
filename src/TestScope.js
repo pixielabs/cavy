@@ -102,10 +102,12 @@ export default class TestScope {
   // label - Label for this test case. This is combined with the label from
   //         `describe` when Cavy outputs to the console.
   // f     - The test case.
+  // focus - (Optional) A test flag which causes Cavy to ignore all
+  //         unflagged tests.
   //
   // See example above.
-  it(label, f) {
-    this.testCases.push({ describeLabel: this.describeLabel, label, f });
+  it(label, f, focus = null) {
+    this.testCases.push({ describeLabel: this.describeLabel, label, f, focus });
   }
 
   // Public: Runs a function before each test case.
