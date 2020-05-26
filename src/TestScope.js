@@ -107,6 +107,14 @@ export default class TestScope {
   //
   // See example above.
   it(label, f, focus = null) {
+    if (focus && focus != 'focus'){
+      message  = 'An additional argument was passed to `.it()` in test ' +
+                 `'${this.describeLabel}: ${label}'.\nIf you intended to ` +
+                 "focus Cavy on this test, the additional argument must be " +
+                 "the string, 'focus'. See the documentation here: " +
+                 "https://cavy.app/docs/api/helpers#itlabel-function"
+      console.warn(message)
+    }
     this.testCases.push({ describeLabel: this.describeLabel, label, f, focus });
   }
 
