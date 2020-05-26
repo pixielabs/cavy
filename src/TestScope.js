@@ -16,6 +16,15 @@ class UnwrappedComponentError extends Error {
   }
 }
 
+// Custom error returned when the `.it()` method receives a focus argument,
+// that is not the string 'focus'.
+class FocusArgumentError extends Error {
+  constructor(message) {
+    super(message);
+    this.name =  "FocusArgumentError";
+  }
+}
+
 // Internal: TestScope is responsible for building up testCases to be run by
 // the TestRunner, and includes all the functions available when writing these
 // specs.
@@ -113,7 +122,7 @@ export default class TestScope {
                  "focus Cavy on this test, the additional argument must be " +
                  "the string, 'focus'. See the documentation here: " +
                  "https://cavy.app/docs/api/helpers#itlabel-function"
-      console.warn(message)
+      throw new FocusArgumentError(message);
     }
     this.testCases.push({
       describeLabel: this.describeLabel,
