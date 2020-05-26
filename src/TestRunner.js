@@ -37,14 +37,30 @@ export default class TestRunner {
     const start = new Date();
     console.log(`Cavy test suite started at ${start}.`);
 
+    // Setup collections for tests
+    const focusedTests = [];
+    const allTests = [];
+
     // Iterate through each suite...
     for (let i = 0; i < this.testSuites.length; i++) {
       // And then through the suite's test cases...
       for (let j = 0; j < this.testSuites[i].testCases.length; j++) {
         let scope = this.testSuites[i];
-        // And run each test, within the test scope.
-        await this.runTest(scope, scope.testCases[j]);
+        // If the test has a 'focus' flag...
+        if (scope.testCases[j].focus == 'focus') {
+          // Add the test scope and the test to the focusedTests array...
+          focusedTests.push({ scope, testCase: scope.testCases[j] });
+        }
+        // Add the test scope and the test to the allTests array...
+        allTests.push({ scope, testCase: scope.testCases[j] });
       }
+    }
+
+    // If there are any focused tests, only run them, otherwise run all the tests
+    const tests = focusedTests.length ? focusedTests : allTests;
+    for (let i = 0; i < tests.length; i++) {
+      const { scope, testCase } = tests[i];
+      await this.runTest(scope, testCase);
     }
 
     const stop = new Date();
