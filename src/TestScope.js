@@ -115,7 +115,11 @@ export default class TestScope {
                  "https://cavy.app/docs/api/helpers#itlabel-function"
       console.warn(message)
     }
-    this.testCases.push({ describeLabel: this.describeLabel, label, f, focus });
+    this.testCases.push({
+      describeLabel: this.describeLabel,
+      label, f,
+      focus: focus == 'focus'
+    });
   }
 
   // Public: Runs a function before each test case.

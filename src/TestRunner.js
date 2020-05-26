@@ -47,7 +47,7 @@ export default class TestRunner {
       for (let j = 0; j < this.testSuites[i].testCases.length; j++) {
         let scope = this.testSuites[i];
         // If the test has a 'focus' flag...
-        if (scope.testCases[j].focus == 'focus') {
+        if (scope.testCases[j].focus) {
           // Add the test scope and the test to the focusedTests array...
           focusedTests.push({ scope, testCase: scope.testCases[j] });
         }
