@@ -111,24 +111,11 @@ export default class TestScope {
   // label - Label for this test case. This is combined with the label from
   //         `describe` when Cavy outputs to the console.
   // f     - The test case.
-  // focus - (Optional) A test flag which causes Cavy to ignore all
-  //         unflagged tests.
+  // tag   - (Optional) A test tag used to determine whether the test should run
   //
   // See example above.
-  it(label, f, focus = null) {
-    if (focus && focus != 'focus'){
-      message  = 'An additional argument was passed to `.it()` in test ' +
-                 `'${this.describeLabel}: ${label}'.\nIf you intended to ` +
-                 "focus Cavy on this test, the additional argument must be " +
-                 "the string, 'focus'. See the documentation here: " +
-                 "https://cavy.app/docs/api/helpers#itlabel-function"
-      throw new FocusArgumentError(message);
-    }
-    this.testCases.push({
-      describeLabel: this.describeLabel,
-      label, f,
-      focus: focus == 'focus'
-    });
+  it(label, f, tag = null) {
+    this.testCases.push({ describeLabel: this.describeLabel, label, f, tag });
   }
 
   // Public: Runs a function before each test case.
