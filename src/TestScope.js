@@ -16,15 +16,6 @@ class UnwrappedComponentError extends Error {
   }
 }
 
-// Custom error returned when the `.it()` method receives a focus argument,
-// that is not the string 'focus'.
-class FocusArgumentError extends Error {
-  constructor(message) {
-    super(message);
-    this.name =  "FocusArgumentError";
-  }
-}
-
 // Internal: TestScope is responsible for building up testCases to be run by
 // the TestRunner, and includes all the functions available when writing these
 // specs.
