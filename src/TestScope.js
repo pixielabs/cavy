@@ -77,35 +77,39 @@ export default class TestScope {
   //
   // label - Label for these test cases.
   // f     - Callback function containing your tests cases defined with `it`.
+  // tag   - (Optional) A string tag used to determine whether the group of
+  //          tests should run. Defaults to null.
   //
   // Example
   //
   //   // specs/MyFeatureSpec.js
   //   export default function(spec) {
   //     spec.describe('My Scene', function() {
-  //
   //       spec.it('Has a component', async function() {
   //         await spec.exists('MyScene.myComponent');
-  //       });
-  //
+  //       }, 'focus');
   //     });
   //   }
   //
   // Returns undefined.
-  describe(label, f) {
+  describe(label, f, tag = null) {
     this.describeLabel = label;
+    this.tag = tag;
     f.call(this);
   }
 
   // Public: Define a test case.
   //
-  // label - Label for this test case. This is combined with the label from
+  // label   - Label for this test case. This is combined with the label from
   //         `describe` when Cavy outputs to the console.
-  // f     - The test case.
-  // tag   - (Optional) A test tag used to determine whether the test should run
+  // f       - The test case.
+  // testTag - (Optional) A string tag used to determine whether the individual
+  //           test should run. 'Inherits' a tag from its surrounding describe
+  //           block (if present) or defaults to null.
   //
   // See example above.
-  it(label, f, tag = null) {
+  it(label, f, testTag = null) {
+    const tag = this.tag || testTag;
     this.testCases.push({ describeLabel: this.describeLabel, label, f, tag });
   }
 
