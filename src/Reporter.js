@@ -2,8 +2,8 @@
 // the CLI.
 export default class Reporter {
   constructor() {
-    // Set the Reporter type to inProgress.
-    this.type = 'inProgress';
+    // Set the Reporter type to realtime.
+    this.type = 'realtime';
   }
 
   // Internal: Creates a websocket connection to the cavy-cli server.
