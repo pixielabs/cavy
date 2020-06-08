@@ -80,8 +80,15 @@ export default class TestRunner {
     // Send report to reporter (default is cavy-cli)
     if (this.reporter instanceof Function) {
       await this.reporter(report);
-    } else {
+    } else if (this.reporter.type == 'realtime') {
       await this.reporter.onFinish(report);
+    } else if (this.reporter.type == 'deferred') {
+      await this.reporter.send(report);
+    } else {
+      message = 'Could not find a valid reporter. For more ' +
+                'information on custom reporters, see the documentation ' +
+                'here: https://cavy.app/docs/guides/writing-custom-reporters';
+      console.log(message);
     }
   }
 
@@ -123,6 +130,12 @@ export default class TestRunner {
         time: time
       });
 
+      if (!(this.reporter instanceof Function)
+        && this.reporter.type == 'realtime' ) {
+        const result = { message: successMsg, passed: true };
+        this.reporter.send(result);
+      }
+
     } catch (e) {
       const stop = new Date();
       const time = (stop - start) / 1000;
@@ -138,6 +151,12 @@ export default class TestRunner {
         passed: false,
         time: time
       });
+
+      if (!(this.reporter instanceof Function)
+        && this.reporter.type == 'realtime' ) {
+        const result = { message: fullErrorMessage, passed: false };
+        this.reporter.send(result);
+      }
 
       // Increase error count for reporting.
       this.errorCount += 1;

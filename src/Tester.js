@@ -75,7 +75,8 @@ export default class Tester extends Component {
 
   componentDidMount() {
     this.runTests();
-    if (!(this.reporter instanceof Function)) {
+    if (!(this.reporter instanceof Function)
+      && this.reporter.type == 'realtime' ) {
       this.reporter.onStart();
     }
   }
