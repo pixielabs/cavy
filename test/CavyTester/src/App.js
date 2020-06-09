@@ -13,6 +13,7 @@ import * as fillIn from './scenarios/fillIn';
 import * as findComponent from './scenarios/findComponent';
 import * as focus from './scenarios/focus';
 import * as notExists from './scenarios/notExists';
+import * as taggingTest from './scenarios/taggingTest';
 // Import new scenarios here:
 
 // Add new scenarios here:
@@ -26,7 +27,8 @@ const scenarios = [
   fillIn,
   findComponent,
   focus,
-  notExists
+  notExists,
+  taggingTest
 ];
 
 // Validate scenarios.
@@ -81,6 +83,14 @@ const store = new TestHookStore();
 // scene.
 const navigateAndRun = (scenario) => {
   return (spec) => {
+    // Override `describe` so that all tests have the 'focus' tag, unless you
+    // specifically pass a different tag in.
+    const origDescribe = spec.describe;
+    spec.describe = (label, f, tag) => {
+      const testTag = tag || 'focus';
+      origDescribe.call(spec, label, f, testTag)
+    }
+
     // Override `it` so that it first presses into the scene.
     const origIt = spec.it;
     spec.it = (label, f) => {
@@ -96,7 +106,11 @@ const navigateAndRun = (scenario) => {
 
 // Wrap our app in the Tester component, containing all our test scenarios.
 const App = () => (
-  <Tester specs={scenarios.map(x => navigateAndRun(x))} store={store}>
+  <Tester
+    specs={scenarios.map(x => navigateAndRun(x))}
+    store={store}
+    only={['focus']}
+    >
     <AppContainer />
   </Tester>
 );

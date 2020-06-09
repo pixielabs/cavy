@@ -35,5 +35,4 @@ export default class TestHookStore {
   get(identifier) {
     return this.hooks[identifier];
   }
-
 }

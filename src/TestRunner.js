@@ -13,7 +13,7 @@
 //              all tests have finished.
 //
 export default class TestRunner {
-  constructor(component, testSuites, startDelay, reporter, sendReport) {
+  constructor(component, testSuites, startDelay, reporter, sendReport, filter) {
     this.component = component;
     this.testSuites = testSuites;
     this.startDelay = startDelay;
@@ -21,6 +21,9 @@ export default class TestRunner {
     // Using the sendReport prop is deprecated - cavy checks whether the
     // cavy-cli server is listening and sends a report if true.
     this.shouldSendReport = sendReport;
+    // An array of strings dictating the subset of tagged tests to run, or null
+    // if all tests should be run.
+    this.filter = filter;
     this.results = [];
     this.errorCount = 0;
   }
@@ -42,8 +45,13 @@ export default class TestRunner {
       // And then through the suite's test cases...
       for (let j = 0; j < this.testSuites[i].testCases.length; j++) {
         let scope = this.testSuites[i];
-        // And run each test, within the test scope.
-        await this.runTest(scope, scope.testCases[j]);
+        let tag = scope.testCases[j].tag;
+        // Run the test if:
+        // 1. The test suite isn't filtered
+        // 2. The test suite is filtered and test's tag is included
+        if (!this.filter || (this.filter && this.filter.includes(tag))) {
+          await this.runTest(scope, scope.testCases[j]);
+        };
       }
     }
 

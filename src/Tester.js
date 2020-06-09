@@ -68,7 +68,7 @@ export default class Tester extends Component {
 
   // Run all test suites.
   async runTests() {
-    const { specs, waitTime, startDelay, sendReport } = this.props;
+    const { specs, waitTime, startDelay, sendReport, only } = this.props;
     const testSuites = [];
     // Iterate over each suite of specs and create a new TestScope for each.
     for (var i = 0; i < specs.length; i++) {
@@ -77,8 +77,18 @@ export default class Tester extends Component {
       testSuites.push(scope);
     }
 
-    // Instantiate the test runner, pass in the array of suites and run the tests.
-    const runner = new TestRunner(this, testSuites, startDelay, this.reporter, sendReport);
+    // Instantiate the test runner with the test suites, the reporter to use,
+    // the startDelay to apply, and the `only` filter to apply.
+    const runner = new TestRunner(
+      this,
+      testSuites,
+      startDelay,
+      this.reporter,
+      sendReport,
+      only
+    );
+
+    // Run the tests.
     runner.run();
   }
 
@@ -107,18 +117,19 @@ export default class Tester extends Component {
 }
 
 Tester.propTypes = {
-  store: PropTypes.instanceOf(TestHookStore),
-  specs: PropTypes.arrayOf(PropTypes.func),
-  waitTime: PropTypes.number,
-  startDelay: PropTypes.number,
   clearAsyncStorage: PropTypes.bool,
+  only: PropTypes.arrayOf(PropTypes.string),
   reporter: PropTypes.func,
-  // Deprecated (see note in TestRunner component).
-  sendReport: PropTypes.bool
+  // Deprecated (see note in TestRunner component)
+  sendReport: PropTypes.bool,
+  specs: PropTypes.arrayOf(PropTypes.func),
+  startDelay: PropTypes.number,
+  store: PropTypes.instanceOf(TestHookStore),
+  waitTime: PropTypes.number
 };
 
 Tester.defaultProps = {
-  waitTime: 2000,
+  clearAsyncStorage: false,
   startDelay: 0,
-  clearAsyncStorage: false
+  waitTime: 2000
 };
