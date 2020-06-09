@@ -1,3 +1,23 @@
+# 4.0.0
+
+**BREAKING** This release includes updates to the default Cavy reporter to
+support new cavy-cli features. These changes are backwards compatible within
+Cavy itself, and require no changes to your code. However, if you're using
+cavy-cli you'll need to upgrade to version cavy-cli 2.0 to continue to run
+your tests.
+
+The updated default reporter now:
+
+- Opens a websocket connection to cavy-cli when your app boots. cavy-cli waits
+  for a configurable length of time to receive this connection and exits with an
+  error code if no connection is made.
+- Sends in-progress results to cavy-cli, so that you can see a log of each test
+  as they pass/fail in realtime.
+
+This release also:
+- Adds a deprecation warning if an old-style reporter is used i.e. a reporter
+  that is a function taking one argument (the test report object).
+
 # 3.4.1
 
 - Remove tester app from package.
@@ -26,20 +46,21 @@
 
 # 3.1.0
 
-- Extend `wrap` functionality so that it can also be used turn native
-components like `Text` into testable components.
+- Extend `wrap` functionality so that it can also be used turn native components
+  like `Text` into testable components.
 - New `containsText` spec helper function.
-- Use [hoist-non-react-statics](https://github.com/mridgway/hoist-non-react-statics) in `hook` HOC.
+- Use [hoist-non-react-statics](https://github.com/mridgway/hoist-non-react-statics)
+  in `hook` HOC.
 - Add a `displayName` to the `hook` HOC for ease of debugging.
 - Upgrade React Native in the sample app to 0.59.9.
 
 # 3.0.0
 
 - **BREAKING** Fixed issue whereby props were being flattened on `wrap`-ped
-function components. This is a breaking change for those users manually fetching
-a component and accessing a flattened prop as a workaround. All props are now
-accessible through the `props` key as expected. Thanks to
-[FLGMwt](https://github.com/FLGMwt) for your help!
+  function components. This is a breaking change for those users manually
+  fetching a component and accessing a flattened prop as a workaround. All props
+  are now accessible through the `props` key as expected. Thanks to
+  [FLGMwt](https://github.com/FLGMwt) for your help!
 
 # 2.2.1
 
@@ -57,10 +78,10 @@ accessible through the `props` key as expected. Thanks to
 # 2.1.0
 
 - Deprecate the `sendReport` prop. By default Cavy checks to see whether
-cavy-cli is running and sends the test report if a response is received.
+  cavy-cli is running and sends the test report if a response is received.
 - Add the ability to use a custom `reporter` when running Cavy tests. If
-supplied, Cavy will send the test report to the custom reporter rather than
-cavy-cli.
+  supplied, Cavy will send the test report to the custom reporter rather than
+  cavy-cli.
 
 # 2.0.0
 
