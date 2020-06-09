@@ -5,7 +5,7 @@ import { AsyncStorage } from 'react-native';
 import TestHookStore from './TestHookStore';
 import TestScope from './TestScope';
 import TestRunner from './TestRunner';
-import reporter from './reporter';
+import Reporter from './Reporter';
 
 // Public: Wrap your entire app in Tester to run tests against that app,
 // interacting with registered components in your test cases via the Cavy
@@ -59,11 +59,26 @@ export default class Tester extends Component {
     this.testHookStore = props.store;
     // Default to sending a test report to cavy-cli if no custom reporter is
     // supplied.
-    this.reporter = props.reporter || reporter;
+    if (props.reporter instanceof Function) {
+      const message = 'Deprecation warning: support for custom function' +
+                      'reporters will soon be deprecated. Cavy supports custom ' +
+                      'class based reporters. For more info, see the ' +
+                      'documentation here: ' +
+                      'https://cavy.app/docs/guides/writing-custom-reporters';
+      console.warn(message);
+      this.reporter = props.reporter;
+    } else {
+      reporterClass = props.reporter || Reporter;
+      this.reporter = new reporterClass;
+    }
   }
 
   componentDidMount() {
     this.runTests();
+    if (!(this.reporter instanceof Function)
+      && this.reporter.type == 'realtime' ) {
+      this.reporter.onStart();
+    }
   }
 
   // Run all test suites.
