@@ -1,3 +1,7 @@
+# 3.4.1
+
+- Remove tester app from package.
+
 # 3.4.0
 
 - Add ability to tag and filter tests, allowing you to run a subset of tests per
