@@ -1,3 +1,8 @@
+# 3.4.0
+
+- Add ability to tag and filter tests, allowing you to run a subset of tests per
+  test run.
+
 # 3.3.0
 
 - Add `fullResults` to Cavy's test report object, containing more details about
