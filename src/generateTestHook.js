@@ -11,7 +11,7 @@ export default function(testHookStore) {
   //
   // identifier - String, the key the component will be stored under in the
   //              test hook store.
-  // f          - Your own ref generating function (optional).
+  // f          - Your own ref generating function or ref (optional).
   //
   return function generateTestHook(identifier, ref) {
     // Returns the component, preserving any user's own ref generating function
@@ -28,7 +28,13 @@ export default function(testHookStore) {
         testHookStore.remove(identifier);
       }
 
-      return (typeof ref == 'function' ? ref(component) : ref);
+      if (typeof ref == 'function') {
+        ref(component);
+      } else {
+        if (ref && ref.current) {
+          ref.current = component;
+        }
+      }
     }
   }
 };
