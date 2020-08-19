@@ -14,6 +14,7 @@ import * as findComponent from './scenarios/findComponent';
 import * as focus from './scenarios/focus';
 import * as notExists from './scenarios/notExists';
 import * as taggingTest from './scenarios/taggingTest';
+import * as useRef from './scenarios/useRef';
 // Import new scenarios here:
 
 // Add new scenarios here:
@@ -28,7 +29,8 @@ const scenarios = [
   findComponent,
   focus,
   notExists,
-  taggingTest
+  taggingTest,
+  useRef
 ];
 
 // Validate scenarios.
