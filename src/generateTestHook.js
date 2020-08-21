@@ -30,10 +30,9 @@ export default function(testHookStore) {
 
       if (typeof ref == 'function') {
         ref(component);
-      } else {
-        if (ref && ref.current) {
-          ref.current = component;
-        }
+      }
+      if (typeof ref == 'object') {
+        ref.current = component;
       }
     }
   }

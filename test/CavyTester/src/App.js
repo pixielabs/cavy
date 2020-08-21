@@ -15,6 +15,8 @@ import * as focus from './scenarios/focus';
 import * as notExists from './scenarios/notExists';
 import * as taggingTest from './scenarios/taggingTest';
 import * as useRef from './scenarios/useRef';
+import * as createRef from './scenarios/createRef';
+import * as callbackRef from './scenarios/callbackRef';
 // Import new scenarios here:
 
 // Add new scenarios here:
@@ -30,7 +32,9 @@ const scenarios = [
   focus,
   notExists,
   taggingTest,
-  useRef
+  useRef,
+  createRef,
+  callbackRef
 ];
 
 // Validate scenarios.
