@@ -31,7 +31,7 @@ export default function(testHookStore) {
       if (typeof ref == 'function') {
         ref(component);
       }
-      if (typeof ref == 'object') {
+      if (ref && typeof ref == 'object') {
         ref.current = component;
       }
     }
