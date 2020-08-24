@@ -1,14 +1,19 @@
-import React, { useRef } from 'react';
+import React, { createRef, Component } from 'react';
 import { Button, TextInput } from 'react-native';
-import { useCavy, hook } from 'cavy';
+import { hook } from 'cavy';
 
 export const key = 'CreateRef';
 const inputId = `${key}.Input`;
 const buttonId = `${key}.Button`;
 
-class CreateRefTest extends React.Component {
-  textInput = React.createRef();
-  focusTextInput = () => {
+class CreateRefTest extends Component {
+  constructor(props) {
+    super(props);
+    this.textInput = createRef();
+    this.focusTextInput = this.focusTextInput.bind(this);
+  }
+  
+  focusTextInput() {
     this.textInput.current.focus();
   };
 

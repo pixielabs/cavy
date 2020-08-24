@@ -1,16 +1,23 @@
-import React, { useRef } from 'react';
+import React, { Component } from 'react';
 import { Button, TextInput } from 'react-native';
-import { useCavy, hook } from 'cavy';
+import { hook } from 'cavy';
 
 export const key = 'CallbackRef';
 const inputId = `${key}.Input`;
 const buttonId = `${key}.Button`;
 
-class CreateRefTest extends React.Component {
-  setTextInputRef = (element) => {
+class CallbackRefTest extends Component {
+  constructor(props) {
+    super(props);
+    this.setTextInputRef = this.setTextInputRef.bind(this)
+    this.focusTextInput = this.focusTextInput.bind(this);
+  }
+
+  setTextInputRef(element) {
     this.textInput = element;
   }
-  focusTextInput = () => {
+
+  focusTextInput() {
     this.textInput.focus();
   }
 
@@ -29,7 +36,7 @@ class CreateRefTest extends React.Component {
   }
 }
 
-export const Screen = hook(CreateRefTest);
+export const Screen = hook(CallbackRefTest);
 
 export const label = 'spec.callbackRef retains functionality of a callback ref';
 export const spec = spec =>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Component } from 'react';
 import { Button, Text } from 'react-native';
 import { useCavy } from 'cavy';
 
@@ -7,7 +7,7 @@ export const key = 'ButtonClassComponent';
 const buttonId = `${key}.Button`;
 const textId = `${key}.Text`;
 
-class ClassButton extends React.Component {
+class ClassButton extends Component {
   render() {
     const { title, onPress } = this.props;
     return <Button onPress={onPress} title={title} />;
