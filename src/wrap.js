@@ -96,7 +96,7 @@ export default function wrap(Component) {
 // checks here. This code is taken from examples in React source code e.g:
 //
 // https://github.com/facebook/react/blob/12be8938a5d71ffdc21ee7cf770bf1cb63ae038e/packages/react-refresh/src/ReactFreshRuntime.js#L138
-function isNotReactClass(Component) {
+export function isNotReactClass(Component) {
   return !(Component.prototype && Component.prototype.isReactComponent);
 }
 

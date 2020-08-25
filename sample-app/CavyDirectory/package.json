@@ -15,6 +15,8 @@
   "devDependencies": {
     "@babel/core": "^7.6.2",
     "@babel/runtime": "^7.6.2",
+    "@babel/plugin-transform-react-jsx": "^7.9.1",
+    "@wordpress/babel-plugin-import-jsx-pragma": "^2.5.0",
     "babel-jest": "^24.9.0",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.56.0",
