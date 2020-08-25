@@ -1,3 +1,9 @@
+# 4.0.1
+
+- Fix bug in `generateTestHook`, preserving the functionality of users' own
+  refs created using `useRef` and `createRef`. Thanks to
+  [MrLoh](https://github.com/MrLoh) for the fix.
+
 # 4.0.0
 
 **BREAKING** This release includes updates to the default Cavy reporter to
