@@ -11,15 +11,26 @@ export default function(testHookStore) {
   //
   // identifier - String, the key the component will be stored under in the
   //              test hook store.
-  // f          - Your own ref generating function (optional).
+  // f          - Your own ref generating function or ref (optional).
   //
   return function generateTestHook(identifier, ref) {
     // Returns the component, preserving any user's own ref generating function
     // f() or ref attribute created via React.createRef.
     // Adds the component to the testHookStore if defined.
+
+    const registerRef = (component) => {
+      // support for callback refs
+      if (typeof ref == 'function') {
+        ref(component);
+      }
+      // support for createRef and useRef
+      if (ref && typeof ref == 'object') {
+        ref.current = component;
+      }
+    }
     return (component) => {
       if (!testHookStore) {
-        return (typeof ref == 'function' ? ref(component) : ref);
+        return registerRef(component)
       }
 
       if (component) {
@@ -28,7 +39,7 @@ export default function(testHookStore) {
         testHookStore.remove(identifier);
       }
 
-      return (typeof ref == 'function' ? ref(component) : ref);
+      return registerRef(component)
     }
   }
 };
