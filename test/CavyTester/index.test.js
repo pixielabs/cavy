@@ -44,7 +44,7 @@ const navigateAndRun = (scenario) => {
   }
 }
 
-class AppWrapper extends Component {
+class TestableApp extends Component {
   render() {
     return (
       <Tester
@@ -57,4 +57,4 @@ class AppWrapper extends Component {
   }
 }
 
-AppRegistry.registerComponent(appName, () => AppWrapper);
+AppRegistry.registerComponent(appName, () => TestableApp);
