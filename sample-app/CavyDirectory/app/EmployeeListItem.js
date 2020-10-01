@@ -1,18 +1,18 @@
 import React from 'react';
-import { View, Text, Image, TouchableHighlight, StyleSheet } from 'react-native';
+import { View, Text, Image, Pressable, StyleSheet } from 'react-native';
 import { useCavy, wrap } from 'cavy';
 
 export default ({ data, navigation }) => {
   const generateTestHook = useCavy();
   const WrappedText = wrap(Text);
-  const WrappedTouchableHighlight = wrap(Text);
+  const WrappedPressable = wrap(Pressable);
 
   const navigateTo = (id) => {
     navigation.navigate('EmployeeDetails', {employeeId: id})
   }
 
   return (
-    <WrappedTouchableHighlight
+    <WrappedPressable
       ref={generateTestHook(`EmployeeList.${data.firstName}${data.lastName}`)}
       onPress={() => navigateTo(data.id)}
       underlayColor={'#EEEEEE'}>
@@ -28,7 +28,7 @@ export default ({ data, navigation }) => {
           </WrappedText>
         </View>
       </View>
-    </WrappedTouchableHighlight>
+    </WrappedPressable>
   )
 };
 
