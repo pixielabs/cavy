@@ -1,12 +1,10 @@
-import React, {Component} from 'react';
-import {View, StyleSheet, Linking} from 'react-native';
+import React, { Component } from 'react';
+import { View, StyleSheet, Linking } from 'react-native';
+import { hook, wrap } from 'cavy';
 
 import ActionButton from './ActionButton';
 
-import { hook, wrap } from 'cavy';
-
 class ActionBar extends Component {
-
   callNumber() {
     this.openURL('tel:' + this.props.mobilePhone);
   }
@@ -34,9 +32,18 @@ class ActionBar extends Component {
 
     return (
       <View style={styles.container}>
-        <TestableActionButton ref={this.props.generateTestHook('ActionBar.EmailButton')} text="email" icon={require('./assets/email.png')} onPress={this.sendMail.bind(this)}/>
-        <ActionButton text="call" icon={require('./assets/call.png')} onPress={this.callNumber.bind(this)}/>
-        <ActionButton text="message" icon={require('./assets/sms.png')} onPress={this.sendMessage.bind(this)}/>
+        <TestableActionButton
+          ref={this.props.generateTestHook('ActionBar.EmailButton')}
+          text="email" icon={require('./assets/email.png')}
+          onPress={this.sendMail.bind(this)} />
+        <ActionButton
+          text="call"
+          icon={require('./assets/call.png')}
+          onPress={this.callNumber.bind(this)} />
+        <ActionButton
+          text="message"
+          icon={require('./assets/sms.png')}
+          onPress={this.sendMessage.bind(this)} />
       </View>
     );
   }

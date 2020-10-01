@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import { Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 export default function ActionButton({ text, icon, onPress }) {
   return (

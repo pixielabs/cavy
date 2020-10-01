@@ -1,41 +1,29 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
+import { useCavy, wrap } from 'cavy';
 
-import { hook, wrap } from 'cavy';
+export default function SearchBar({ onChange }) {
+  const [value, setValue] = useState('');
+  const generateTestHook = useCavy();
+  const TestableTextInput = wrap(TextInput);
 
-const TestableTextInput = wrap(TextInput);
-
-class SearchBar extends Component {
-  constructor() {
-    super();
-    this.state = {
-      value: ''
-    }
-    this.textInput = React.createRef();
+  const onChangeText = (value) => {
+    setValue(value);
+    onChange(value);
   }
 
-  _onChangeText(value) {
-    this.setState({value});
-    this.props.onChange(value);
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <TestableTextInput
-          ref={this.props.generateTestHook('SearchBar.TextInput', this.textInput)}
-          style={styles.input}
-          placeholder="Search"
-          onChangeText={(value) => this._onChangeText(value)}
-          value={this.state.value}
-          onFocus={() => {}}
-        />
-      </View>
-    )
-  }
+  return (
+    <View style={styles.container}>
+      <TestableTextInput
+        ref={generateTestHook('SearchBar.TextInput')}
+        style={styles.input}
+        placeholder='Search'
+        onChangeText={onChangeText}
+        value={value}
+      />
+    </View>
+  )
 }
-
-export default hook(SearchBar);
 
 const styles = StyleSheet.create({
   container: {

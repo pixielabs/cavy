@@ -1,54 +1,36 @@
-import React, {Component} from 'react';
-import {View, FlatList, StyleSheet} from 'react-native';
-import SearchBar from './SearchBar';
-import EmployeeListItem from './EmployeeListItem';
-import * as employeeService from './services/employee-service-mock';
+import React, { useEffect, useState } from 'react'
+import { View, FlatList, StyleSheet } from 'react-native'
 
-export default class EmployeeList extends Component {
+import SearchBar from './SearchBar'
+import EmployeeListItem from './EmployeeListItem'
+import * as employeeService from './services/employee-service-mock'
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: null
-    };
+export default function EmployeeList({ navigation }) {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    employeeService.findAll().then(employees => setData(employees));
+  }, [])
+
+  const search = (key) => {
+    employeeService.findByName(key).then(employees => setData(employees));
   }
 
-  componentDidMount() {
-    this.fetchData();
+  const renderItem = ({ item }) => {
+    return <EmployeeListItem navigation={navigation} data={item} />;
   }
 
-  fetchData() {
-    employeeService.findAll().then(employees => {
-      this.setState({
-        data: employees
-      });
-    });
-  }
+  const itemSeparator = (_, id) => <View key={id} style={styles.separator} />;
 
-  search(key) {
-    employeeService.findByName(key).then(employees => {
-      this.setState({
-        data: employees
-      });
-    });
-  }
-
-  _renderItem = ({item}) => <EmployeeListItem navigation={this.props.navigation} data={item} />;
-  _itemSeparator = (sectionId, rowId) => <View key={rowId} style={styles.separator} />;
-  _headerSearchBar = () => <SearchBar onChange={this.search.bind(this)} />;
-  _keyExtractor = (item, index) => item.id.toString();
-
-  render() {
-    return (
-      <FlatList style={styles.container}
-                data={this.state.data}
-                renderItem={this._renderItem}
-                ItemSeparatorComponent={this._itemSeparator}
-                ListHeaderComponent={this._headerSearchBar}
-                keyExtractor={this._keyExtractor}
-      />
-    );
-  }
+  return (
+    <FlatList
+      style={styles.container}
+      data={data}
+      renderItem={renderItem}
+      ItemSeparatorComponent={itemSeparator}
+      ListHeaderComponent={<SearchBar onChange={search} />}
+      keyExtractor={(item, _) => item.id.toString()} />
+  )
 }
 
 const styles = StyleSheet.create({
