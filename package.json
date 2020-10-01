@@ -45,7 +45,8 @@
   "jest": {
     "testPathIgnorePatterns": [
       "/node_modules/",
-      "/sample-app/"
+      "/sample-app/",
+      "/test/CavyTester/"
     ]
   }
 }
