@@ -21,10 +21,9 @@ const watchFolders = [
 ];
 
 module.exports = {
-  watchFolders,
+  // watchFolders,
   resolver: {
-    extraNodeModules,
-    blacklistRE: /CavyTester/
+    extraNodeModules
   },
   transformer: {
     getTransformOptions: async () => ({

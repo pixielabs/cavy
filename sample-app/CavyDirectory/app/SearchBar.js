@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 
-import { hook } from 'cavy';
+import { hook, wrap } from 'cavy';
+
+const TestableTextInput = wrap(TextInput);
 
 class SearchBar extends Component {
   constructor() {
@@ -20,7 +22,7 @@ class SearchBar extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TextInput
+        <TestableTextInput
           ref={this.props.generateTestHook('SearchBar.TextInput', this.textInput)}
           style={styles.input}
           placeholder="Search"

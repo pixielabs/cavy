@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text, Image, TouchableHighlight, StyleSheet } from 'react-native';
 
 import { useCavy, wrap } from 'cavy';
@@ -9,7 +9,7 @@ export default ({ data, navigation }) => {
 
   return (
     <TouchableHighlight
-      ref={generateTestHook(`${navigation.state.routeName}.${data.firstName}${data.lastName}`)}
+      ref={generateTestHook(`EmployeeList.${data.firstName}${data.lastName}`)}
       onPress={ () => navigation.navigate('EmployeeDetails', {employeeId: data.id}) }
       underlayColor={'#EEEEEE'}>
       <View style={styles.container}>
@@ -17,7 +17,7 @@ export default ({ data, navigation }) => {
         <View>
           <Text>{data.firstName} {data.lastName}</Text>
           <WrappedText
-            ref={generateTestHook(`${navigation.state.routeName}.${data.title}`)}
+            ref={generateTestHook(`EmployeeList.${data.title}`)}
             style={styles.title}
           >
             {data.title}

@@ -15,7 +15,7 @@ export default class EmployeeDetails extends Component {
   }
 
   componentDidMount() {
-    const { params } = this.props.navigation.state;
+    const { params } = this.props.route;
     const employeeId = params ? params.employeeId : null;
     this.fetchData(employeeId);
   }
