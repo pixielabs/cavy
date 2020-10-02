@@ -4,6 +4,10 @@ The `CavyTester` app exercises the Cavy API in a native mobile environment to
 test against regressions and make it safer to modify existing features or add
 new ones.
 
+
+You will need to install [Cavy CLI](https://github.com/pixielabs/cavy-cli) to
+run the tests.
+
 ## Running CavyTester with Cavy in Development
 
 CavyTester can be run on its own to demonstrate Cavy running in a sample React
@@ -16,11 +20,12 @@ following steps:
    modules.
 3. `cd test/CavyTester`
 4. Run `npm link cavy` to make `CavyTester` use this local version of `cavy`.
-5. If you don't have cocoapods installed, follow [their instructions](https://cocoapods.org/) to install it
+5. If you don't have cocoapods installed, follow
+  [their instructions](https://cocoapods.org/) to install it
 6. `cd ios`
 7. `pod install`
 8. `cd ..`
-9. Run the app! (`npm run android` or `npm run ios`)
+9. Run the tests! (`cavy run-android` or `cavy run-ios`)
 
 ## Adding Tests to Cavy Tester
 
