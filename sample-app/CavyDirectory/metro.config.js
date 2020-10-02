@@ -16,12 +16,7 @@ const extraNodeModules = {
   'react': path.resolve(__dirname, "node_modules/react")
 };
 
-const watchFolders = [
-  path.resolve(__dirname, "../../")
-];
-
 module.exports = {
-  // watchFolders,
   resolver: {
     extraNodeModules
   },
