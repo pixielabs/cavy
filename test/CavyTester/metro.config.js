@@ -1,7 +1,9 @@
 var path = require('path');
+
 const extraNodeModules = {
   react: path.resolve(__dirname, 'node_modules/react'),
 };
+
 module.exports = {
   transformer: {
     getTransformOptions: async () => ({
@@ -11,9 +13,7 @@ module.exports = {
       },
     }),
   },
-  watchFolders: [path.resolve(__dirname, '../../')],
   resolver: {
-    extraNodeModules,
-    blacklistRE: /CavyDirectory/,
+    extraNodeModules
   },
 };

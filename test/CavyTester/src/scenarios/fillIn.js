@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Text, TextInput } from 'react-native';
-import { useCavy } from 'cavy';
+import React, { useState } from 'react'
+import { Text, TextInput } from 'react-native'
+import { useCavy } from 'cavy'
 
 export const key = 'FillIn';
 

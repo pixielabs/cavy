@@ -1,9 +1,12 @@
-import React from 'react';
-import { Button } from 'react-native';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
-import { useCavy } from 'cavy';
+import React from 'react'
+import { Button } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import { useCavy } from 'cavy'
 
-import scenarios from './scenarios';
+import scenarios from './scenarios'
+
+const Stack = createStackNavigator();
 
 // Create our HomeScreen which contains a button to each of our test scenarios.
 const HomeScreen = ({ navigation }) => {
@@ -22,22 +25,25 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 
-// Create a navigation route to each of our test scenarios.
-const scenarioRoutes = scenarios.reduce((acc, scenario) => {
-  acc[scenario.key] = {
-    screen: scenario.Screen,
-    navigationOptions: { title: scenario.label },
-  };
-  return acc;
-}, {});
-
 // Our app navigator, containing the navigation to each of our test scenarios.
-const MainNavigator = createStackNavigator({
-  Home: { screen: HomeScreen },
-  ...scenarioRoutes,
-});
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen} />
 
-const AppContainer = createAppContainer(MainNavigator);
-
-// Wrap our app in the Tester component, containing all our test scenarios.
-export default App = () => <AppContainer />;
+        {/* Create a navigation route to each of our test scenarios. */}
+        {scenarios.map(scenario => {
+          return (
+            <Stack.Screen
+              name={scenario.key}
+              component={scenario.Screen}
+              options={{ title: scenario.label }} />
+          )
+        })}
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
+}

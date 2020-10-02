@@ -1,6 +1,6 @@
-import React from 'react';
-import { Button } from 'react-native';
-import { useCavy } from 'cavy';
+import React from 'react'
+import { Button } from 'react-native'
+import { useCavy } from 'cavy'
 
 export const key = 'FindComponent';
 

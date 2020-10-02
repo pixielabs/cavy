@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
-import { AppRegistry } from 'react-native';
-import App from './src/App';
-import { name as appName } from './app.json';
+import React, { Component } from 'react'
+import { AppRegistry } from 'react-native'
+import App from './src/App'
+import { name as appName } from './app.json'
 
-import scenarios from './src/scenarios';
-import { Tester, TestHookStore } from 'cavy';
+import { Tester, TestHookStore } from 'cavy'
+import scenarios from './src/scenarios'
+
 const store = new TestHookStore();
 
 // Validate scenarios.

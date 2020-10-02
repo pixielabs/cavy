@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Button, Text } from 'react-native';
-import { useCavy, wrap } from 'cavy';
+import React, { useState } from 'react'
+import { Button, Text } from 'react-native'
+import { useCavy, wrap } from 'cavy'
 
 export const key = 'ButtonFunctionComponent';
 

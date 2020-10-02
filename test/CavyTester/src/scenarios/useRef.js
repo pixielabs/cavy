@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
-import { Button, TextInput } from 'react-native';
-import { useCavy } from 'cavy';
+import React, { useRef } from 'react'
+import { Button, TextInput } from 'react-native'
+import { useCavy } from 'cavy'
 
 export const key = 'UseRef';
 const inputId = `${key}.Input`;

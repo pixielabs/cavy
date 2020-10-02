@@ -1,6 +1,6 @@
-import React from 'react';
-import { Text } from 'react-native';
-import { useCavy } from 'cavy';
+import React from 'react'
+import { Text } from 'react-native'
+import { useCavy } from 'cavy'
 
 export const key = 'ContainsTextUnwrapped';
 

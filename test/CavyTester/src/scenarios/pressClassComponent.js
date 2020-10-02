@@ -1,6 +1,6 @@
-import React, { useState, Component } from 'react';
-import { Button, Text } from 'react-native';
-import { useCavy } from 'cavy';
+import React, { useState, Component } from 'react'
+import { Button, Text } from 'react-native'
+import { useCavy } from 'cavy'
 
 export const key = 'ButtonClassComponent';
 
