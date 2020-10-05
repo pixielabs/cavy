@@ -10,21 +10,15 @@
  * @format
  */
 
- const path = require('path');
+const path = require('path');
 
- const extraNodeModules = {
-   'react': path.resolve(__dirname, "node_modules/react")
- };
- 
- const watchFolders = [
-   path.resolve(__dirname, "../../")
- ];
+const extraNodeModules = {
+  'react': path.resolve(__dirname, "node_modules/react")
+};
 
 module.exports = {
-  watchFolders,
   resolver: {
-    extraNodeModules,
-    blacklistRE: /CavyTester/
+    extraNodeModules
   },
   transformer: {
     getTransformOptions: async () => ({

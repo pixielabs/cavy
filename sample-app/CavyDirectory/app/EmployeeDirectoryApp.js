@@ -1,47 +1,44 @@
-import React, {Component} from 'react';
-import { Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { StackNavigator } from 'react-navigation';
-import EmployeeList from './EmployeeList';
-import EmployeeDetails from './EmployeeDetails';
+import React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
 
-const RootStack = StackNavigator({
-  EmployeeList: {
-    screen: EmployeeList,
-    navigationOptions: {
-      title: 'Employee List',
-      headerBackTitle: null,
-      headerStyle: {
-        backgroundColor: '#FAFAFF',
-        height: 60,
-      },
-      headerTitleStyle: {
-        padding: 8,
-        fontSize: 18,
-        fontWeight: 'bold'
-      }
-    }
-  },
-  EmployeeDetails: {
-    screen: EmployeeDetails,
-    navigationOptions: {
-      headerStyle: {
-        backgroundColor: '#FAFAFF',
-        height: 60,
-        borderBottomWidth: 0
-      }
-    }
-  }
-}, {
-  initialRouteName: 'EmployeeList'
-});
+import EmployeeList from './EmployeeList'
+import EmployeeDetails from './EmployeeDetails'
 
+const Stack = createStackNavigator();
 
-class EmployeeDirectoryApp extends Component {
-  render() {
-    return (
-      <RootStack />
-    )
-  }
+export default function EmployeeDirectoryApp() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="EmployeeList">
+        <Stack.Screen
+          name="EmployeeList"
+          component={EmployeeList}
+          options={{
+            title: 'Employee List',
+            headerBackTitle: null,
+            headerStyle: {
+              backgroundColor: '#FAFAFF',
+              height: 100,
+            },
+            headerTitleStyle: {
+              padding: 8,
+              fontSize: 18,
+              fontWeight: 'bold'
+            }
+          }}/>
+        <Stack.Screen
+          name="EmployeeDetails"
+          component={EmployeeDetails}
+          options={{
+            title: null,
+            headerStyle: {
+              backgroundColor: '#FAFAFF',
+              height: 100,
+              borderBottomWidth: 0
+            }
+          }} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
 }
-
-export default EmployeeDirectoryApp;

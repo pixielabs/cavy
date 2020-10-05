@@ -1,82 +1,68 @@
-import React, {Component} from 'react';
-import { View, FlatList, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, FlatList, Text, Image, StyleSheet } from 'react-native';
 import ActionBar from './ActionBar';
 import EmployeeListItem from './EmployeeListItem';
 import * as employeeService from './services/employee-service-mock';
 
-export default class EmployeeDetails extends Component {
+export default function EmployeeDetails({ navigation, route }) {
+  const [employee, setEmployee] = useState(null);
+  const [reports, setReports] = useState(null);
+  const { params } = route;
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      employee: null,
-      reports: null
-    };
-  }
-
-  componentDidMount() {
-    const { params } = this.props.navigation.state;
+  useEffect(() => {
     const employeeId = params ? params.employeeId : null;
-    this.fetchData(employeeId);
-  }
+    fetchData(employeeId);
+  }, [])
 
-  fetchData(id) {
+  const fetchData = (id) => {
     employeeService.findById(id).then(employee => {
-      this.setState({
-        employee: employee,
-        reports: employee.reports
-      });
+      setEmployee(employee);
+      setReports(employee.reports);
     });
   }
 
-  render() {
-    const { navigate } = this.props.navigation;
-
-    if (this.state && this.state.employee) {
-      let employee = this.state.employee;
-      let manager;
-      if (employee.manager) {
-        manager = <TouchableOpacity style={styles.manager} onPress={() => navigate('EmployeeDetails', {employeeId: employee.manager.id})}>
-                  <Image source={{uri: employee.manager.picture}} style={styles.smallPicture} />
-                  <Text style={styles.lightText}>{employee.manager.firstName} {employee.manager.lastName}</Text>
-                  <Text style={styles.lightText}>{employee.manager.title}</Text>
-                  </TouchableOpacity>;
-      }
-
-      let directReports;
-      if (employee.reports && employee.reports.length > 0) {
-        directReports =
-          <FlatList style={styles.list}
-                    data={this.state.reports}
-                    renderItem={ ({item}) => <EmployeeListItem navigation={this.props.navigation} data={item} /> }
-                    ItemSeparatorComponent={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}
-                    keyExtractor={(item, index) => item.id.toString()}
-          />;
-      } else {
-        directReports = <View style={styles.emptyList}><Text style={styles.lightText}>No direct reports</Text></View>;
-      }
-      return (
-        <View style={styles.container}>
-          <View style={styles.header}>
-            {manager}
-            <Image source={{uri: employee.picture}} style={styles.picture} />
-            <Text style={styles.bigText}>{employee.firstName} {employee.lastName}</Text>
-            <Text style={[styles.mediumText, styles.lightText]}>{employee.title}</Text>
-            <ActionBar mobilePhone={employee.mobilePhone} email={employee.email} />
-          </View>
-          {directReports}
-        </View>
-      );
-    } else {
-      return null;
-    }
+  const renderItem = ({ item }) => {
+    return <EmployeeListItem navigation={navigation} data={item} />
   }
+
+  const itemSeparator = (_, id) => <View key={id} style={styles.separator} />;
+
+  if (!employee) { return null }
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Image
+          source={{uri: employee.picture}}
+          style={styles.picture} />
+        <Text style={styles.bigText}>
+          {employee.firstName} {employee.lastName}
+        </Text>
+        <Text style={styles.lightText}>
+          {employee.title}
+        </Text>
+        <ActionBar mobilePhone={employee.mobilePhone} email={employee.email} />
+      </View>
+      {employee.reports && employee.reports.length > 0 ?
+        <FlatList
+          style={styles.list}
+          data={reports}
+          renderItem={renderItem}
+          ItemSeparatorComponent={itemSeparator}
+          keyExtractor={(item, _) => item.id.toString()} /> :
+        <View style={styles.emptyList}>
+          <Text style={styles.lightText}>No direct reports</Text>
+        </View>
+      }
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFFFFF',
-    flex: 1
+    flex: 1,
+    paddingTop: 20
   },
   header: {
     alignItems: 'center',
@@ -84,10 +70,6 @@ const styles = StyleSheet.create({
     paddingBottom: 4,
     borderBottomColor: '#F2F2F7',
     borderBottomWidth: StyleSheet.hairlineWidth
-  },
-  manager: {
-    paddingBottom: 10,
-    alignItems: 'center'
   },
   picture: {
     width: 80,
@@ -98,9 +80,6 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20
-  },
-  mediumText: {
-    fontSize: 16,
   },
   bigText: {
     fontSize: 20
