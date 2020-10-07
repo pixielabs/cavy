@@ -44,7 +44,6 @@ jobs:
           name: Link local Cavy version
           command: |
             (sleep 1; echo -e 'y\n'; sleep 1; echo -e 'y\n') | wml add ~/project ~/cavy-tester/node_modules/cavy
-            wml start
 
       - run:
           name: Build app and run tests
@@ -52,6 +51,7 @@ jobs:
             cd ~/cavy-tester
             rm -rf $TMPDIR/react-* $TMPDIR/haste-* $TMPDIR/metro-*
             watchman watch-del-all
+            wml start &
             react-native start --reset-cache &
             cavy run-ios
 
