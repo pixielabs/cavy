@@ -1,7 +1,6 @@
 version: 2
 jobs:
   ios:
-    # Specify the Xcode version to use
     macos:
       xcode: 10.3.0
 
@@ -25,36 +24,34 @@ jobs:
           command: npm test
 
       - run:
-          name: Link local copy of cavy
-          command: npm link
+          name: Install command line interfaces
+          command: npm install -g cavy-cli react-native-cli wml
 
       - run:
-          name: Install command line interfaces
-          command: npm install -g cavy-cli react-native-cli
+          name: Clone CavyTester repo
+          command:
+            git clone https://github.com/pixielabs/cavy-tester.git ~/cavy-tester
 
       - run:
           name: Install CavyTester dependencies
           command: |
-            mv test ~/
-            cd ~/test/CavyTester
+            cd ~/cavy-tester
             npm i
-            npm link cavy
             cd ios
             pod install
 
       - run:
-          name: Link React versions together
-          command:
-            npm link ../test/CavyTester/node_modules/react
+          name: Link local Cavy version
+          command: |
+            (sleep 1; echo -e 'y\n'; sleep 1; echo -e 'y\n') | wml add ~/project ~/cavy-tester/node_modules/cavy
 
       - run:
           name: Build app and run tests
           command: |
-            cd ~/test/CavyTester
-            rm -rf $TMPDIR/react-*
-            rm -rf $TMPDIR/haste-*
-            rm -rf $TMPDIR/metro-*
+            cd ~/cavy-tester
+            rm -rf $TMPDIR/react-* $TMPDIR/haste-* $TMPDIR/metro-*
             watchman watch-del-all
+            wml start &
             react-native start --reset-cache &
             cavy run-ios
 
