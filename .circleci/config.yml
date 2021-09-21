@@ -18,8 +18,8 @@ jobs:
       - run:
           name: Install Node dependencies
           command: |
-            npm i
-            npm i react@16.8.3
+            npm i --legacy-peer-deps
+            npm i --legacy-peer-deps react@16.8.3
 
       - run:
           name: Run unit tests
