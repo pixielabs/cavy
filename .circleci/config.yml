@@ -37,7 +37,7 @@ jobs:
           name: Install CavyTester dependencies
           command: |
             cd ~/cavy-tester
-            npm i
+            npm ci --legacy-peer-deps
             cd ios
             pod install
 
