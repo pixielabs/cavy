@@ -19,7 +19,6 @@ jobs:
           name: Install Node dependencies
           command: |
             npm ci --legacy-peer-deps
-            npm ci --legacy-peer-deps react@16.8.3
 
       - run:
           name: Run unit tests
