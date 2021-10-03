@@ -13,8 +13,8 @@ jobs:
             git -C /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core fetch --unshallow
             git -C /usr/local/Homebrew/Library/Taps/homebrew/homebrew-cask fetch --unshallow
             brew update
-            brew install watchman cocoapods
-            brew link --overwrite cocoapods || exit 0
+            brew install watchman cocoapods || true
+            brew link --overwrite cocoapods || true
 
       - run:
           name: Install Node dependencies
