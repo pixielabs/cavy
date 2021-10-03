@@ -11,7 +11,7 @@ jobs:
           name: Install React Native dependencies
           command: |
             brew update
-            brew install watchman cocoapods || true
+            brew install watchman cocoapods yarn || true
             brew link --overwrite cocoapods || true
 
       - run:
@@ -36,7 +36,7 @@ jobs:
           name: Install CavyTester dependencies
           command: |
             cd ~/cavy-tester
-            npm i --legacy-peer-deps
+            yarn
             cd ios
             pod install
 
