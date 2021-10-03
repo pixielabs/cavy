@@ -41,8 +41,8 @@ You might also want to
 find out a bit more before you write code.
 
 If you need some inspiration, head over to Cavy's
-[sample app](/sample-app/CavyDirectory), follow the instructions in the README,
-and see Cavy in action.
+[sample app](https://github.com/pixielabs/cavy-sample-app), follow the
+instructions in the README, and see Cavy in action.
 
 ## 📘 Documentation
 Full documentation and guides for Cavy can be found on our
