@@ -2,7 +2,7 @@ version: 2
 jobs:
   ios:
     macos:
-      xcode: 10.3.0
+      xcode: 13.0.0
 
     steps:
       - checkout
