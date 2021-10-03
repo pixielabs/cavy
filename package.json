@@ -21,8 +21,8 @@
     "specs"
   ],
   "peerDependencies": {
-    "react-native": "~0.59.0",
-    "react": "~16.8.3"
+    "react-native": ">= 0.59.0 <= 0.66.0",
+    "react": "^16.8.3 || ^17.0.0"
   },
   "author": "Pixie Labs",
   "license": "MIT",
@@ -40,6 +40,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react-native": "^4.0.0",
     "jest": "^21.2.1",
+    "react": "^16.8.3",
     "regenerator-runtime": "^0.11.0"
   },
   "jest": {
