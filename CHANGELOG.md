@@ -1,3 +1,12 @@
+# 4.0.2
+
+- Open up react and react-native peer dependency versions. Thanks
+  [alexburkowskypolysign](https://github.com/alexburkowskypolysign) for
+  this.
+- Remove sample app from codebase (was ignored by npm anyway, so doesn't
+  affect package.
+- Update CircleCI workflow.
+
 # 4.0.1
 
 - Fix bug in `generateTestHook`, preserving the functionality of users' own
