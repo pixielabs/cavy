@@ -52,7 +52,7 @@ jobs:
             rm -rf $TMPDIR/react-* $TMPDIR/haste-* $TMPDIR/metro-*
             watchman watch-del-all
             wml start &
-            react-native start --reset-cache &
+            npx react-native start --reset-cache &
             cavy run-ios
 
 workflows:
