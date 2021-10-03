@@ -10,8 +10,6 @@ jobs:
       - run:
           name: Install React Native dependencies
           command: |
-            git -C /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core fetch --unshallow
-            git -C /usr/local/Homebrew/Library/Taps/homebrew/homebrew-cask fetch --unshallow
             brew update
             brew install watchman cocoapods || true
             brew link --overwrite cocoapods || true
