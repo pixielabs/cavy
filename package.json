@@ -36,10 +36,9 @@
   },
   "devDependencies": {
     "@babel/runtime": "^7.4.3",
-    "babel-jest": "^21.2.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react-native": "^4.0.0",
-    "jest": "^21.2.1",
+    "babel-jest": "^27.3.1",
+    "jest": "^27.3.1",
+    "metro-react-native-babel-preset": "^0.66.2",
     "react": "^16.8.3",
     "regenerator-runtime": "^0.13.9"
   },
